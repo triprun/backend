@@ -16,6 +16,7 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+pm2conf.json
 
 # Tests
 /coverage
