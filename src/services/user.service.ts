@@ -97,6 +97,20 @@ export class UserService {
 
     }
 
+    async login(body: UserPostRegistrationInterface): Promise<object> {
+      const res = await this.authService.mail({
+          email: body.email,
+          password: body.password,
+      });
+
+      const profile = await this.profile({ accessToken: res.accessToken });
+
+      return {
+        ...res,
+        profile
+      };
+    }
+
     async password(body: UserPostPasswordInterface): Promise<object> {
 
         if ( body.newPassword == null ) {

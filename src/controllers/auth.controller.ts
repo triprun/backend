@@ -1,20 +1,17 @@
 import { Controller, Get, Post, Body, HttpCode} from '@nestjs/common';
-import {AuthService} from '../services/auth.service';
-import {UserService} from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Controller('auth')
 export class AuthController {
 
     constructor(private readonly authService: AuthService,
-               /* private readonly userService: UserService*/) {}
+                private readonly userSevice: UserService) {}
 
     @Post('mail')
     @HttpCode(200)
     async mail( @Body() body ) {
-        const res = await this.authService.mail(body);
-       /* res.profile = this.userService.profile({
-            accessToken: res.accessToken,
-        });*/
+        const res = await this.userSevice.login(body);
         return res;
     }
 

@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus, forwardRef } from '@nestjs/common';
 import { Users } from '../models/users.model';
 import { Consts } from '../consts';
 import { Passwords } from '../models/passwords.model';
