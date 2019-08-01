@@ -3,4 +3,5 @@ export interface AuthResponsePostMailInterface {
     refreshToken: string;
     accessTokenExpireAt: number;
     refreshTokenExpireAt: number;
+    profile?: any;
 }

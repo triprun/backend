@@ -3,5 +3,5 @@ export interface UserPostRegistrationInterface {
     firstName: string;
     lastName: string;
     password: string;
-    sex: number;
+    userName?: string;
 }

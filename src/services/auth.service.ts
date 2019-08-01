@@ -22,7 +22,7 @@ export class AuthService {
     @Inject(Consts.passwords_rep) private readonly TPasswords: typeof Passwords;
 
     constructor(
-        private readonly redisService: RedisService,
+        private readonly redisService: RedisService
     ) { }
 
     async clearTokensIsRedis(userId: number): Promise<void> {

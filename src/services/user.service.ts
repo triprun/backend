@@ -44,11 +44,26 @@ export class UserService {
             throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
         }
 
-        if ( body.sex == null ) {
-            throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
+        if ( /^.*?@\w+\.\w{2,5}$/.test(body.email) === false ) {
+            throw new HttpException(Consts.ERROR_MAIL_NOT_VALID, 400);
         }
 
-        let user = await this.TUsers.findOne({
+        let user = null;
+
+        if ( body.userName != null ) {
+
+            user = await this.TUsers.findOne({
+                where: {
+                    userName: body.userName,
+                },
+            });
+
+            if ( user != null ) {
+                throw new HttpException(Consts.ERROR_USERNAME, 400);
+            }
+        }
+
+        user = await this.TUsers.findOne({
             where: {
                 email: body.email,
             },
@@ -62,7 +77,7 @@ export class UserService {
             email: body.email,
             firstName: body.firstName,
             lastName: body.lastName,
-            sex: body.sex,
+            userName: body.userName,
         });
 
         const pass = crypto.createHash('sha256').update(body.password + Config.salt_sha).digest('hex');
@@ -73,7 +88,12 @@ export class UserService {
            isActive: 1,
         });
 
-        return {};
+        const res = await this.authService.mail({
+            email: body.email,
+            password: body.password,
+        });
+
+        return res;
 
     }
 
