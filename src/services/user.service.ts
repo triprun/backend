@@ -237,6 +237,10 @@ export class UserService {
             lastName: user.lastName,
             sex: user.sex,
             verified: user.verified,
+            bio: user.bio,
+            avatar: user.avatar,
+            joined: user.createdAt,
+            origin: user.origin
         };
 
     }

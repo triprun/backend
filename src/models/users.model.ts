@@ -26,4 +26,13 @@ export class Users extends Model<Users> {
     @Column
     sex: number;
 
+    @Column
+    bio: string;
+
+    @Column
+    avatar: string;
+
+    @Column
+    origin: string;
+
 }
