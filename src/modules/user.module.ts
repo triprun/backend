@@ -11,5 +11,4 @@ import { AuthModule } from './auth.module';
     ],
     imports: [DatabaseModule, AuthModule],
 })
-
 export class UserModule {}

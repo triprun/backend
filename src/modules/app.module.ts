@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
+import { RestaurantModule } from './restaurants.module';
 import { UploadModule } from './upload.module';
 import { RedisModule } from 'nestjs-redis';
 import { Config } from '../config';
@@ -14,10 +15,10 @@ import { Config } from '../config';
       AuthModule,
       UserModule,
       UploadModule,
+      RestaurantModule,
   ],
   controllers: [],
   providers: [],
   exports: [],
 })
-
 export class AppModule {}
