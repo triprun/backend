@@ -9,3 +9,5 @@ export { UserPostRegistrationInterface } from './user/post.registration.interfac
 export { UserPostPasswordInterface } from './user/post.password.interface';
 export { UserGetProfileInterface } from './user/get.profile.interface';
 export { UserResponseGetProfileInterface } from './user/response.get.profile.interface';
+
+export { Restaurant } from './restaurant/get.restaurant.interface';

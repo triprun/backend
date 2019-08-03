@@ -1,7 +1,8 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { Restaurant } from '../interfaces/restaurant.interface';
 import { Consts } from '../consts';
+
+import { Restaurant } from '../interfaces/protocol';
 
 @Injectable()
 export class RestaurantService {

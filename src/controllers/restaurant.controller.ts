@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, HttpCode} from '@nestjs/common';
-import { RestaurantsService } from '../services/restaurant.service';
+import { RestaurantService } from '../services/restaurant.service';
 
 @Controller('restaurant')
 export class RestaurantController {
 
-  constructor(private readonly restaurantsService: RestaurantsService) {}
+  constructor(private readonly restaurantsService: RestaurantService) {}
 
   @Post('create')
   @HttpCode(200)
