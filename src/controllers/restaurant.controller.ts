@@ -4,24 +4,24 @@ import { RestaurantService } from '../services/restaurant.service';
 @Controller('restaurant')
 export class RestaurantController {
 
-  constructor(private readonly restaurantsService: RestaurantService) {}
+  constructor(private readonly restaurantService: RestaurantService) {}
 
   @Post('create')
   @HttpCode(200)
   create( @Body() body ) {
-    return this.restaurantsService.create(body);
+    return this.restaurantService.create(body);
   }
 
-  @Get('restaurants')
+  @Get('search')
   @HttpCode(200)
   findAll( @Body() body ) {
-    return this.restaurantsService.findAll(body);
+    return this.restaurantService.findAll(body);
   }
 
-  @Get('restaurant')
+  @Get('fetch')
   @HttpCode(200)
   find( @Body() body ) {
-    return this.restaurantsService.find(body);
+    return this.restaurantService.find(body);
   }
 
 }

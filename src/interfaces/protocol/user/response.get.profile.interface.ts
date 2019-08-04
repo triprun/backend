@@ -5,4 +5,8 @@ export interface UserResponseGetProfileInterface {
     lastName: string;
     verified: number;
     sex: number | null;
+    bio: string | null;
+    avatar: string | null;
+    joined: string;
+    origin: string | null;
 }

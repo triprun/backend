@@ -10,4 +10,8 @@ export { UserPostPasswordInterface } from './user/post.password.interface';
 export { UserGetProfileInterface } from './user/get.profile.interface';
 export { UserResponseGetProfileInterface } from './user/response.get.profile.interface';
 
-export { Restaurant } from './restaurant/get.restaurant.interface';
+export { Restaurant } from './restaurant/restaurant.interface';
+export { RestaurantPostCreateInterface } from './restaurant/post.restaurant.interface';
+export { RestaurantGetCardInterface } from './restaurant/get.restaurant.interface';
+export { RestaurantsGetCardInterface } from './restaurant/get.restaurants.interface';
+export { RestaurantResponseGetCardInterface } from './restaurant/response.get.restaurant.interface';

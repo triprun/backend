@@ -1,8 +1,13 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { Consts } from '../consts';
-
-import { Restaurant } from '../interfaces/protocol';
+import {
+  Restaurant,
+  RestaurantPostCreateInterface,
+  RestaurantGetCardInterface,
+  RestaurantsGetCardInterface,
+  RestaurantResponseGetCardInterface
+} from '../interfaces/protocol';
 
 @Injectable()
 export class RestaurantService {
@@ -11,16 +16,16 @@ export class RestaurantService {
     private readonly restaurantModel: Model<Restaurant>,
   ) {}
 
-  async create(body: RestaurantInterface): Promise<Restaurant> {
+  async create(body: RestaurantPostCreateInterface): Promise<RestaurantResponseGetCardInterface> {
     const createdRestaurant = new this.restaurantModel(body);
     return await createdRestaurant.save();
   }
 
-  async findAll(): Promise<Restaurant[]> {
+  async findAll(body: RestaurantsGetCardInterface): Promise<RestaurantResponseGetCardInterface[]> {
     return await this.restaurantModel.find().exec();
   }
 
-  async find(body: RestaurantInterface): Promise<Restaurant[]> {
-    return await this.restaurantModel.find({ ...body }).exec();
+  async find(body: RestaurantGetCardInterface): Promise<RestaurantResponseGetCardInterface> {
+    return await this.restaurantModel.find({ _id: body.restId }).exec();
   }
 }
