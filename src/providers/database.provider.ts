@@ -31,6 +31,6 @@ export const databaseProvider = [
     {
       provide: Consts.dm_provide,
       useFactory: (): Promise<typeof mongoose> =>
-        mongoose.connect(Config.mdb_link),
+        mongoose.connect(Config.mdb_link, { useFindAndModify: false }),
     },
 ]

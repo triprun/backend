@@ -24,4 +24,10 @@ export class RestaurantController {
     return this.restaurantService.find(body);
   }
 
+  @Post('edit')
+  @HttpCode(200)
+  edit( @Body() body ) {
+    return this.restaurantService.edit(body);
+  }
+
 }

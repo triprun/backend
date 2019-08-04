@@ -4,6 +4,8 @@ import { Consts } from '../consts';
 import {
   Restaurant,
   RestaurantPostCreateInterface,
+  RestaurantPostEditInterface,
+  RestaurantPostVerifyInterface,
   RestaurantGetCardInterface,
   RestaurantsGetCardInterface,
   RestaurantResponseGetCardInterface
@@ -17,7 +19,7 @@ export class RestaurantService {
   ) {}
 
   async create(body: RestaurantPostCreateInterface): Promise<RestaurantResponseGetCardInterface> {
-    const createdRestaurant = new this.restaurantModel(body);
+    const createdRestaurant = new this.restaurantModel({ ...body, verified: false });
     return await createdRestaurant.save();
   }
 
@@ -27,5 +29,13 @@ export class RestaurantService {
 
   async find(body: RestaurantGetCardInterface): Promise<RestaurantResponseGetCardInterface> {
     return await this.restaurantModel.find({ _id: body.restId }).exec();
+  }
+
+  async edit(body: RestaurantPostEditInterface): Promise<RestaurantResponseGetCardInterface> {
+    return await this.restaurantModel.findOneAndUpdate({ _id: body.restId }, { ...body, verified: false }, { upsert: true, new: true });
+  }
+
+  async verify(body: RestaurantPostVerifyInterface): Promise<RestaurantResponseGetCardInterface> {
+    return await this.restaurantModel.findOneAndUpdate({ _id: body.restId }, { verified: true }, { upsert: true, new: true });
   }
 }

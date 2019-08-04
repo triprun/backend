@@ -12,6 +12,8 @@ export { UserResponseGetProfileInterface } from './user/response.get.profile.int
 
 export { Restaurant } from './restaurant/restaurant.interface';
 export { RestaurantPostCreateInterface } from './restaurant/post.restaurant.interface';
+export { RestaurantPostEditInterface } from './restaurant/post.restaurant.edit.interface';
+export { RestaurantPostVerifyInterface } from './restaurant/post.restaurant.verify.interface';
 export { RestaurantGetCardInterface } from './restaurant/get.restaurant.interface';
 export { RestaurantsGetCardInterface } from './restaurant/get.restaurants.interface';
 export { RestaurantResponseGetCardInterface } from './restaurant/response.get.restaurant.interface';
