@@ -4,6 +4,7 @@ export const Consts = {
     users_rep: 'USERS_REPOSITORY',
     passwords_rep: 'PASSWORDS_REPOSITORY',
     restaurants_rep: 'RESTAURANTS_REPOSITORY',
+    hotels_rep: 'HOTELS_REPOSITORY',
     ERROR_REQUIRED_FIELDS: 'Not all required fields',
     ERROR_ACCESS_TOKEN: 'Not valid access token',
     ERROR_REFRESH_TOKEN: 'Not valid refresh token',
