@@ -1,10 +1,10 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, Inject, HttpException } from '@nestjs/common';
 import { Users } from '../models/users.model';
 import { Consts } from '../consts';
 import { Passwords } from '../models/passwords.model';
 import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
-import {Config} from '../config';
+import { Config } from '../config';
 import moment = require('moment');
 import { RedisService } from 'nestjs-redis';
 import {

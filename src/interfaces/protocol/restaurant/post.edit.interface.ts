@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface RestaurantPostCreateInterface extends Document {
+export interface RestaurantPostEditInterface extends Document {
   restId: string;
   name?: string;
   description?: string;
