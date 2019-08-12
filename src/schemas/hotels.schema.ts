@@ -18,8 +18,8 @@ export const HotelSchema = new mongoose.Schema({
   foodtypes: [String],
   roomsavailable: [{
     roomtype: String,
-    available: Number
+    available: Number,
   }],
   shoreline: Number,
-  specialextras: [String]
+  specialextras: [String],
 });

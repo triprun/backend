@@ -9,7 +9,7 @@ import {
   RestaurantPostDeleteInterface,
   RestaurantGetCardInterface,
   RestaurantsGetCardInterface,
-  RestaurantResponseGetCardInterface
+  RestaurantResponseGetCardInterface,
 } from '../interfaces/protocol';
 import { AuthService } from './auth.service';
 
@@ -18,10 +18,10 @@ export class RestaurantService {
   constructor(
     @Inject(Consts.restaurants_rep)
     private readonly restaurantModel: Model<Restaurant>,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
 
-  async create(body: RestaurantPostCreateInterface): Promise<RestaurantResponseGetCardInterface> {
+  async create(body: RestaurantPostCreateInterface): Promise<object> {
     if ( await this.authService.checkAccessToken(body.accessToken) === false ) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
@@ -29,7 +29,7 @@ export class RestaurantService {
     return await createdRestaurant.save();
   }
 
-  async findAll(body: RestaurantsGetCardInterface): Promise<RestaurantResponseGetCardInterface[]> {
+  async findAll(body: RestaurantsGetCardInterface): Promise<object[]> {
     return await this.restaurantModel.find().exec();
   }
 
@@ -37,14 +37,14 @@ export class RestaurantService {
     return await this.restaurantModel.find({ _id: body.restId }).exec();
   }
 
-  async edit(body: RestaurantPostEditInterface): Promise<RestaurantResponseGetCardInterface> {
+  async edit(body: RestaurantPostEditInterface): Promise<object> {
     if ( await this.authService.checkAccessToken(body.accessToken) === false ) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     return await this.restaurantModel.findOneAndUpdate({ _id: body.restId }, { ...body, verified: false }, { upsert: true, new: true });
   }
 
-  async verify(body: RestaurantPostVerifyInterface): Promise<RestaurantResponseGetCardInterface> {
+  async verify(body: RestaurantPostVerifyInterface): Promise<object> {
     if ( await this.authService.checkAccessToken(body.accessToken) === false ) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
@@ -58,7 +58,7 @@ export class RestaurantService {
     const deleted = await this.restaurantModel.find({ _id: body.restId }).remove().exec();
     if(!deleted.ok) return {
       status: 'error',
-      error: 'seems like this restaurant got moved'
+      error: 'seems like this restaurant got moved',
     };
     return deleted;
   }

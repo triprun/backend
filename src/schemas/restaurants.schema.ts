@@ -10,5 +10,5 @@ export const RestaurantSchema = new mongoose.Schema({
   bestToVisit: [String],
   avgprice: Number,
   suitableFor: [String],
-  extras: [String]
+  extras: [String],
 });

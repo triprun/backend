@@ -27,3 +27,12 @@ export { HotelPostDeleteInterface } from './hotel/post.delete.interface';
 export { HotelGetCardInterface } from './hotel/get.hotel.interface';
 export { HotelsGetCardInterface } from './hotel/get.hotels.interface';
 export { HotelResponseGetCardInterface } from './hotel/response.get.hotel.interface';
+
+export { Entertainment } from './entertainment/entertainment.interface';
+export { EntertainmentPostCreateInterface } from './entertainment/post.create.interface';
+export { EntertainmentPostEditInterface } from './entertainment/post.edit.interface';
+export { EntertainmentPostVerifyInterface } from './entertainment/post.verify.interface';
+export { EntertainmentPostDeleteInterface } from './entertainment/post.delete.interface';
+export { EntertainmentGetCardInterface } from './entertainment/get.entertainment.interface';
+export { EntertainmentsGetCardInterface } from './entertainment/get.entertainments.interface';
+export { EntertainmentResponseGetCardInterface } from './entertainment/response.get.entertainment.interface';

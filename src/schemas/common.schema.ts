@@ -8,5 +8,5 @@ export const common = {
   open: Number,
   close: Number,
   photos: [String],
-  verified: Boolean
+  verified: Boolean,
 };
