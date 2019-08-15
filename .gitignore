@@ -5,6 +5,7 @@
 # configs
 /src/config.ts
 /db/config
+.env
 
 # DBs
 /postgres
