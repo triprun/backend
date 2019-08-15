@@ -4,6 +4,7 @@ RUN mkdir -p /home/node/triprun/node_modules && chown -R node:node /home/node/tr
 WORKDIR /home/node/triprun
 
 COPY package*.json ./
+COPY .env ./.env
 
 USER node
 
