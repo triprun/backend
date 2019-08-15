@@ -6,6 +6,11 @@
 /src/config.ts
 /db/config
 
+# DBs
+/postgres
+/redis
+/mongo
+
 # Logs
 logs
 *.log
