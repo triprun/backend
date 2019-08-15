@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://triprun.io" target="blank"><img src="https://i.ibb.co/pJ5C0Vb/Screenshot-2019-08-15-at-20-20-38.png" width="200" alt="Triprun Logo" /></a>
+  <a href="http://triprun.io" target="blank"><img src="https://i.ibb.co/pJ5C0Vb/Screenshot-2019-08-15-at-20-20-38.png" width="320" alt="Triprun Logo" /></a>
 </p>
 
 ## Description
