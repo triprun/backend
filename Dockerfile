@@ -14,6 +14,4 @@ COPY --chown=node:node . .
 
 EXPOSE 3030
 
-HEALTHCHECK --interval=10s --timeout=2s --start-period=20s CMD node /healthcheck.js
-
 CMD [ "npm", "run", "start:dev" ]
