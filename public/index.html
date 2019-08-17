@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>TripRunApiDocumentations</title>
+	<title>TripRun | API Documentation</title>
 
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -42,42 +42,42 @@
 									<span data-feather="file-text"></span>
 									Обмен данными
 								</a>
-							</li>			
+							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="#Примечания">
 									<span data-feather="file-text"></span>
-									Примечания 
+									Примечания
 								</a>
 							</li>
 						</ul>
-					
-						
+
+
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>auth</span>
 						</h6>
-						<ul class="nav flex-column mb-2">						
-							
+						<ul class="nav flex-column mb-2">
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Авторизация-по-email">
 									<span data-feather="file-text"></span>
 									Авторизация по email
 								</a>
 							</li>
-							
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Логаут">
 									<span data-feather="file-text"></span>
 									Логаут
 								</a>
 							</li>
-							
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Проверка-accessToken">
 									<span data-feather="file-text"></span>
 									Проверка accessToken
 								</a>
 							</li>
-							
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Обновление-accessToken">
 									<span data-feather="file-text"></span>
@@ -85,26 +85,26 @@
 								</a>
 							</li>
 						</ul>
-						
+
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>user</span>
 						</h6>
-						<ul class="nav flex-column mb-2">						
-							
+						<ul class="nav flex-column mb-2">
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Запрос_профиля_публичные_данные">
 									<span data-feather="file-text"></span>
 									Запрос профиля - публичные данные
 								</a>
 							</li>
-							
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Регистрация_пользователя_по_email">
 									<span data-feather="file-text"></span>
 									Регистрация пользователя по email
 								</a>
 							</li>
-							
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Смена_пароля">
 									<span data-feather="file-text"></span>
@@ -112,12 +112,12 @@
 								</a>
 							</li>
 						</ul>
-						
+
 						<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>Структуры данных</span>
 						</h6>
-						<ul class="nav flex-column mb-2">						
-							
+						<ul class="nav flex-column mb-2">
+
 							<li class="nav-item">
 								<a class="nav-link" href="#Пользователь">
 									<span data-feather="file-text"></span>
@@ -138,9 +138,9 @@
 									Платформа
 								</a>
 							</li>
-							
+
 						</ul>
-						
+
 					</div>
 				</nav>
 
@@ -164,9 +164,9 @@
 								<td>Вызываемый метод объекта</td>
 							</tr>
 						</table>
-						
+
 					</div>
-						
+
 					<h2 id="Примечания">Примечания</h2>
 					<div class="alert alert-light" role="alert">
 						Возможные http коды ответа: <br>
@@ -182,22 +182,22 @@
 						<p>Если после названия параметра стоит знак "?", то этот параметр не обязательный</p>
 						<p>Время жизни accessToken 30 минут - возможно использовать неограниченное кол-во раз.</p>
 						<p>Время жизни refreshToken 3 суток - возможно использовать только 1 раз.</p>
-						
-						<p>При обновлении refreshToken будут сгенерированы новые accessToken и refreshToken, а старые будут удалены.</p>						
+
+						<p>При обновлении refreshToken будут сгенерированы новые accessToken и refreshToken, а старые будут удалены.</p>
 						<p>Пользователь может быть авторизован несколько раз под одними учетными данными, при этом будут сгенерированы новые ключи и старые ключи останутся активными. Если нужно удалить ключ, то необходимо вызвать метод <a href="#Логаут">логаут</a>.</p>
 						<p>Поля id, email, userName сущности user уникальны. userName не обязателен и может быть null. userName является строковым представлением идентификатора. Может быть использован для формирования ЧПУ ссылок на профиль. </p>
 						<p>При смене пароля старый будет скомпрометирован и установить его не получится</p>
-						
+
 					</div>
-					
-					
+
+
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 						<h1 class="h2">auth</h1>
 					</div>
-						
+
 					<h4 id="Авторизация-по-email">Авторизация по email</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>POST /auth/mail</b>
 						</div>
@@ -212,7 +212,7 @@
 								<td>Пароль пользователя</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
@@ -233,11 +233,11 @@
 							</tr>
 						</table>
 					</div>
-					
-					
+
+
 					<h4 id="Логаут">Логаут</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>POST /auth/logout</b>
 						</div>
@@ -248,7 +248,7 @@
 								<td>Ключ доступа</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
@@ -257,10 +257,10 @@
 							</tr>
 						</table>
 					</div>
-					
+
 					<h4 id="Проверка-accessToken">Проверка accessToken</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>GET /auth/access</b>
 						</div>
@@ -271,7 +271,7 @@
 								<td>Ключ доступа</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
@@ -280,10 +280,10 @@
 							</tr>
 						</table>
 					</div>
-					
+
 					<h4 id="Обновление-accessToken">Обновление accessToken</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>POST /auth/refresh</b>
 						</div>
@@ -294,7 +294,7 @@
 								<td>Ключ обновления доступа</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
@@ -315,14 +315,14 @@
 							</tr>
 						</table>
 					</div>
-					
+
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 						<h1 class="h2">user</h1>
 					</div>
-					
+
 					<h4 id="Запрос_профиля_публичные_данные">Запрос профиля - публичные данные</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>GET /user/profile</b>
 						</div>
@@ -341,7 +341,7 @@
 								<td>Ключ доступа</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
@@ -368,14 +368,14 @@
 								<th>sex</th>
 								<td>Пол</td>
 							</tr>
-							
+
 						</table>
 					</div>
-					
-					
+
+
 					<h4 id="Регистрация_пользователя_по_email">Регистрация пользователя по email</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>POST /user/registration</b>
 						</div>
@@ -407,19 +407,19 @@
 								<td>String. Уникальный.</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
 								<th></th>
 								<td>{}</td>
-							</tr>							
+							</tr>
 						</table>
 					</div>
-					
+
 					<h4 id="Смена_пароля">Смена пароля</h4>
 					<div>
-						
+
 						<div class="alert alert-primary" role="alert">
 							<b>POST /user/password</b>
 						</div>
@@ -438,29 +438,29 @@
 								<td>Ключ доступа</td>
 							</tr>
 						</table>
-						
+
 						<label>Ответ</label>
 						<table class="table table-bordered">
 							<tr>
 								<th></th>
 								<td>{}</td>
-							</tr>							
+							</tr>
 						</table>
 					</div>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
+
+
+
+
+
+
+
+
+
+
 					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 						<h1 class="h2">Структуры данных</h1>
 					</div>
-					
+
 					<h2 id="Пользователь">Пользователь</h2>
 						<table class="table table-bordered">
 							<tr>
@@ -494,7 +494,7 @@
 							<tr>
 								<th>Email</th>
 								<td>Email пользователя</td>
-							</tr>	
+							</tr>
 						</table>Регистрация_пользователя_по_email
 
 					<h2 id="Изображение">Изображение</h2>
@@ -524,8 +524,8 @@
 								<td></td>
 							</tr>
 						</table>
-						
-						
+
+
 						<h2 id="Платформа">Платформа</h2>
 						<table class="table table-bordered">
 							<tr>
@@ -561,7 +561,7 @@
 								<td>Приложение для Windows 19</td>
 							</tr>
 						</table>
-					
+
 				</main>
 			</div>
 		</div>
@@ -569,7 +569,7 @@
 		<script src="/js/jquery-3.4.1.min.js"></script>
 		<script src="/js/popper.min.js"></script>
 		<script src="/js/bootstrap.min.js"></script>
-		
+
 
 	</body>
 </html>

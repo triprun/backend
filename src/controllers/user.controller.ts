@@ -18,7 +18,7 @@ export class UserController {
         return this.userService.password(body);
     }
 
-    @Get('profile')
+    @Post('profile')
     @HttpCode(200)
     profile( @Body() body ) {
         return this.userService.profile(body);

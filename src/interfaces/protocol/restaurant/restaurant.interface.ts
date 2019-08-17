@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface Restaurant extends Document {
+  readonly restId: string;
   readonly name: string;
   readonly description: string;
   readonly open: number;

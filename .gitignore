@@ -3,8 +3,13 @@
 /node_modules
 
 # configs
-/src/config.ts
 /db/config
+.env
+
+# DBs
+/postgres
+/redis
+/mongo
 
 # Logs
 logs

@@ -4,7 +4,7 @@ import { HotelService } from '../services/hotel.service';
 @Controller('hotel')
 export class HotelController {
 
-  constructor(private readonly hotelService: hotelService) {}
+  constructor(private readonly hotelService: HotelService) {}
 
   @Post('create')
   @HttpCode(200)
