@@ -15,6 +15,9 @@ import {
 } from '../interfaces/protocol';
 import { AuthService } from './auth.service';
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 @Injectable()
 export class UserService {
 
@@ -176,72 +179,94 @@ export class UserService {
         return {};
     }
 
-    async profile(body: UserGetProfileInterface): Promise<UserResponseGetProfileInterface> {
+    async foreignProfile(body: UserGetProfileInterface): Promise<UserResponseGetProfileInterface> {
 
-        if ( body.userId == null && body.userName == null && body.accessToken == null ) {
-            throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
-        }
+      let user = null;
 
-        let userId = body.userId;
-        let decoded = null;
+      if ( body.id === null ) {
+        throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
+      }
 
-        if ( body.userId == null && body.userName == null ) {
-
-            if ( await this.authService.checkAccessToken( body.accessToken ) === false ) {
-                throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-            }
-
-            jwt.verify(body.accessToken, Config.jwt_key_access, (e, d) => {
-                if ( d != null ) {
-                    decoded = d;
-                }
-            });
-
-            userId = decoded.userId;
-        }
-
-        if ( body.userId == null ) {
-
-            if ( body.userName != null ) {
-
-                const userTmp = await this.TUsers.findOne({
-                    where: {
-                        userName: body.userName,
-                    },
-                });
-                if (userTmp != null) {
-                    userId = userTmp.id;
-                }
-
-            }
-
-        }
-
-        if ( userId == null ) {
-            throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
-        }
-
-        const user = await this.TUsers.findOne({
-            where: {
-                id: userId,
-            },
+      if(body.id[0] !== '@') {
+        user = await this.TUsers.findOne({
+          where: {
+            id: Number.parseInt(body.id),
+          },
         });
-        if ( user == null ) {
-            throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
-        }
+      } else {
+        user = await this.TUsers.findOne({
+          where: {
+            userName: body.id.slice(1),
+          },
+        });
+      }
 
-        return {
-            id: user.id,
-            userName: user.userName,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            sex: user.sex,
-            verified: user.verified,
-            bio: user.bio,
-            avatar: user.avatar,
-            joined: user.createdAt,
-            origin: user.origin
-        };
+      if ( user === null ) {
+        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
+      }
+
+      return {
+        id: user.id,
+        userName: user.userName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        sex: user.sex,
+        verified: user.verified,
+        bio: user.bio,
+        avatar: user.avatar,
+        joined: user.createdAt,
+        origin: user.origin
+      };
+
+    }
+
+    async profile(body: UserPostProfileInterface): Promise<UserResponseGetProfileInterface> {
+
+      if ( body.accessToken === null ) {
+        throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
+      }
+
+      let userId = body.userId;
+      let decoded = null;
+
+      if ( await this.authService.checkAccessToken( body.accessToken ) === false ) {
+        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+      }
+
+      jwt.verify(body.accessToken, Config.jwt_key_access, (e, d) => {
+        if ( d != null ) {
+          decoded = d;
+        }
+      });
+
+      userId = decoded.userId;
+
+      if ( userId === null ) {
+        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
+      }
+
+      const user = await this.TUsers.findOne({
+        where: {
+          id: userId,
+        },
+      });
+
+      if ( user === null ) {
+        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
+      }
+
+      return {
+        id: user.id,
+        userName: user.userName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        sex: user.sex,
+        verified: user.verified,
+        bio: user.bio,
+        avatar: user.avatar,
+        joined: user.createdAt,
+        origin: user.origin
+      };
 
     }
 

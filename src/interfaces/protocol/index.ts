@@ -8,6 +8,7 @@ export { AuthPostLogoutInterface } from './auth/post.logout.interface';
 export { UserPostRegistrationInterface } from './user/post.registration.interface';
 export { UserPostPasswordInterface } from './user/post.password.interface';
 export { UserGetProfileInterface } from './user/get.profile.interface';
+export { UserPostProfileInterface } from './user/post.profile.interface';
 export { UserResponseGetProfileInterface } from './user/response.get.profile.interface';
 
 export { Restaurant } from './restaurant/restaurant.interface';
