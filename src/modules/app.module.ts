@@ -9,6 +9,7 @@ import { CommonPlaceModule } from './common.place.module';
 import { EntertainmentModule } from './entertainment.module';
 import { RestaurantModule } from './restaurant.module';
 import { ConcertModule } from './concert.module';
+import { RelaxModule } from './relax.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ConcertModule } from './concert.module';
       RestaurantModule,
       SightModule,
       ConcertModule,
+      RelaxModule,
   ],
   controllers: [],
   providers: [],

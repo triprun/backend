@@ -6,7 +6,8 @@ import { etnertainmentsProviders } from '../providers/entertainments.provider';
 import { restaurantsProviders } from '../providers/restaurant.provider';
 import { sightsProviders } from '../providers/sight.provider';
 import { concertsProviders } from '../providers/concert.provider';
-import {AuthModule} from './auth.module';
+import { relaxProviders } from '../providers/relax.provider';
+import { AuthModule } from './auth.module';
 
 @Module({
     controllers: [],
@@ -17,6 +18,7 @@ import {AuthModule} from './auth.module';
         ...restaurantsProviders,
         ...sightsProviders,
         ...concertsProviders,
+        ...relaxProviders,
     ],
     imports: [DatabaseModule, AuthModule],
     exports: [CommonPlaceService],

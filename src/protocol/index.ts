@@ -20,6 +20,9 @@ export { SightGetSearchDto } from './sight/get.search.dto';
 export { ConcertPostEditDto } from './concert/post.edit.dto';
 export { ConcertPostCreateDto } from './concert/post.create.dto';
 export { ConcertGetSearchDto } from './concert/get.search.dto';
+export { RelaxPostEditDto } from './relax/post.edit.dto';
+export { RelaxPostCreateDto } from './relax/post.create.dto';
+export { RelaxGetSearchDto } from './relax/get.search.dto';
 
 export { UserPostRegistrationResponse } from './user/post.registration.response';
 export { AuthPostMailResponse } from './auth/post.mail.response';
@@ -31,6 +34,7 @@ export { EntertainmentAnyResponse } from './entertainment/any.response';
 export { RestaurantAnyResponse } from './restaurant/any.response';
 export { SightAnyResponse } from './sight/any.response';
 export { ConcertAnyResponse } from './concert/any.response';
+export { RelaxAnyResponse } from './relax/any.response';
 
 export { UserPostRegistrationSwagger } from './user/post.registration.swagger';
 export { AuthPostMailSwagger } from './auth/post.mail.swagger';
@@ -42,3 +46,4 @@ export { EntertainmentAnySwagger } from './entertainment/any.swagger';
 export { RestaurantAnySwagger } from './restaurant/any.swagger';
 export { SightAnySwagger } from './sight/any.swagger';
 export { ConcertAnySwagger } from './concert/any.swagger';
+export { RelaxAnySwagger } from './relax/any.swagger';
