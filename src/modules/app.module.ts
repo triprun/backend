@@ -6,7 +6,7 @@ import { UserModule } from './user.module';
 import { HotelModule } from './hotel.module';
 import { CommonPlaceModule } from './common.place.module';
 import { EntertainmentModule } from './entertainment.module';
-import {CommonPlaceService} from '../services/common.place.service';
+import {RestaurantModule} from './restaurant.module';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import {CommonPlaceService} from '../services/common.place.service';
       AuthModule,
       UserModule,
       HotelModule,
-
+      RestaurantModule,
   ],
   controllers: [],
   providers: [],

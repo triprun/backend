@@ -4,6 +4,7 @@ import { Consts } from '../consts';
 import { RedisService } from 'nestjs-redis';
 import { IHotel } from '../schemas/hotel.interface';
 import { IEntertainment } from '../schemas/entertainment.interface';
+import { IRestaurant } from '../schemas/restaurant.interface';
 
 import { AuthService } from './auth.service';
 
@@ -17,6 +18,8 @@ export class CommonPlaceService {
         private readonly hotelModel: Model<IHotel>,
         @Inject(Consts.entertainments_rep)
         private readonly entertainmentModel: Model<IEntertainment>,
+        @Inject(Consts.restaurants_rep)
+        private readonly restaurantModel: Model<IRestaurant>,
         private readonly redisService: RedisService,
         private readonly authService: AuthService,
     ) {}
@@ -26,6 +29,8 @@ export class CommonPlaceService {
             this.commonPlace = this.hotelModel;
         } else if ( value === 'entertainment' ) {
             this.commonPlace = this.entertainmentModel;
+        } else if ( value === 'restaurant' ) {
+            this.commonPlace = this.restaurantModel;
         } else {
             this.commonPlace = null;
         }

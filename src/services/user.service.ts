@@ -12,11 +12,11 @@ import {
     UserPostRegistrationResponse,
     UserGetProfileDto,
     UserGetProfileResponse,
-    UserPostMailDto,
+    AuthPostMailDto,
     UserPostPasswordDto,
-    UserGetLogoutDto,
-    UserPostAccessDto,
-    UserPostRefreshDto,
+    AuthGetLogoutDto,
+    AuthPostAccessDto,
+    AuthPostRefreshDto,
 } from '../protocol';
 
 import { AuthService } from './auth.service';
@@ -100,7 +100,7 @@ export class UserService {
 
     }
 
-    async login(body: UserPostMailDto): Promise<any> {
+    async login(body: AuthPostMailDto): Promise<any> {
 
         const res = await this.authService.mail({
             email: body.email,
@@ -119,7 +119,7 @@ export class UserService {
         };
     }
 
-    async logout(query: UserGetLogoutDto): Promise<any> {
+    async logout(query: AuthGetLogoutDto): Promise<any> {
 
         if ( await this.authService.checkAccessToken(query.accessToken) === false ) {
             throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
@@ -271,14 +271,14 @@ export class UserService {
 
     }
 
-    async access(body: UserPostAccessDto, query): Promise<any> {
+    async access(body: AuthPostAccessDto, query): Promise<any> {
         if ( await this.authService.checkAccessToken( query.accessToken ) === false ) {
             throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
         }
         return {};
     }
 
-    async refresh(body: UserPostRefreshDto): Promise<any> {
+    async refresh(body: AuthPostRefreshDto): Promise<any> {
 
         return await this.authService.refresh(body);
 

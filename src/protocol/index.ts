@@ -11,6 +11,9 @@ export { HotelPostEditDto } from './hotel/post.edit.dto';
 export { EntertainmentPostEditDto } from './entertainment/post.edit.dto';
 export { EntertainmentPostCreateDto } from './entertainment/post.create.dto';
 export { EntertainmentGetSearchDto } from './entertainment/get.search.dto';
+export { RestaurantGetSearchDto } from './restaurant/get.search.dto';
+export { RestaurantPostCreateDto } from './restaurant/post.create.dto';
+export { RestaurantPostEditDto } from './restaurant/post.edit.dto';
 
 export { UserPostRegistrationResponse } from './user/post.registration.response';
 export { AuthPostMailResponse } from './auth/post.mail.response';
@@ -19,6 +22,7 @@ export { UserPostPasswordResponse } from './user/post.password.response';
 export { AuthPostRefreshResponse } from './auth/post.refresh.response';
 export { HotelAnyResponse } from './hotel/any.response';
 export { EntertainmentAnyResponse } from './entertainment/any.response';
+export { RestaurantAnyResponse } from './restaurant/any.response';
 
 export { UserPostRegistrationSwagger } from './user/post.registration.swagger';
 export { AuthPostMailSwagger } from './auth/post.mail.swagger';
@@ -27,3 +31,4 @@ export { UserPostPasswordSwagger } from './user/post.password.swagger';
 export { AuthPostRefreshSwagger } from './auth/post.refresh.swagger';
 export { HotelAnySwagger } from './hotel/any.swagger';
 export { EntertainmentAnySwagger } from './entertainment/any.swagger';
+export { RestaurantAnySwagger } from './restaurant/any.swagger';
