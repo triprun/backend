@@ -1,14 +1,12 @@
-require('dotenv').config();
-
 export const Config = {
-    pdb_host: 'postgres',
+    mdb_link: 'mongodb://127.0.0.1/mongotrip',
+    pdb_host: 'localhost',
     pdb_port: 5432,
-    pdb_username: process.env.POSTGRES_USER,
-    pdb_password: process.env.POSTGRES_PASSWORD,
-    pdb_name: process.env.POSTGRES_DB,
+    pdb_username: 'postgres',
+    pdb_password: 'postgres',
+    pdb_name: 'triprun',
     pdb_dialect: 'postgres',
-    mdb_link: 'mongodb://mongo/nest',
-    redis_host: 'redis',
+    redis_host: 'localhost',
     redis_port: 6379,
     salt_sha: 'ASDHjuhs7899sadhqSDHhkoashdjsklahDJSKLDHNKLJnkNd2jn2doJKDSPSJDPISAjdipj2ipjdijID',
     salt_sha_access: 'ASDJLH98SADH(SAUIDH&(ASDH@2uhd29PDSAuoihO@H!hSUHDSADUhASUDHASUDHsuadhDSHASDH(APASF',

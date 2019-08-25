@@ -7,13 +7,6 @@ import * as crypto from 'crypto';
 import {Config} from '../config';
 import moment = require('moment');
 import { RedisService } from 'nestjs-redis';
-import {
-    AuthPostMailInterface,
-    AuthResponsePostMailInterface,
-    AuthPostLogoutInterface,
-    AuthPostRefreshInterface,
-    AuthPostAccessInterface,
-} from '../interfaces/protocol';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +15,7 @@ export class AuthService {
     @Inject(Consts.passwords_rep) private readonly TPasswords: typeof Passwords;
 
     constructor(
-        private readonly redisService: RedisService
+        private readonly redisService: RedisService,
     ) { }
 
     async clearTokensIsRedis(userId: number): Promise<void> {
@@ -111,7 +104,7 @@ export class AuthService {
         return false;
     }
 
-    async generateTokens(uid: number): Promise<AuthResponsePostMailInterface> {
+    async generateTokens(uid: number): Promise<any> {
 
         const user = await this.TUsers.findOne({
             where: {
@@ -120,14 +113,14 @@ export class AuthService {
         });
 
         if ( user == null ) {
-            throw new HttpException('auth.service:generateTokens:0', 500);
+            throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
         }
 
         const dataAccess = {
             userId: user.id,
             expireAt: moment().unix() + Config.access_token_expire_at,
             token: crypto.createHash('sha256').update(
-                Config.salt_sha_access + moment() + moment().unix() + user.id + Math.random()
+                Config.salt_sha_access + moment() + moment().unix() + user.id + Math.random(),
             ).digest('hex'),
         };
 
@@ -137,7 +130,7 @@ export class AuthService {
             userId: user.id,
             expireAt: moment().unix() + Config.refresh_token_expire_at,
             token: crypto.createHash('sha256').update(
-                Config.salt_sha_refresh + moment() + moment().unix() + user.id + Math.random()
+                Config.salt_sha_refresh + moment() + moment().unix() + user.id + Math.random(),
             ).digest('hex'),
         };
 
@@ -154,21 +147,21 @@ export class AuthService {
 
     }
 
-    async access(body: AuthPostAccessInterface): Promise<object> {
+    async access(body): Promise<any> {
         if ( await this.checkAccessToken( body.accessToken ) === false ) {
             throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
         }
         return {};
     }
 
-    async logout(body: AuthPostLogoutInterface): Promise<object> {
+    async logout(query): Promise<any> {
 
-        if ( await this.checkAccessToken( body.accessToken ) === false ) {
+        if ( await this.checkAccessToken( query.accessToken ) === false ) {
             throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
         }
 
         let decoded = null;
-        jwt.verify(body.accessToken, Config.jwt_key_access, (e, d) => {
+        jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
             if ( d != null ) {
                 decoded = d;
             }
@@ -191,7 +184,7 @@ export class AuthService {
         throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
 
-    async mail(body: AuthPostMailInterface): Promise<AuthResponsePostMailInterface> {
+    async mail(body: any): Promise<any> {
 
         if ( body.email == null ) {
             throw new HttpException(Consts.ERROR_MAIL_PASSWORD, 400);
@@ -222,7 +215,7 @@ export class AuthService {
             throw new HttpException(Consts.ERROR_PASSWORD_NOT_ACTIVE, 400);
         }
 
-        /* пароль подошел */
+        // пароль подошел
         const res = await this.generateTokens(user.id);
 
         let dataAccess = null;
@@ -252,7 +245,7 @@ export class AuthService {
         return res;
     }
 
-    async refresh(body: AuthPostRefreshInterface): Promise<AuthResponsePostMailInterface> {
+    async refresh(body: any): Promise<any> {
 
         if ( await this.checkRefreshToken( body.refreshToken ) === false ) {
             throw new HttpException(Consts.ERROR_REFRESH_TOKEN, 401);

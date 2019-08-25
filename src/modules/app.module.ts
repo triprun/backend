@@ -1,24 +1,27 @@
 import { Module } from '@nestjs/common';
+import { Config } from '../config';
+import { RedisModule } from 'nestjs-redis';
 import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
-import { RestaurantModule } from './restaurant.module';
-import { UploadModule } from './upload.module';
-import { RedisModule } from 'nestjs-redis';
-import { Config } from '../config';
+import { HotelModule } from './hotel.module';
+import { CommonPlaceModule } from './common.place.module';
+import { EntertainmentModule } from './entertainment.module';
+import {CommonPlaceService} from '../services/common.place.service';
 
 @Module({
   imports: [
       RedisModule.register({
-        host: Config.redis_host,
-        port: Config.redis_port,
+          host: Config.redis_host,
+          port: Config.redis_port,
       }),
+      CommonPlaceModule,
+      EntertainmentModule,
       AuthModule,
       UserModule,
-      UploadModule,
-      RestaurantModule,
+      HotelModule,
+
   ],
   controllers: [],
   providers: [],
-  exports: [],
 })
 export class AppModule {}

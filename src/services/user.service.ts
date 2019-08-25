@@ -8,15 +8,18 @@ import { Config } from '../config';
 import moment = require('moment');
 import { RedisService } from 'nestjs-redis';
 import {
-    UserPostRegistrationInterface,
-    UserPostPasswordInterface,
-    UserGetProfileInterface,
-    UserResponseGetProfileInterface,
-} from '../interfaces/protocol';
-import { AuthService } from './auth.service';
+    UserPostRegistrationDto,
+    UserPostRegistrationResponse,
+    UserGetProfileDto,
+    UserGetProfileResponse,
+    UserPostMailDto,
+    UserPostPasswordDto,
+    UserGetLogoutDto,
+    UserPostAccessDto,
+    UserPostRefreshDto,
+} from '../protocol';
 
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserService {
@@ -29,7 +32,7 @@ export class UserService {
         private readonly authService: AuthService,
     ) { }
 
-    async register(body: UserPostRegistrationInterface): Promise<object> {
+    async register(body: UserPostRegistrationDto, query): Promise<any> {
 
         if ( body.email == null ) {
             throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
@@ -91,30 +94,42 @@ export class UserService {
            isActive: 1,
         });
 
+        return {
+            userId: user.id,
+        };
+
+    }
+
+    async login(body: UserPostMailDto): Promise<any> {
+
         const res = await this.authService.mail({
             email: body.email,
             password: body.password,
         });
 
-        return res;
+        const profile = await this.profile({
+            userName: null,
+            accessToken: res.accessToken,
+            userId: null,
+        });
 
+        return {
+            ...res,
+            profile,
+        };
     }
 
-    async login(body: UserPostRegistrationInterface): Promise<object> {
-      const res = await this.authService.mail({
-          email: body.email,
-          password: body.password,
-      });
+    async logout(query: UserGetLogoutDto): Promise<any> {
 
-      const profile = await this.profile({ accessToken: res.accessToken });
+        if ( await this.authService.checkAccessToken(query.accessToken) === false ) {
+            throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+        }
+        await this.authService.logout(query);
 
-      return {
-        ...res,
-        profile
-      };
+        return {};
     }
 
-    async password(body: UserPostPasswordInterface): Promise<object> {
+    async password(body: UserPostPasswordDto, query): Promise<any> {
 
         if ( body.newPassword == null ) {
             throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
@@ -124,12 +139,12 @@ export class UserService {
             throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
         }
 
-        if ( await this.authService.checkAccessToken(body.accessToken) === false ) {
+        if ( await this.authService.checkAccessToken(query.accessToken) === false ) {
             throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
         }
 
         let decoded = null;
-        jwt.verify(body.accessToken, Config.jwt_key_access, (e, d) => {
+        jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
             if ( d != null ) {
                 decoded = d;
             }
@@ -176,97 +191,96 @@ export class UserService {
             isActive: 1,
         });
 
+        const user = await this.profile(query);
+        await this.logout(query);
+        const res = await this.login({
+            email: user.email,
+            password: body.newPassword,
+        });
+
+        return res;
+    }
+
+    async profile(query: UserGetProfileDto): Promise<UserGetProfileResponse> {
+
+        if ( query.userId == null && query.userName == null && query.accessToken == null ) {
+            throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
+        }
+
+        let userId = query.userId;
+        let decoded = null;
+
+        if ( query.userId == null && query.userName == null ) {
+
+            if ( await this.authService.checkAccessToken( query.accessToken ) === false ) {
+                throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+            }
+
+            jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
+                if ( d != null ) {
+                    decoded = d;
+                }
+            });
+
+            userId = decoded.userId;
+        }
+
+        if ( query.userId == null ) {
+
+            if ( query.userName != null ) {
+
+                const userTmp = await this.TUsers.findOne({
+                    where: {
+                        userName: query.userName,
+                    },
+                });
+                if (userTmp != null) {
+                    userId = userTmp.id;
+                }
+
+            }
+
+        }
+
+        if ( userId == null ) {
+            throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
+        }
+
+        const user = await this.TUsers.findOne({
+            where: {
+                id: userId,
+            },
+        });
+        if ( user == null ) {
+            throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
+        }
+
+        return {
+            id: user.id,
+            email: user.email,
+            userName: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            sex: user.sex,
+            verified: user.verified,
+           // bio: user.bio,
+           // avatar: user.avatar,
+           // joined: user.createdAt,
+           // origin: user.origin,
+        };
+
+    }
+
+    async access(body: UserPostAccessDto, query): Promise<any> {
+        if ( await this.authService.checkAccessToken( query.accessToken ) === false ) {
+            throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+        }
         return {};
     }
 
-    async foreignProfile(body: UserGetProfileInterface): Promise<UserResponseGetProfileInterface> {
+    async refresh(body: UserPostRefreshDto): Promise<any> {
 
-      let user = null;
-
-      if ( body.id === null ) {
-        throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
-      }
-
-      if(body.id[0] !== '@') {
-        user = await this.TUsers.findOne({
-          where: {
-            id: Number.parseInt(body.id),
-          },
-        });
-      } else {
-        user = await this.TUsers.findOne({
-          where: {
-            userName: body.id.slice(1),
-          },
-        });
-      }
-
-      if ( user === null ) {
-        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
-      }
-
-      return {
-        id: user.id,
-        userName: user.userName,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        sex: user.sex,
-        verified: user.verified,
-        bio: user.bio,
-        avatar: user.avatar,
-        joined: user.createdAt,
-        origin: user.origin
-      };
-
-    }
-
-    async profile(body: UserPostProfileInterface): Promise<UserResponseGetProfileInterface> {
-
-      if ( body.accessToken === null ) {
-        throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
-      }
-
-      let userId = body.userId;
-      let decoded = null;
-
-      if ( await this.authService.checkAccessToken( body.accessToken ) === false ) {
-        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-      }
-
-      jwt.verify(body.accessToken, Config.jwt_key_access, (e, d) => {
-        if ( d != null ) {
-          decoded = d;
-        }
-      });
-
-      userId = decoded.userId;
-
-      if ( userId === null ) {
-        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
-      }
-
-      const user = await this.TUsers.findOne({
-        where: {
-          id: userId,
-        },
-      });
-
-      if ( user === null ) {
-        throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
-      }
-
-      return {
-        id: user.id,
-        userName: user.userName,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        sex: user.sex,
-        verified: user.verified,
-        bio: user.bio,
-        avatar: user.avatar,
-        joined: user.createdAt,
-        origin: user.origin
-      };
+        return await this.authService.refresh(body);
 
     }
 

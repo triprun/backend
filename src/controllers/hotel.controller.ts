@@ -1,39 +1,46 @@
-import { Controller, Get, Post, Body, HttpCode} from '@nestjs/common';
-import { HotelService } from '../services/hotel.service';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import { CommonPlaceService } from '../services/common.place.service';
+import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
+import {
+    HotelAnyResponse,
+    HotelAnySwagger,
+    HotelPostCreateDto,
+    HotelGetSearchDto,
+    HotelPostEditDto,
+} from '../protocol';
 
+@ApiBearerAuth()
+@ApiUseTags('hotel')
 @Controller('hotel')
 export class HotelController {
 
-  constructor(private readonly hotelService: HotelService) {}
+    constructor(private readonly commonPlaceService: CommonPlaceService) {   }
 
-  @Post('create')
-  @HttpCode(200)
-  create( @Body() body ) {
-    return this.hotelService.create(body);
-  }
+    @ApiOperation({ title: 'Создание отеля' })
+    @ApiResponse({ status: 200, type: HotelAnySwagger })
+    @Post('create')
+    @HttpCode(200)
+    async create( @Body() body: HotelPostCreateDto, @Query() query): Promise<HotelAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('hotel');
+        return this.commonPlaceService.create(body, query);
+    }
 
-  @Get('search')
-  @HttpCode(200)
-  findAll( @Body() body ) {
-    return this.hotelService.findAll(body);
-  }
+    @ApiOperation({ title: 'Список отелей' })
+    @ApiResponse({ status: 200, type: HotelAnySwagger, isArray: true })
+    @Get('search')
+    @HttpCode(200)
+    async search( @Query() query: HotelGetSearchDto): Promise<HotelAnyResponse[]> {
+        await this.commonPlaceService.enterCommonPlace('hotel');
+        return this.commonPlaceService.search(query);
+    }
 
-  // @Post('filter')
-  // @HttpCode(200)
-  // findByCriteria( @Body() body ) {
-  //   return this.hotelService.findByCriteria(body);
-  // }
-
-  @Get('fetch')
-  @HttpCode(200)
-  find( @Body() body ) {
-    return this.hotelService.find(body);
-  }
-
-  @Post('edit')
-  @HttpCode(200)
-  edit( @Body() body ) {
-    return this.hotelService.edit(body);
-  }
+    @ApiOperation({ title: 'Изменение отеля' })
+    @ApiResponse({ status: 200, type: HotelAnySwagger })
+    @Post('edit')
+    @HttpCode(200)
+    async edit( @Body() body: HotelPostEditDto, @Query() query): Promise<HotelAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('hotel');
+        return this.commonPlaceService.edit(body, query);
+    }
 
 }

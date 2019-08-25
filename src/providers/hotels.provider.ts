@@ -1,5 +1,5 @@
 import { Connection } from 'mongoose';
-import { HotelSchema } from '../schemas/hotels.schema';
+import { HotelSchema } from '../schemas/hotel.schema';
 import { Consts } from '../consts';
 
 export const hotelsProviders = [
