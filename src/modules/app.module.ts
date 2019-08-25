@@ -3,10 +3,12 @@ import { Config } from '../config';
 import { RedisModule } from 'nestjs-redis';
 import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
+import { SightModule } from './sight.module';
 import { HotelModule } from './hotel.module';
 import { CommonPlaceModule } from './common.place.module';
 import { EntertainmentModule } from './entertainment.module';
-import {RestaurantModule} from './restaurant.module';
+import { RestaurantModule } from './restaurant.module';
+import { ConcertModule } from './concert.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import {RestaurantModule} from './restaurant.module';
       UserModule,
       HotelModule,
       RestaurantModule,
+      SightModule,
+      ConcertModule,
   ],
   controllers: [],
   providers: [],
