@@ -26,13 +26,13 @@ export class Users extends Model<Users> {
     @Column
     sex: number;
 
-    /*@Column
+    @Column
     bio: string;
 
     @Column
     avatar: string;
 
     @Column
-    origin: string;*/
+    origin: string;
 
 }

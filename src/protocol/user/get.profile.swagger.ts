@@ -24,6 +24,15 @@ export class UserGetProfileSwagger {
     sex: number;
 
     @ApiModelProperty({ example: '', description: '' })
-    bdate?: number;
+    bio: string | null;
+
+    @ApiModelProperty({ example: '', description: '' })
+    avatar: string | null;
+
+    @ApiModelProperty({ example: '', description: '' })
+    joined: string;
+
+    @ApiModelProperty({ example: '', description: '' })
+    origin: string | null;
 
 }

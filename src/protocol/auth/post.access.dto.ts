@@ -1,3 +1,3 @@
-export class UserPostAccessDto {
+export class AuthPostAccessDto {
     readonly accessToken: string;
 }

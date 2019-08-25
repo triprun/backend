@@ -1,6 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
+import { UserGetProfileSwagger } from '../user/get.profile.swagger';
 
-export class UserPostRefreshSwagger {
+export class AuthPostMailSwagger {
 
     @ApiModelProperty({ example: '', description: '' })
     accessToken: string;
@@ -13,5 +14,8 @@ export class UserPostRefreshSwagger {
 
     @ApiModelProperty({ example: '', description: '' })
     refreshTokenExpireAt: number;
+
+    @ApiModelProperty({ example: '', description: '' })
+    profile: UserGetProfileSwagger;
 
 }

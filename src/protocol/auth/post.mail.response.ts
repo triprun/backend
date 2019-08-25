@@ -1,6 +1,6 @@
-import {UserGetProfileResponse} from './get.profile.response';
+import {UserGetProfileResponse} from '../user/get.profile.response';
 
-export interface UserPostMailResponse {
+export interface AuthPostMailResponse {
     accessToken: string;
     refreshToken: string;
     accessTokenExpireAt: number;

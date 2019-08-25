@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-export class UserPostRefreshDto {
+export class AuthPostRefreshDto {
     @ApiModelProperty({
         description: 'RefreshToken',
         required: true,

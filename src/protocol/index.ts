@@ -1,10 +1,10 @@
 export { UserPostRegistrationDto } from './user/post.registration.dto';
-export { UserPostMailDto } from './user/post.mail.dto';
+export { AuthPostMailDto } from './auth/post.mail.dto';
 export { UserGetProfileDto } from './user/get.profile.dto';
 export { UserPostPasswordDto } from './user/post.password.dto.js';
-export { UserGetLogoutDto } from './user/get.logout.dto';
-export { UserPostAccessDto } from './user/post.access.dto';
-export { UserPostRefreshDto } from './user/post.refresh.dto';
+export { AuthGetLogoutDto } from './auth/get.logout.dto';
+export { AuthPostAccessDto } from './auth/post.access.dto';
+export { AuthPostRefreshDto } from './auth/post.refresh.dto';
 export { HotelPostCreateDto } from './hotel/post.create.dto';
 export { HotelGetSearchDto } from './hotel/get.search.dto';
 export { HotelPostEditDto } from './hotel/post.edit.dto';
@@ -13,17 +13,17 @@ export { EntertainmentPostCreateDto } from './entertainment/post.create.dto';
 export { EntertainmentGetSearchDto } from './entertainment/get.search.dto';
 
 export { UserPostRegistrationResponse } from './user/post.registration.response';
-export { UserPostMailResponse } from './user/post.mail.response';
+export { AuthPostMailResponse } from './auth/post.mail.response';
 export { UserGetProfileResponse } from './user/get.profile.response';
 export { UserPostPasswordResponse } from './user/post.password.response';
-export { UserPostRefreshResponse } from './user/post.refresh.response';
+export { AuthPostRefreshResponse } from './auth/post.refresh.response';
 export { HotelAnyResponse } from './hotel/any.response';
 export { EntertainmentAnyResponse } from './entertainment/any.response';
 
 export { UserPostRegistrationSwagger } from './user/post.registration.swagger';
-export { UserPostMailSwagger } from './user/post.mail.swagger';
+export { AuthPostMailSwagger } from './auth/post.mail.swagger';
 export { UserGetProfileSwagger } from './user/get.profile.swagger';
 export { UserPostPasswordSwagger } from './user/post.password.swagger';
-export { UserPostRefreshSwagger } from './user/post.refresh.swagger';
+export { AuthPostRefreshSwagger } from './auth/post.refresh.swagger';
 export { HotelAnySwagger } from './hotel/any.swagger';
 export { EntertainmentAnySwagger } from './entertainment/any.swagger';

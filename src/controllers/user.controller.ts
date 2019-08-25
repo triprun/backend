@@ -8,17 +8,9 @@ import {
     UserGetProfileDto,
     UserGetProfileResponse,
     UserGetProfileSwagger,
-    UserPostMailDto,
-    UserPostMailResponse,
-    UserPostMailSwagger,
     UserPostPasswordDto,
     UserPostPasswordResponse,
     UserPostPasswordSwagger,
-    UserGetLogoutDto,
-    UserPostAccessDto,
-    UserPostRefreshDto,
-    UserPostRefreshSwagger,
-    UserPostRefreshResponse,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -34,17 +26,6 @@ export class UserController {
     @HttpCode(200)
     async register( @Body() body: UserPostRegistrationDto, @Query() query): Promise<UserPostRegistrationResponse> {
         await this.userService.register(body, query);
-        const res = await this.userService.login(body);
-        return {
-            ...res,
-        };
-    }
-
-    @ApiOperation({ title: 'Авторизация пользователя по email' })
-    @ApiResponse({ status: 200, type: UserPostMailSwagger })
-    @Post('mail')
-    @HttpCode(200)
-    async mail( @Body() body: UserPostMailDto ): Promise<UserPostMailResponse> {
         const res = await this.userService.login(body);
         return {
             ...res,
@@ -67,28 +48,5 @@ export class UserController {
         return this.userService.profile(query);
     }
 
-    @ApiOperation({ title: 'Проверка токена', description: 'Вернет пустой json при успехе' })
-    @ApiResponse({ status: 200, type: {} })
-    @Post('access')
-    @HttpCode(200)
-    async access(@Body() body: UserPostAccessDto, @Query() query): Promise<any> {
-        return this.userService.access(body , query);
-    }
-
-    @ApiOperation({ title: 'Обновление access токена', description: '' })
-    @ApiResponse({ status: 200, type: UserPostRefreshSwagger })
-    @Post('refresh')
-    @HttpCode(200)
-    async refresh( @Body() query: UserPostRefreshDto): Promise<UserPostRefreshResponse> {
-        return this.userService.refresh( query );
-    }
-
-    @ApiOperation({ title: 'Выход из системы', description: 'Удалить текущий ключ. Вернет пустой json при успехе' })
-    @ApiResponse({ status: 200, type: {} })
-    @Get('logout')
-    @HttpCode(200)
-    async logout( @Query() query: UserGetLogoutDto): Promise<any> {
-        return this.userService.logout( query );
-    }
 
 }

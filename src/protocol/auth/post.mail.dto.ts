@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-export class UserPostMailDto {
+export class AuthPostMailDto {
     @ApiModelProperty({
         description: 'E-mail',
         required: true,

@@ -3,7 +3,7 @@
 /node_modules
 
 # configs
-/db/config
+/db/config/config.json
 .env
 
 # DBs
