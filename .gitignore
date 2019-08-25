@@ -4,6 +4,7 @@
 
 # configs
 /db/config/config.json
+/src/config.ts
 .env
 
 # DBs
