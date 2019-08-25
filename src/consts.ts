@@ -9,6 +9,7 @@ export const Consts = {
     sights_rep: 'SIGHTS_REPOSITORY',
     concerts_rep: 'CONSERTS_REPOSITORY',
     relax_rep: 'RELAX_REPOSITORY',
+    shopping_rep: 'SHOPPING_REPOSITORY',
     ERROR_REQUIRED_FIELDS: 'Not all required fields',
     ERROR_ACCESS_TOKEN: 'Not valid access token',
     ERROR_REFRESH_TOKEN: 'Not valid refresh token',

@@ -8,6 +8,7 @@ import { IRestaurant } from '../schemas/restaurant.interface';
 import { ISight } from '../schemas/sight.interface';
 import { IConcert } from '../schemas/concert.interface';
 import { IRelax } from '../schemas/relax.interface';
+import { IShopping } from '../schemas/shopping.interface';
 
 import { AuthService } from './auth.service';
 
@@ -29,6 +30,8 @@ export class CommonPlaceService {
         private readonly concertModel: Model<IConcert>,
         @Inject(Consts.relax_rep)
         private readonly relaxModel: Model<IRelax>,
+        @Inject(Consts.shopping_rep)
+        private readonly shoppingModel: Model<IShopping>,
         private readonly redisService: RedisService,
         private readonly authService: AuthService,
     ) {}
@@ -46,6 +49,8 @@ export class CommonPlaceService {
             this.commonPlace = this.concertModel;
         } else if ( value === 'relax' ) {
             this.commonPlace = this.relaxModel;
+        }  else if ( value === 'shopping' ) {
+            this.commonPlace = this.shoppingModel;
         } else {
             this.commonPlace = null;
         }

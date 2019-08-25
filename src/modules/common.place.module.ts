@@ -7,6 +7,7 @@ import { restaurantsProviders } from '../providers/restaurant.provider';
 import { sightsProviders } from '../providers/sight.provider';
 import { concertsProviders } from '../providers/concert.provider';
 import { relaxProviders } from '../providers/relax.provider';
+import { shoppingProviders } from '../providers/shopping.provider';
 import { AuthModule } from './auth.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { AuthModule } from './auth.module';
         ...sightsProviders,
         ...concertsProviders,
         ...relaxProviders,
+        ...shoppingProviders,
     ],
     imports: [DatabaseModule, AuthModule],
     exports: [CommonPlaceService],

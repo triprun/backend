@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface ISight extends Document {
-    restId: string;
+    id: string;
     freeprice: boolean;
     avgprice: number;
     avgpricechild: number;

@@ -1,8 +1,8 @@
 import { Document } from 'mongoose';
 
 export interface IConcert extends Document {
-    hotelId: string;
-    naem: string;
+    id: string;
+    name: string;
     freeprice: boolean;
     avgprice: number;
     avgpricechild: number;

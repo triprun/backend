@@ -10,6 +10,7 @@ import { EntertainmentModule } from './entertainment.module';
 import { RestaurantModule } from './restaurant.module';
 import { ConcertModule } from './concert.module';
 import { RelaxModule } from './relax.module';
+import { ShoppingModule } from './shopping.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RelaxModule } from './relax.module';
       SightModule,
       ConcertModule,
       RelaxModule,
+      ShoppingModule,
   ],
   controllers: [],
   providers: [],
