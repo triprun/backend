@@ -38,6 +38,10 @@ export {ImpressionPostEditDto} from './impression/post.edit.dto';
 export {ImpressionPostCreateDto} from './impression/post.create.dto';
 export {ImpressionGetSearchDto} from './impression/get.search.dto';
 export {ImpressionGetFetchDto} from './impression/get.fetch.dto';
+export {TransportPostEditDto} from './transport/post.edit.dto';
+export {TransportPostCreateDto} from './transport/post.create.dto';
+export {TransportGetSearchDto} from './transport/get.search.dto';
+export {TransportGetFetchDto} from './transport/get.fetch.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -52,6 +56,7 @@ export {ConcertAnyResponse} from './concert/any.response';
 export {RelaxAnyResponse} from './relax/any.response';
 export {ShoppingAnyResponse} from './shopping/any.response';
 export {ImpressionAnyResponse} from './impression/any.response';
+export {TransportAnyResponse} from './transport/any.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -66,3 +71,4 @@ export {ConcertAnySwagger} from './concert/any.swagger';
 export {RelaxAnySwagger} from './relax/any.swagger';
 export {ShoppingAnySwagger} from './shopping/any.swagger';
 export {ImpressionAnySwagger} from './impression/any.swagger';
+export {TransportAnySwagger} from './transport/any.swagger';
