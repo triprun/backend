@@ -9,6 +9,7 @@ import {concertsProviders} from '../providers/concert.provider';
 import {relaxProviders} from '../providers/relax.provider';
 import {shoppingProviders} from '../providers/shopping.provider';
 import {AuthModule} from './auth.module';
+import {UserModule} from './user.module';
 
 @Module({
   controllers: [],
@@ -22,7 +23,7 @@ import {AuthModule} from './auth.module';
     ...relaxProviders,
     ...shoppingProviders,
   ],
-  imports: [DatabaseModule, AuthModule],
+  imports: [DatabaseModule, AuthModule, UserModule],
   exports: [CommonPlaceService],
 })
 export class CommonPlaceModule {

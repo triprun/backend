@@ -11,6 +11,7 @@ import {
   UserPostPasswordDto,
   UserPostPasswordResponse,
   UserPostPasswordSwagger,
+  UserPostRoleDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -37,7 +38,7 @@ export class UserController {
   @ApiResponse({status: 200, type: UserPostPasswordSwagger})
   @Post('password')
   @HttpCode(200)
-  password(@Body() body: UserPostPasswordDto, @Query() query): Promise<UserPostPasswordResponse> {
+  async password(@Body() body: UserPostPasswordDto, @Query() query): Promise<UserPostPasswordResponse> {
     return this.userService.password(body, query);
   }
 
@@ -52,5 +53,12 @@ export class UserController {
     return this.userService.profile(query);
   }
 
+  @ApiOperation({title: 'Установка роли', description: 'Принимает только значение 0-user,1-moderator,2-root'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('role')
+  @HttpCode(200)
+  async role(@Body() body: UserPostRoleDto, @Query() query): Promise<any> {
+    return this.userService.setRole(body, query);
+  }
 
 }

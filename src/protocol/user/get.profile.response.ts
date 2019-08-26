@@ -10,4 +10,5 @@ export interface UserGetProfileResponse {
   avatar: string | null;
   joined: string;
   origin: string | null;
+  role: number;
 }
