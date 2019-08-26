@@ -35,4 +35,7 @@ export class Users extends Model<Users> {
   @Column
   origin: string;
 
+  @Column
+  role: number;
+
 }

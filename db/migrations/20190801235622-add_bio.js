@@ -8,7 +8,10 @@ module.exports = {
     );
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Users');
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.removeColumn(
+        'Users',
+        'bio',
+    );
   }
 };

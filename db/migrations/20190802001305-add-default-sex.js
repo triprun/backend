@@ -10,5 +10,11 @@ module.exports = {
         defaultValue: -1
       }
     );
-  }
+  },
+    down: function(queryInterface, Sequelize) {
+        return queryInterface.removeColumn(
+            'Users',
+            'sex',
+        );
+    }
 };

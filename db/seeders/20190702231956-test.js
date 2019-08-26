@@ -31,7 +31,11 @@ module.exports = {
         sex: randomInt(0, 1),
         createdAt: formatted,
         updatedAt: formatted,
+        role: 0,
       };
+      if ( i === 1) {
+        tmp.role = 2;
+      }
       dataUsers.push(tmp);
 
       var tmp2 = {
@@ -55,6 +59,7 @@ module.exports = {
         sex: randomInt(0, 1),
         createdAt: formatted,
         updatedAt: formatted,
+        role: 0,
       };
       dataUsers.push(tmp);
     }
