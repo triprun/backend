@@ -1,14 +1,15 @@
-import {Injectable, Inject, HttpException} from '@nestjs/common';
-import {Model} from 'mongoose';
-import {Consts} from '../consts';
-import {RedisService} from 'nestjs-redis';
-import {IHotel} from '../schemas/hotel.interface';
-import {IEntertainment} from '../schemas/entertainment.interface';
-import {IRestaurant} from '../schemas/restaurant.interface';
-import {ISight} from '../schemas/sight.interface';
-import {IConcert} from '../schemas/concert.interface';
-import {IRelax} from '../schemas/relax.interface';
-import {IShopping} from '../schemas/shopping.interface';
+import { Injectable, Inject, HttpException} from '@nestjs/common';
+import { Model } from 'mongoose';
+import { Consts } from '../consts';
+import { RedisService } from 'nestjs-redis';
+import { UserService } from './user.service';
+import { IHotel } from '../schemas/hotel.interface';
+import { IEntertainment } from '../schemas/entertainment.interface';
+import { IRestaurant } from '../schemas/restaurant.interface';
+import { ISight } from '../schemas/sight.interface';
+import { IConcert } from '../schemas/concert.interface';
+import { IRelax } from '../schemas/relax.interface';
+import { IShopping } from '../schemas/shopping.interface';
 
 import {AuthService} from './auth.service';
 
@@ -34,6 +35,7 @@ export class CommonPlaceService {
     private readonly shoppingModel: Model<IShopping>,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {
   }
 
@@ -57,10 +59,13 @@ export class CommonPlaceService {
     }
   }
 
-  // todo: guard access token admin
   async create(body, query): Promise<any> {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    if (user.role === 0) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     const common = new this.commonPlace({...body, verified: false});
     common.id = common._id;
@@ -81,10 +86,13 @@ export class CommonPlaceService {
     return await qu.limit(Number(query.limit)).skip(Number(query.skip)).exec();
   }
 
-  // todo: guard access token admin
   async edit(body, query): Promise<any> {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    if (user.role === 0) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     return await this.commonPlace.findOneAndUpdate({_id: body.id}, {verified: true}, {upsert: true, new: true});
   }

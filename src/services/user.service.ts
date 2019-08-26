@@ -202,7 +202,32 @@ export class UserService {
     return res;
   }
 
-  async profile(query: UserGetProfileDto): Promise<UserGetProfileResponse> {
+  async setRole(body, query): Promise<any> {
+
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.profile({accessToken: query.accessToken});
+    if (user.role === 0) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+    }
+
+    if ( body.role < 0 || body.role > 2 ) {
+      throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
+    }
+
+    await this.TUsers.update({
+      role: body.role,
+    }, {
+      where: {
+        id: body.userId,
+      },
+    });
+
+    return {};
+  }
+
+  async profile(query): Promise<any> {
 
     if (query.userId == null && query.userName == null && query.accessToken == null) {
       throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
@@ -268,6 +293,7 @@ export class UserService {
       avatar: user.avatar,
       joined: user.createdAt,
       origin: user.origin,
+      role: user.role,
     };
 
   }
