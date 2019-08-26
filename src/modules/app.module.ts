@@ -11,6 +11,7 @@ import {RestaurantModule} from './restaurant.module';
 import {ConcertModule} from './concert.module';
 import {RelaxModule} from './relax.module';
 import {ShoppingModule} from './shopping.module';
+import {TransportModule} from './transport.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import {ShoppingModule} from './shopping.module';
     ConcertModule,
     RelaxModule,
     ShoppingModule,
+    TransportModule,
   ],
   controllers: [],
   providers: [],
