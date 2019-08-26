@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { RelaxController } from '../controllers/relax.controller';
-import { relaxProviders } from '../providers/relax.provider';
-import { DatabaseModule } from '../modules/database.module';
-import { AuthModule } from './auth.module';
-import { CommonPlaceModule } from './common.place.module';
+import {Module} from '@nestjs/common';
+import {RelaxController} from '../controllers/relax.controller';
+import {relaxProviders} from '../providers/relax.provider';
+import {DatabaseModule} from '../modules/database.module';
+import {AuthModule} from './auth.module';
+import {CommonPlaceModule} from './common.place.module';
 
 @Module({
   controllers: [RelaxController],
@@ -12,4 +12,5 @@ import { CommonPlaceModule } from './common.place.module';
     ...relaxProviders,
   ],
 })
-export class RelaxModule {}
+export class RelaxModule {
+}

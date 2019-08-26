@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { RelaxSchema } from '../schemas/relax.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {RelaxSchema} from '../schemas/relax.schema';
+import {Consts} from '../consts';
 
 export const relaxProviders = [
   {

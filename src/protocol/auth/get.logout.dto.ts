@@ -1,3 +1,3 @@
 export class AuthGetLogoutDto {
-    readonly accessToken: string;
+  readonly accessToken: string;
 }

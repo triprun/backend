@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { EntertainmentSchema } from '../schemas/entertainment.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {EntertainmentSchema} from '../schemas/entertainment.schema';
+import {Consts} from '../consts';
 
 export const etnertainmentsProviders = [
   {

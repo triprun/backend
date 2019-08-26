@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-import { commonPlace } from './common.place.schema';
+import {commonPlace} from './common.place.schema';
 
 export const EntertainmentSchema = new mongoose.Schema({
   ...commonPlace,

@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { ShoppingSchema } from '../schemas/shopping.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {ShoppingSchema} from '../schemas/shopping.schema';
+import {Consts} from '../consts';
 
 export const shoppingProviders = [
   {

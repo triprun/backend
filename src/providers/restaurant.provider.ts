@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { RestaurantSchema } from '../schemas/restaurant.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {RestaurantSchema} from '../schemas/restaurant.schema';
+import {Consts} from '../consts';
 
 export const restaurantsProviders = [
   {

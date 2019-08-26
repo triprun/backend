@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { ConcertSchema } from '../schemas/concert.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {ConcertSchema} from '../schemas/concert.schema';
+import {Consts} from '../consts';
 
 export const concertsProviders = [
   {

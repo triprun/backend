@@ -1,6 +1,6 @@
-import { Connection } from 'mongoose';
-import { SightSchema } from '../schemas/sight.schema';
-import { Consts } from '../consts';
+import {Connection} from 'mongoose';
+import {SightSchema} from '../schemas/sight.schema';
+import {Consts} from '../consts';
 
 export const sightsProviders = [
   {

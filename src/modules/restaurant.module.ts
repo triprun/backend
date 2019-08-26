@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { RestaurantController } from '../controllers/restaurant.controller';
-import { restaurantsProviders } from '../providers/restaurant.provider';
-import { DatabaseModule } from '../modules/database.module';
-import { AuthModule } from './auth.module';
-import { CommonPlaceModule } from './common.place.module';
+import {Module} from '@nestjs/common';
+import {RestaurantController} from '../controllers/restaurant.controller';
+import {restaurantsProviders} from '../providers/restaurant.provider';
+import {DatabaseModule} from '../modules/database.module';
+import {AuthModule} from './auth.module';
+import {CommonPlaceModule} from './common.place.module';
 
 @Module({
   controllers: [RestaurantController],
@@ -12,4 +12,5 @@ import { CommonPlaceModule } from './common.place.module';
     ...restaurantsProviders,
   ],
 })
-export class RestaurantModule {}
+export class RestaurantModule {
+}

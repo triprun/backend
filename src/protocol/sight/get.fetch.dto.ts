@@ -1,10 +1,10 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import {ApiModelProperty} from '@nestjs/swagger';
 
 export class SightGetFetchDto {
 
-    @ApiModelProperty()
-    readonly id: string;
+  @ApiModelProperty()
+  readonly id: string;
 
-    readonly accessToken: string;
+  readonly accessToken: string;
 
 }
