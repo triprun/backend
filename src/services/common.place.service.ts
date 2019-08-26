@@ -66,6 +66,10 @@ export class CommonPlaceService {
         return await common.save();
     }
 
+    async findById(id): Promise<any> {
+        return await this.commonPlace.findById(id).exec();
+    }
+
     async search(query): Promise<any[]> {
         let qu;
         if ( query.name == null ) {

@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
 import { CommonPlaceService } from '../services/common.place.service';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
 import {
@@ -7,6 +7,7 @@ import {
     RelaxPostCreateDto,
     RelaxGetSearchDto,
     RelaxPostEditDto,
+    RelaxGetFetchDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -23,6 +24,15 @@ export class RelaxController {
     async create( @Body() body: RelaxPostCreateDto, @Query() query): Promise<RelaxAnyResponse> {
         await this.commonPlaceService.enterCommonPlace('relax');
         return this.commonPlaceService.create(body, query);
+    }
+
+    @ApiOperation({ title: 'Место для отдыха по id' })
+    @ApiResponse({ status: 200, type: RelaxAnySwagger })
+    @Get('fetch/:id')
+    @HttpCode(200)
+    async fetch( @Param() params: RelaxGetFetchDto, @Query() query): Promise<RelaxAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('relax');
+        return this.commonPlaceService.findById(params.id);
     }
 
     @ApiOperation({ title: 'Список мест для отдыха' })

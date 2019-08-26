@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
 import { CommonPlaceService } from '../services/common.place.service';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
 import {
@@ -7,6 +7,7 @@ import {
     HotelPostCreateDto,
     HotelGetSearchDto,
     HotelPostEditDto,
+    HotelGetFetchDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -23,6 +24,15 @@ export class HotelController {
     async create( @Body() body: HotelPostCreateDto, @Query() query): Promise<HotelAnyResponse> {
         await this.commonPlaceService.enterCommonPlace('hotel');
         return this.commonPlaceService.create(body, query);
+    }
+
+    @ApiOperation({ title: 'Отель по id' })
+    @ApiResponse({ status: 200, type: HotelAnySwagger })
+    @Get('fetch/:id')
+    @HttpCode(200)
+    async fetch( @Param() params: HotelGetFetchDto, @Query() query): Promise<HotelAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('hotel');
+        return this.commonPlaceService.findById(params.id);
     }
 
     @ApiOperation({ title: 'Список отелей' })

@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
 import { CommonPlaceService } from '../services/common.place.service';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
 import {
@@ -7,6 +7,7 @@ import {
     ConcertPostCreateDto,
     ConcertGetSearchDto,
     ConcertPostEditDto,
+    ConcertGetFetchDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -23,6 +24,15 @@ export class ConcertController {
     async create( @Body() body: ConcertPostCreateDto, @Query() query): Promise<ConcertAnyResponse> {
         await this.commonPlaceService.enterCommonPlace('concert');
         return this.commonPlaceService.create(body, query);
+    }
+
+    @ApiOperation({ title: 'Концерт по id' })
+    @ApiResponse({ status: 200, type: ConcertAnySwagger })
+    @Get('fetch/:id')
+    @HttpCode(200)
+    async fetch( @Param() params: ConcertGetFetchDto, @Query() query): Promise<ConcertAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('concert');
+        return this.commonPlaceService.findById(params.id);
     }
 
     @ApiOperation({ title: 'Список концертов' })

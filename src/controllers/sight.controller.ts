@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
 import { CommonPlaceService } from '../services/common.place.service';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
 import {
@@ -7,6 +7,7 @@ import {
     SightPostCreateDto,
     SightGetSearchDto,
     SightPostEditDto,
+    SightGetFetchDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -23,6 +24,15 @@ export class SightController {
     async create( @Body() body: SightPostCreateDto, @Query() query): Promise<SightAnyResponse> {
         await this.commonPlaceService.enterCommonPlace('sight');
         return this.commonPlaceService.create(body, query);
+    }
+
+    @ApiOperation({ title: 'Достопримечательность по id' })
+    @ApiResponse({ status: 200, type: SightPostCreateDto })
+    @Get('fetch/:id')
+    @HttpCode(200)
+    async fetch( @Param() params: SightGetFetchDto, @Query() query): Promise<SightAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('sight');
+        return this.commonPlaceService.findById(params.id);
     }
 
     @ApiOperation({ title: 'Список достопримечательностей' })

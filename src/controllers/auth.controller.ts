@@ -22,7 +22,6 @@ export class AuthController {
                 private readonly userService: UserService) {}
 
 
-
     @ApiOperation({ title: 'Авторизация пользователя по email' })
     @ApiResponse({ status: 200, type: AuthPostMailSwagger })
     @Post('mail')

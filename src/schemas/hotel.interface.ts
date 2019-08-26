@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface IHotel extends Document {
-    hotelId: string;
+    id: string;
     readonly name: string;
     readonly description: string;
     readonly open: number;

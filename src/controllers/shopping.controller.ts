@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
 import { CommonPlaceService } from '../services/common.place.service';
 import { ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam } from '@nestjs/swagger';
 import {
@@ -7,6 +7,7 @@ import {
     ShoppingPostCreateDto,
     ShoppingGetSearchDto,
     ShoppingPostEditDto,
+    ShoppingGetFetchDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -23,6 +24,15 @@ export class ShoppingController {
     async create( @Body() body: ShoppingPostCreateDto, @Query() query): Promise<ShoppingAnyResponse> {
         await this.commonPlaceService.enterCommonPlace('shopping');
         return this.commonPlaceService.create(body, query);
+    }
+
+    @ApiOperation({ title: 'Место для покупки по id' })
+    @ApiResponse({ status: 200, type: ShoppingAnySwagger })
+    @Get('fetch/:id')
+    @HttpCode(200)
+    async fetch( @Param() params: ShoppingGetFetchDto, @Query() query): Promise<ShoppingAnyResponse> {
+        await this.commonPlaceService.enterCommonPlace('shopping');
+        return this.commonPlaceService.findById(params.id);
     }
 
     @ApiOperation({ title: 'Список мест для покупок' })
