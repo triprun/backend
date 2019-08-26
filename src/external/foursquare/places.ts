@@ -3,10 +3,10 @@ require('dotenv').config();
 const ID = process.env.FOURSQUARE_ID;
 const SEC = process.env.FOURSQUARE_SECRET;
 
-function URI(opts: string, args=false): string {
+function URI(opts: string, args = false): string {
   let link = '';
   const URL = 'https://api.foursquare.com/v2/venues';
-  if(args) link = `${URL}/${opts}&v=20180323`;
+  if (args) link = `${URL}/${opts}&v=20180323`;
   else link = `${URL}/${opts}?v=20180323`;
   return `${link}&client_id=${ID}&client_secret=${SEC}`;
 };

@@ -1,39 +1,57 @@
-import { Controller, Get, Post, Body, HttpCode} from '@nestjs/common';
-import { HotelService } from '../services/hotel.service';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers, Param} from '@nestjs/common';
+import {CommonPlaceService} from '../services/common.place.service';
+import {ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam} from '@nestjs/swagger';
+import {
+  HotelAnyResponse,
+  HotelAnySwagger,
+  HotelPostCreateDto,
+  HotelGetSearchDto,
+  HotelPostEditDto,
+  HotelGetFetchDto,
+} from '../protocol';
 
+@ApiBearerAuth()
+@ApiUseTags('hotel')
 @Controller('hotel')
 export class HotelController {
 
-  constructor(private readonly hotelService: HotelService) {}
+  constructor(private readonly commonPlaceService: CommonPlaceService) {
+  }
 
+  @ApiOperation({title: 'Создание отеля'})
+  @ApiResponse({status: 200, type: HotelAnySwagger})
   @Post('create')
   @HttpCode(200)
-  create( @Body() body ) {
-    return this.hotelService.create(body);
+  async create(@Body() body: HotelPostCreateDto, @Query() query): Promise<HotelAnyResponse> {
+    await this.commonPlaceService.enterCommonPlace('hotel');
+    return this.commonPlaceService.create(body, query);
   }
 
+  @ApiOperation({title: 'Отель по id'})
+  @ApiResponse({status: 200, type: HotelAnySwagger})
+  @Get('fetch/:id')
+  @HttpCode(200)
+  async fetch(@Param() params: HotelGetFetchDto, @Query() query): Promise<HotelAnyResponse> {
+    await this.commonPlaceService.enterCommonPlace('hotel');
+    return this.commonPlaceService.findById(params.id);
+  }
+
+  @ApiOperation({title: 'Список отелей'})
+  @ApiResponse({status: 200, type: HotelAnySwagger, isArray: true})
   @Get('search')
   @HttpCode(200)
-  findAll( @Body() body ) {
-    return this.hotelService.findAll(body);
+  async search(@Query() query: HotelGetSearchDto): Promise<HotelAnyResponse[]> {
+    await this.commonPlaceService.enterCommonPlace('hotel');
+    return this.commonPlaceService.search(query);
   }
 
-  // @Post('filter')
-  // @HttpCode(200)
-  // findByCriteria( @Body() body ) {
-  //   return this.hotelService.findByCriteria(body);
-  // }
-
-  @Get('fetch')
-  @HttpCode(200)
-  find( @Body() body ) {
-    return this.hotelService.find(body);
-  }
-
+  @ApiOperation({title: 'Изменение отеля'})
+  @ApiResponse({status: 200, type: HotelAnySwagger})
   @Post('edit')
   @HttpCode(200)
-  edit( @Body() body ) {
-    return this.hotelService.edit(body);
+  async edit(@Body() body: HotelPostEditDto, @Query() query): Promise<HotelAnyResponse> {
+    await this.commonPlaceService.enterCommonPlace('hotel');
+    return this.commonPlaceService.edit(body, query);
   }
 
 }

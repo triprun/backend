@@ -1,16 +1,16 @@
-import { Module } from '@nestjs/common';
-import { HotelController } from '../controllers/hotel.controller';
-import { HotelService } from '../services/hotel.service';
-import { hotelsProviders } from '../providers/hotels.provider';
-import { DatabaseModule } from '../modules/database.module';
-import { AuthModule } from './auth.module';
+import {Module} from '@nestjs/common';
+import {HotelController} from '../controllers/hotel.controller';
+import {hotelsProviders} from '../providers/hotels.provider';
+import {DatabaseModule} from '../modules/database.module';
+import {AuthModule} from './auth.module';
+import {CommonPlaceModule} from './common.place.module';
 
 @Module({
   controllers: [HotelController],
-  imports: [DatabaseModule, AuthModule],
+  imports: [DatabaseModule, AuthModule, CommonPlaceModule],
   providers: [
-    HotelService,
     ...hotelsProviders,
   ],
 })
-export class HotelModule {}
+export class HotelModule {
+}

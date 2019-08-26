@@ -1,16 +1,16 @@
-import { Module } from '@nestjs/common';
-import { RestaurantController } from '../controllers/restaurant.controller';
-import { RestaurantService } from '../services/restaurant.service';
-import { restaurantsProviders } from '../providers/restaurants.provider';
-import { DatabaseModule } from '../modules/database.module';
-import { AuthModule } from './auth.module';
+import {Module} from '@nestjs/common';
+import {RestaurantController} from '../controllers/restaurant.controller';
+import {restaurantsProviders} from '../providers/restaurant.provider';
+import {DatabaseModule} from '../modules/database.module';
+import {AuthModule} from './auth.module';
+import {CommonPlaceModule} from './common.place.module';
 
 @Module({
   controllers: [RestaurantController],
-  imports: [DatabaseModule, AuthModule],
+  imports: [DatabaseModule, AuthModule, CommonPlaceModule],
   providers: [
-    RestaurantService,
     ...restaurantsProviders,
   ],
 })
-export class RestaurantModule {}
+export class RestaurantModule {
+}

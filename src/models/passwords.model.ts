@@ -1,17 +1,17 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import {Table, Column, Model} from 'sequelize-typescript';
 
 @Table({
-    timestamps: true,
+  timestamps: true,
 })
 export class Passwords extends Model<Passwords> {
 
-    @Column
-    userId: number;
+  @Column
+  userId: number;
 
-    @Column
-    password: string;
+  @Column
+  password: string;
 
-    @Column
-    isActive: number;
+  @Column
+  isActive: number;
 
 }

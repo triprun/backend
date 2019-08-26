@@ -1,33 +1,56 @@
-import { Controller, Get, Post, Body, Param, HttpCode} from '@nestjs/common';
-import { UserService } from '../services/user.service';
+import {Controller, Get, Post, Body, HttpCode, Query, Headers} from '@nestjs/common';
+import {UserService} from '../services/user.service';
+import {ApiBearerAuth, ApiUseTags, ApiOperation, ApiResponse, ApiImplicitParam} from '@nestjs/swagger';
+import {
+  UserPostRegistrationDto,
+  UserPostRegistrationResponse,
+  UserPostRegistrationSwagger,
+  UserGetProfileDto,
+  UserGetProfileResponse,
+  UserGetProfileSwagger,
+  UserPostPasswordDto,
+  UserPostPasswordResponse,
+  UserPostPasswordSwagger,
+} from '../protocol';
 
+@ApiBearerAuth()
+@ApiUseTags('user')
 @Controller('user')
 export class UserController {
 
-    constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {
+  }
 
-    @Post('registration')
-    @HttpCode(200)
-    register( @Body() body ) {
-      return this.userService.register(body);
-    }
+  @ApiOperation({title: 'Регистрация пользователя'})
+  @ApiResponse({status: 200, type: UserPostRegistrationSwagger})
+  @Post('registration')
+  @HttpCode(200)
+  async register(@Body() body: UserPostRegistrationDto, @Query() query): Promise<UserPostRegistrationResponse> {
+    await this.userService.register(body, query);
+    const res = await this.userService.login(body);
+    return {
+      ...res,
+    };
+  }
 
-    @Post('password')
-    @HttpCode(200)
-    password( @Body() body ) {
-      return this.userService.password(body);
-    }
+  @ApiOperation({title: 'Смена пароля пользователя с помощью accessToken', description: 'Обновляются токены'})
+  @ApiResponse({status: 200, type: UserPostPasswordSwagger})
+  @Post('password')
+  @HttpCode(200)
+  password(@Body() body: UserPostPasswordDto, @Query() query): Promise<UserPostPasswordResponse> {
+    return this.userService.password(body, query);
+  }
 
-    @Get('profile/:id')
-    @HttpCode(200)
-    foreignProfile( @Param() params: string ) {
-      return this.userService.foreignProfile({ id: params.id });
-    }
+  @ApiOperation({
+    title: 'Профиль пользователя',
+    description: 'Если вызвать без параметров, то вернется профиль текущего пользователя'
+  })
+  @ApiResponse({status: 200, type: UserGetProfileSwagger})
+  @Get('profile')
+  @HttpCode(200)
+  async profile(@Query() query: UserGetProfileDto): Promise<UserGetProfileResponse> {
+    return this.userService.profile(query);
+  }
 
-    @Post('profile')
-    @HttpCode(200)
-    profile( @Body() body ) {
-      return this.userService.profile(body);
-    }
 
 }
