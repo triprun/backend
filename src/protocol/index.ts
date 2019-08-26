@@ -34,6 +34,10 @@ export {ShoppingPostEditDto} from './shopping/post.edit.dto';
 export {ShoppingPostCreateDto} from './shopping/post.create.dto';
 export {ShoppingGetSearchDto} from './shopping/get.search.dto';
 export {ShoppingGetFetchDto} from './shopping/get.fetch.dto';
+export {ImpressionPostEditDto} from './impression/post.edit.dto';
+export {ImpressionPostCreateDto} from './impression/post.create.dto';
+export {ImpressionGetSearchDto} from './impression/get.search.dto';
+export {ImpressionGetFetchDto} from './impression/get.fetch.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -47,6 +51,7 @@ export {SightAnyResponse} from './sight/any.response';
 export {ConcertAnyResponse} from './concert/any.response';
 export {RelaxAnyResponse} from './relax/any.response';
 export {ShoppingAnyResponse} from './shopping/any.response';
+export {ImpressionAnyResponse} from './impression/any.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -60,3 +65,4 @@ export {SightAnySwagger} from './sight/any.swagger';
 export {ConcertAnySwagger} from './concert/any.swagger';
 export {RelaxAnySwagger} from './relax/any.swagger';
 export {ShoppingAnySwagger} from './shopping/any.swagger';
+export {ImpressionAnySwagger} from './impression/any.swagger';

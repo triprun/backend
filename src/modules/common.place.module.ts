@@ -8,6 +8,7 @@ import {sightsProviders} from '../providers/sight.provider';
 import {concertsProviders} from '../providers/concert.provider';
 import {relaxProviders} from '../providers/relax.provider';
 import {shoppingProviders} from '../providers/shopping.provider';
+import {impressionProviders} from '../providers/impression.provider';
 import {AuthModule} from './auth.module';
 import {UserModule} from './user.module';
 
@@ -22,6 +23,7 @@ import {UserModule} from './user.module';
     ...concertsProviders,
     ...relaxProviders,
     ...shoppingProviders,
+    ...impressionProviders,
   ],
   imports: [DatabaseModule, AuthModule, UserModule],
   exports: [CommonPlaceService],
