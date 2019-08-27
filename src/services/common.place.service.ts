@@ -12,6 +12,7 @@ import { IRelax } from '../schemas/relax.interface';
 import { IShopping } from '../schemas/shopping.interface';
 import { IImpression } from '../schemas/impression.interface';
 import { ITransport } from '../schemas/transport.interface';
+import { ICustom } from '../schemas/custom.interface';
 
 import {AuthService} from './auth.service';
 
@@ -39,6 +40,8 @@ export class CommonPlaceService {
     private readonly impressionModel: Model<IImpression>,
     @Inject(Consts.transport_rep)
     private readonly transportModel: Model<ITransport>,
+    @Inject(Consts.custom_rep)
+    private readonly customModel: Model<ICustom>,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
@@ -64,6 +67,8 @@ export class CommonPlaceService {
       this.commonPlace = this.impressionModel;
     } else if (value === 'transport') {
       this.commonPlace = this.transportModel;
+    } else if (value === 'custom') {
+      this.commonPlace = this.customModel;
     } else {
       this.commonPlace = null;
     }
