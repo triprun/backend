@@ -13,6 +13,7 @@ import {RelaxModule} from './relax.module';
 import {ShoppingModule} from './shopping.module';
 import {ImpressionModule} from './impression.module';
 import {TransportModule} from './transport.module';
+import {CityModule} from './city.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import {TransportModule} from './transport.module';
     ShoppingModule,
     ImpressionModule,
     TransportModule,
+    CityModule,
   ],
   controllers: [],
   providers: [],

@@ -10,6 +10,7 @@ import {relaxProviders} from '../providers/relax.provider';
 import {shoppingProviders} from '../providers/shopping.provider';
 import {impressionProviders} from '../providers/impression.provider';
 import {transportProviders} from '../providers/transport.provider';
+import {cityProviders} from '../providers/city.provider';
 import {AuthModule} from './auth.module';
 import {UserModule} from './user.module';
 
@@ -26,6 +27,7 @@ import {UserModule} from './user.module';
     ...shoppingProviders,
     ...impressionProviders,
     ...transportProviders,
+    ...cityProviders,
   ],
   imports: [DatabaseModule, AuthModule, UserModule],
   exports: [CommonPlaceService],

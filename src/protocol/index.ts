@@ -42,6 +42,10 @@ export {TransportPostEditDto} from './transport/post.edit.dto';
 export {TransportPostCreateDto} from './transport/post.create.dto';
 export {TransportGetSearchDto} from './transport/get.search.dto';
 export {TransportGetFetchDto} from './transport/get.fetch.dto';
+export {CityPostEditDto} from './city/post.edit.dto';
+export {CityPostCreateDto} from './city/post.create.dto';
+export {CityGetSearchDto} from './city/get.search.dto';
+export {CityGetFetchDto} from './city/get.fetch.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -57,6 +61,7 @@ export {RelaxAnyResponse} from './relax/any.response';
 export {ShoppingAnyResponse} from './shopping/any.response';
 export {ImpressionAnyResponse} from './impression/any.response';
 export {TransportAnyResponse} from './transport/any.response';
+export {CityAnyResponse} from './city/any.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -72,3 +77,4 @@ export {RelaxAnySwagger} from './relax/any.swagger';
 export {ShoppingAnySwagger} from './shopping/any.swagger';
 export {ImpressionAnySwagger} from './impression/any.swagger';
 export {TransportAnySwagger} from './transport/any.swagger';
+export {CityAnySwagger} from './city/any.swagger';
