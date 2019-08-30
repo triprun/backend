@@ -1,5 +1,3 @@
-import * as mongoose from 'mongoose';
-
 export const commonPlace = {
   id: String,
   name: String,
@@ -8,4 +6,5 @@ export const commonPlace = {
   close: Number,
   photos: [String],
   verified: Boolean,
+  created_at: Number,
 };

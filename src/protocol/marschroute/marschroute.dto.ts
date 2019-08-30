@@ -1,6 +1,6 @@
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class PlaceDto {
+export class MarschrouteDto {
 
   @ApiModelProperty({example: '', description: 'Id места'})
   id: number;

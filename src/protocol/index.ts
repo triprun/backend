@@ -1,6 +1,7 @@
 export {UserPostRegistrationDto} from './user/post.registration.dto';
 export {AuthPostMailDto} from './auth/post.mail.dto';
 export {UserGetProfileDto} from './user/get.profile.dto';
+export {UserGetProfilesDto} from './user/get.profiles.dto';
 export {UserPostPasswordDto} from './user/post.password.dto.js';
 export {UserPostRoleDto} from './user/post.role.dto';
 export {AuthGetLogoutDto} from './auth/get.logout.dto';
@@ -42,6 +43,14 @@ export {TransportPostEditDto} from './transport/post.edit.dto';
 export {TransportPostCreateDto} from './transport/post.create.dto';
 export {TransportGetSearchDto} from './transport/get.search.dto';
 export {TransportGetFetchDto} from './transport/get.fetch.dto';
+export {MarschroutePostEditDto} from './marschroute/post.edit.dto';
+export {MarschroutePostCreateDto} from './marschroute/post.create.dto';
+export {MarschrouteGetSearchDto} from './marschroute/get.search.dto';
+export {MarschrouteGetFetchDto} from './marschroute/get.fetch.dto';
+export {MarschroutePostJoinDto} from './marschroute/post.join.dto';
+export {MarschroutePostApproveDto} from './marschroute/post.approve.dto';
+export {MarschroutePostLeaveDto} from './marschroute/post.leave.dto';
+export {MarschroutePostRoleDto} from './marschroute/post.role.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -57,6 +66,7 @@ export {RelaxAnyResponse} from './relax/any.response';
 export {ShoppingAnyResponse} from './shopping/any.response';
 export {ImpressionAnyResponse} from './impression/any.response';
 export {TransportAnyResponse} from './transport/any.response';
+export {MarschrouteAnyResponse} from './marschroute/any.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -72,3 +82,4 @@ export {RelaxAnySwagger} from './relax/any.swagger';
 export {ShoppingAnySwagger} from './shopping/any.swagger';
 export {ImpressionAnySwagger} from './impression/any.swagger';
 export {TransportAnySwagger} from './transport/any.swagger';
+export {MarschrouteAnySwagger} from './marschroute/any.swagger';

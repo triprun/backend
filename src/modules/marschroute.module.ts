@@ -1,16 +1,21 @@
 import {Module} from '@nestjs/common';
-import {ConcertController} from '../controllers/concert.controller';
-import {concertsProviders} from '../providers/concert.provider';
+import {MarschrouteController} from '../controllers/marschroute.controller';
+import {marschrouteProviders} from '../providers/marschroute.provider';
+import {marschrouteSnapProviders} from '../providers/marschroute.snap.provider';
 import {DatabaseModule} from '../modules/database.module';
 import {AuthModule} from './auth.module';
-import {CommonPlaceModule} from './common.place.module';
+import {MarschrouteService} from '../services/marschroute.service';
+import {UserModule} from './user.module';
 
 @Module({
-  controllers: [ConcertController],
-  imports: [DatabaseModule, AuthModule, CommonPlaceModule],
+  controllers: [MarschrouteController],
+  imports: [DatabaseModule, AuthModule, UserModule],
   providers: [
-    ...concertsProviders,
+    ...marschrouteProviders,
+    ...marschrouteSnapProviders,
+    MarschrouteService,
   ],
+  exports: [MarschrouteService],
 })
-export class ConcertModule {
+export class MarschrouteModule {
 }

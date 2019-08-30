@@ -13,7 +13,7 @@ export const Config = {
   salt_sha_refresh: 'IJISADJ78ASFHiBCQA((XCHCHkljNWKJN@JLnLNDlndDD@LDQL21el;1ASPduHSADbcsbu312u2TWFD12K@N',
   jwt_key_access: 'YqywyeASIJDi8saDJIOSADlASFJf2asopdjkpoOSAIFif123fIJFOsoiajsdij@D@ads[pkdiasojhASOUIFHAOSUHDouD@O',
   jwt_key_refresh: 'LJKASHuhd2iouHLD@h@!!o;iSAHDSAOHDuiHDIGASIdyAKSDygyGD827dg28dg9218egd1i9hdiulHSAILUHDiuHdsiusahdpoSHDpASUHD98pd2h',
-  access_token_expire_at: 60 * 30, // seconds
+  access_token_expire_at: 60 * 30 * 999, // seconds
   refresh_token_expire_at: 60 * 60 * 24 * 3, // seconds
   upload_images_path: './public/uploads/',
   upload_images_file_size: 1024 * 1024 * 10, // bytes

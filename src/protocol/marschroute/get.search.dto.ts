@@ -1,6 +1,6 @@
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class RelaxGetSearchDto {
+export class MarschrouteGetSearchDto {
 
   @ApiModelProperty()
   readonly limit: number;

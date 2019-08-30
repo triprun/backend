@@ -1,11 +1,15 @@
 import {Document} from 'mongoose';
 
-export interface IConcert extends Document {
+interface Comps {
   id: string;
+  role: string;
+}
+
+export interface IMarschroute extends Document {
+  id: string;
+  author: number;
   name: string;
-  freeprice: boolean;
-  avgprice: number;
-  avgpricechild: number;
-  agechild: number;
-  contacts: string;
+  type: number;
+  companions: [Comps];
+  potentialCompanions: [Comps];
 }

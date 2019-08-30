@@ -1,6 +1,6 @@
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class MarschroutePostJoinDto {
+export class MarschroutePostLeaveDto {
 
   @ApiModelProperty()
   readonly id: string;

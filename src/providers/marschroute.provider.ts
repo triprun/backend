@@ -1,11 +1,11 @@
 import {Connection} from 'mongoose';
-import {ConcertSchema} from '../schemas/concert.schema';
+import {MarschrouteSchema} from '../schemas/marschroute.schema';
 import {Consts} from '../consts';
 
-export const concertsProviders = [
+export const marschrouteProviders = [
   {
-    provide: Consts.concerts_rep,
-    useFactory: (connection: Connection) => connection.model('Concert', ConcertSchema),
+    provide: Consts.marschroute_rep,
+    useFactory: (connection: Connection) => connection.model('Marschroute', MarschrouteSchema),
     inject: [Consts.dm_provide],
   },
 ];

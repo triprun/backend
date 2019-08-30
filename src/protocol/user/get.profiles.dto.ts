@@ -1,17 +1,11 @@
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class UserGetProfileDto {
+export class UserGetProfilesDto {
   @ApiModelProperty({
-    description: 'Id пользователя',
+    description: 'Id пользователей',
     required: false,
+    isArray: true,
   })
-  readonly userId: number;
+  readonly ids: number;
 
-  @ApiModelProperty({
-    description: 'Username пользователя',
-    required: false,
-  })
-  readonly userName: string;
-
-  readonly accessToken: string;
 }

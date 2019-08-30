@@ -2,11 +2,12 @@ import * as mongoose from 'mongoose';
 
 import {commonPlace} from './common.place.schema';
 
-export const ImpressionSchema = new mongoose.Schema({
+export const MarschrouteSchema = new mongoose.Schema({
   ...commonPlace,
-  freeprice: Boolean,
-  avgprice: Number,
-  avgpricechild: Number,
-  agechild: Number,
-  contacts: String,
+  ref: String,
+  author: Number,
+  type: Number,
+  companions: Array,
+  potentialCompanions: Array,
+  marschroute: Array,
 });

@@ -1,16 +1,11 @@
-export interface RelaxAnyResponse {
+//import {MarschrouteCompanionDton} from './companion.dto';
+//import {MarschrouteDto} from './place.dto';
+
+export interface MarschrouteAnyResponse {
   id: string;
   name: string;
   description: string;
-  open: number;
-  close: number;
-  photos: [string];
-  verified: boolean;
-  cuisine: [string];
-  type: string;
-  limitations: [string];
-  bestToVisit: [string];
-  avgprice: number;
-  suitableFor: [string];
-  extras: [string];
+  author: number;
+  type: number;
+  //companions: [MarschrouteCompanion];
 }

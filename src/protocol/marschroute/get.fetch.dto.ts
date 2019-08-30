@@ -1,6 +1,6 @@
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class RelaxGetFetchDto {
+export class MarschrouteGetFetchDto {
 
   @ApiModelProperty()
   readonly id: string;

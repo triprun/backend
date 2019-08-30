@@ -3,75 +3,23 @@ import { Model } from 'mongoose';
 import { Consts } from '../consts';
 import { RedisService } from 'nestjs-redis';
 import { UserService } from './user.service';
-import { IHotel } from '../schemas/hotel.interface';
-import { IEntertainment } from '../schemas/entertainment.interface';
-import { IRestaurant } from '../schemas/restaurant.interface';
-import { ISight } from '../schemas/sight.interface';
-import { IConcert } from '../schemas/concert.interface';
-import { IRelax } from '../schemas/relax.interface';
-import { IShopping } from '../schemas/shopping.interface';
-import { IImpression } from '../schemas/impression.interface';
-import { ITransport } from '../schemas/transport.interface';
 import { IMarschroute } from '../schemas/marschroute.interface';
+import moment = require('moment');
 
 import {AuthService} from './auth.service';
 
 @Injectable()
-export class CommonPlaceService {
-
-  commonPlace: any;
+export class MarschrouteService {
 
   constructor(
-    @Inject(Consts.hotels_rep)
-    private readonly hotelModel: Model<IHotel>,
-    @Inject(Consts.entertainments_rep)
-    private readonly entertainmentModel: Model<IEntertainment>,
-    @Inject(Consts.restaurants_rep)
-    private readonly restaurantModel: Model<IRestaurant>,
-    @Inject(Consts.sights_rep)
-    private readonly sightModel: Model<ISight>,
-    @Inject(Consts.concerts_rep)
-    private readonly concertModel: Model<IConcert>,
-    @Inject(Consts.relax_rep)
-    private readonly relaxModel: Model<IRelax>,
-    @Inject(Consts.shopping_rep)
-    private readonly shoppingModel: Model<IShopping>,
-    @Inject(Consts.impression_rep)
-    private readonly impressionModel: Model<IImpression>,
-    @Inject(Consts.transport_rep)
-    private readonly transportModel: Model<ITransport>,
     @Inject(Consts.marschroute_rep)
     private readonly marschrouteModel: Model<IMarschroute>,
+    @Inject(Consts.marschroutesnap_rep)
+    private readonly marschrouteSnapModel: Model<IMarschroute>,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {
-  }
-
-  async enterCommonPlace(value) {
-    if (value === 'hotel') {
-      this.commonPlace = this.hotelModel;
-    } else if (value === 'entertainment') {
-      this.commonPlace = this.entertainmentModel;
-    } else if (value === 'restaurant') {
-      this.commonPlace = this.restaurantModel;
-    } else if (value === 'sight') {
-      this.commonPlace = this.sightModel;
-    } else if (value === 'concert') {
-      this.commonPlace = this.concertModel;
-    } else if (value === 'relax') {
-      this.commonPlace = this.relaxModel;
-    } else if (value === 'shopping') {
-      this.commonPlace = this.shoppingModel;
-    } else if (value === 'impression') {
-      this.commonPlace = this.impressionModel;
-    } else if (value === 'transport') {
-      this.commonPlace = this.transportModel;
-    } else if (value === 'marschroute') {
-      this.commonPlace = this.marschrouteModel;
-    } else {
-      this.commonPlace = null;
-    }
   }
 
   async create(body, query): Promise<any> {
@@ -82,23 +30,39 @@ export class CommonPlaceService {
     if (user.role === 0) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
-    const common = new this.commonPlace({...body, verified: false});
+
+    const common = new this.marschrouteModel({...body, created_at: moment().unix()});
     common.id = common._id;
-    return await common.save();
+    const res = await common.save();
+
+    const commonSnap = new this.marschrouteSnapModel({...body, ref: res._id, created_at: moment().unix()});
+    await commonSnap.save();
+
+    return res;
   }
 
-  async findById(id): Promise<any> {
-    return await this.commonPlace.findById(id).exec();
-  }
-
-  async search(query): Promise<any[]> {
-    let qu;
-    if (query.name == null) {
-      qu = this.commonPlace.find();
-    } else {
-      qu = this.commonPlace.find({name: new RegExp(query.name, 'i')});
+  async findById(id, query): Promise<any> {
+    const mroute = await this.marschrouteModel.findById(id).exec();
+    if ( mroute.type !== 0 ) {
+      return mroute;
     }
-    return await qu.limit(Number(query.limit)).skip(Number(query.skip)).exec();
+    if (query.accessToken == null) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+    }
+    const user = await this.userService.profile(query);
+    let b = false;
+    if ( mroute.author === Number(user.id) ) {
+      b = true;
+    }
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === user.id ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      return mroute;
+    }
+    throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
   }
 
   async edit(body, query): Promise<any> {
@@ -106,10 +70,173 @@ export class CommonPlaceService {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const user = await this.userService.profile({accessToken: query.accessToken});
-    if (user.role === 0) {
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    let b = false;
+    if ( mroute.author === Number(user.id) ) {
+      b = true;
+    }
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === user.id && item.role === '1' ) {
+        b = true;
+      }
+    });
+    if ( b === false ) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
-    return await this.commonPlace.findOneAndUpdate({_id: body.id}, {verified: true}, {upsert: true, new: true});
+    const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {...body}, {upsert: true, new: true});
+    const commonSnap = new this.marschrouteSnapModel({...body, ref: res._id, created_at: moment().unix()});
+    await commonSnap.save();
+    return res;
+  }
+
+  async join(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    let b = false;
+    if ( mroute.author === Number(user.id) ) {
+      b = true;
+    }
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === user.id ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      throw new HttpException('You are already a member', 400);
+    }
+    b = false;
+    mroute.potentialCompanions.forEach((item, i, arr) => {
+      if ( item.id === user.id ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      throw new HttpException('You have already submitted a request', 400);
+    }
+    mroute.potentialCompanions.push({
+      id: user.id,
+      role: '0',
+    });
+    const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+      potentialCompanions: mroute.potentialCompanions
+    }, {upsert: true, new: true});
+    return {};
+  }
+
+  async approve(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    if ( mroute.author !== Number(user.id) ) {
+      throw new HttpException('User is not author', 401);
+    }
+    let b = -1;
+    mroute.potentialCompanions.forEach((item, i, arr) => {
+      if ( item.id === String(body.userId) ) {
+        b = i;
+      }
+    });
+    if ( b === -1 ) {
+      throw new HttpException('User not found in route', 400);
+    }
+    mroute.companions.push({
+      id: String(body.userId),
+      role: '0',
+    });
+    const potentialCompanions = [];
+    mroute.potentialCompanions.forEach((item, i, arr) => {
+      if ( item.id !== String(body.userId) ) {
+        potentialCompanions.push(item);
+      }
+    });
+    await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+      potentialCompanions: potentialCompanions,
+      companions: mroute.companions,
+    }, {upsert: true, new: true});
+    return {};
+  }
+
+  async leave(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+
+    let b = false;
+    mroute.potentialCompanions.forEach((item, i, arr) => {
+      if ( item.id === String(user.id) ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      const potentialCompanions = [];
+      mroute.potentialCompanions.forEach((item, i, arr) => {
+        if ( item.id !== String(user.id) ) {
+          potentialCompanions.push(item);
+        }
+      });
+      await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+        potentialCompanions: potentialCompanions,
+      }, {upsert: true, new: true});
+    }
+
+    b = false;
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === String(user.id) ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      const companions = [];
+      mroute.companions.forEach((item, i, arr) => {
+        if ( item.id !== String(user.id) ) {
+          companions.push(item);
+        }
+      });
+      await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+        companions: companions,
+      }, {upsert: true, new: true});
+    }
+    if ( mroute.author === Number(user.id) ) {
+      await this.marschrouteModel.findOneAndRemove({_id: body.id});
+    }
+  }
+
+  async role(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    if ( mroute.author !== Number(user.id) ) {
+      throw new HttpException('User is not author', 401);
+    }
+    let b = false;
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === body.userId ) {
+        b = true;
+      }
+    });
+    if ( b === false ) {
+      throw new HttpException('User not found in route', 401);
+    }
+    const companions = [];
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === String(body.userId) ) {
+        item.role = body.role;
+      }
+      companions.push(item);
+    });
+    await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+      companions: mroute.companions,
+    }, {upsert: true, new: true});
+    return {};
   }
 
 }
