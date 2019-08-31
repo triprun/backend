@@ -14,6 +14,8 @@ import {ShoppingModule} from './shopping.module';
 import {ImpressionModule} from './impression.module';
 import {TransportModule} from './transport.module';
 import {PhotoModule} from './photo.module';
+import {TemporaryModule} from './temporary.module';
+import {CustomModule} from './custom.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import {PhotoModule} from './photo.module';
     ImpressionModule,
     TransportModule,
     PhotoModule,
+    TemporaryModule,
+    CustomModule,
   ],
   controllers: [],
   providers: [],
