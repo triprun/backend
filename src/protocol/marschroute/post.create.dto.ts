@@ -10,9 +10,6 @@ export class MarschroutePostCreateDto {
   @ApiModelProperty({example: '', description: 'Описание'})
   description: string;
 
-  @ApiModelProperty({example: '', description: 'Id пользователя, который создал путешествие'})
-  author: number;
-
   @ApiModelProperty({example: '', description: 'Тип 0 - закрытое путешествие, 1 - открытое путешествие, 2 - открытое путешествие можно присоединиться.'})
   type: number;
 

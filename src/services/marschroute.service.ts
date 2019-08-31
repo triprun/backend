@@ -22,6 +22,16 @@ export class MarschrouteService {
   ) {
   }
 
+  async createSnap(res) {
+    const snap = JSON.parse(JSON.stringify(res));
+    delete snap._id;
+    delete snap.id;
+    snap.ref = res._id;
+    snap.created_at = moment().unix();
+    const commonSnap = new this.marschrouteSnapModel(snap);
+    await commonSnap.save();
+  }
+
   async create(body, query): Promise<any> {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
@@ -33,10 +43,10 @@ export class MarschrouteService {
 
     const common = new this.marschrouteModel({...body, created_at: moment().unix()});
     common.id = common._id;
+    common.author = Number(user.id);
     const res = await common.save();
 
-    const commonSnap = new this.marschrouteSnapModel({...body, ref: res._id, created_at: moment().unix()});
-    await commonSnap.save();
+    this.createSnap(res);
 
     return res;
   }
@@ -84,8 +94,7 @@ export class MarschrouteService {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {...body}, {upsert: true, new: true});
-    const commonSnap = new this.marschrouteSnapModel({...body, ref: res._id, created_at: moment().unix()});
-    await commonSnap.save();
+    this.createSnap(res);
     return res;
   }
 
@@ -175,7 +184,8 @@ export class MarschrouteService {
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
       potentialCompanions: mroute.potentialCompanions
     }, {upsert: true, new: true});
-    return {};
+    this.createSnap(res);
+    return res;
   }
 
   async approve(body, query): Promise<any> {
@@ -206,11 +216,12 @@ export class MarschrouteService {
         potentialCompanions.push(item);
       }
     });
-    await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+    const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
       potentialCompanions: potentialCompanions,
       companions: mroute.companions,
     }, {upsert: true, new: true});
-    return {};
+    this.createSnap(res);
+    return res;
   }
 
   async leave(body, query): Promise<any> {
@@ -233,9 +244,11 @@ export class MarschrouteService {
           potentialCompanions.push(item);
         }
       });
-      await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+      const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
         potentialCompanions: potentialCompanions,
       }, {upsert: true, new: true});
+      this.createSnap(res);
+      return res;
     }
 
     b = false;
@@ -251,12 +264,16 @@ export class MarschrouteService {
           companions.push(item);
         }
       });
-      await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+      const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
         companions: companions,
       }, {upsert: true, new: true});
+      this.createSnap(res);
+      return res;
     }
     if ( mroute.author === Number(user.id) ) {
-      await this.marschrouteModel.findOneAndRemove({_id: body.id});
+      const res = await this.marschrouteModel.findOneAndRemove({_id: body.id});
+      this.createSnap(res);
+      return res;
     }
   }
 
@@ -285,10 +302,11 @@ export class MarschrouteService {
       }
       companions.push(item);
     });
-    await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+    const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
       companions: mroute.companions,
     }, {upsert: true, new: true});
-    return {};
+    this.createSnap(res);
+    return res;
   }
 
   async places(body, query): Promise<any> {
@@ -298,6 +316,7 @@ export class MarschrouteService {
     const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {places: body.places}, {upsert: true, new: true});
+    this.createSnap(res);
     return res;
   }
 

@@ -11,6 +11,8 @@ interface Places {
 }
 export interface IMarschroute extends Document {
   id: string;
+  ref: string;
+  created_at: number;
   author: number;
   name: string;
   type: number;
