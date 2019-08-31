@@ -12,6 +12,7 @@ import { IRelax } from '../schemas/relax.interface';
 import { IShopping } from '../schemas/shopping.interface';
 import { IImpression } from '../schemas/impression.interface';
 import { ITransport } from '../schemas/transport.interface';
+import { ICountry } from '../schemas/country.interface';
 import { ICity } from '../schemas/city.interface';
 import { IPhoto} from '../schemas/photo.interface';
 import { ITemporary } from '../schemas/temporary.interface';
@@ -43,6 +44,8 @@ export class CommonPlaceService {
     private readonly impressionModel: Model<IImpression>,
     @Inject(Consts.transport_rep)
     private readonly transportModel: Model<ITransport>,
+    @Inject(Consts.country_rep)
+    private readonly countryModel: Model<ICountry>,
     @Inject(Consts.city_rep)
     private readonly cityModel: Model<ICity>,
     @Inject(Consts.photo_rep)
@@ -76,6 +79,8 @@ export class CommonPlaceService {
       this.commonPlace = this.impressionModel;
     } else if (value === 'transport') {
       this.commonPlace = this.transportModel;
+    } else if (value === 'country') {
+      this.commonPlace = this.countryModel;
     } else if (value === 'city') {
       this.commonPlace = this.cityModel;
     } else if (value === 'photo') {
