@@ -12,6 +12,11 @@ import { IRelax } from '../schemas/relax.interface';
 import { IShopping } from '../schemas/shopping.interface';
 import { IImpression } from '../schemas/impression.interface';
 import { ITransport } from '../schemas/transport.interface';
+import { ICountry } from '../schemas/country.interface';
+import { ICity } from '../schemas/city.interface';
+import { IPhoto} from '../schemas/photo.interface';
+import { ITemporary } from '../schemas/temporary.interface';
+import { ICustom } from '../schemas/custom.interface';
 
 import {AuthService} from './auth.service';
 
@@ -39,6 +44,16 @@ export class CommonPlaceService {
     private readonly impressionModel: Model<IImpression>,
     @Inject(Consts.transport_rep)
     private readonly transportModel: Model<ITransport>,
+    @Inject(Consts.country_rep)
+    private readonly countryModel: Model<ICountry>,
+    @Inject(Consts.city_rep)
+    private readonly cityModel: Model<ICity>,
+    @Inject(Consts.photo_rep)
+    private readonly photoModel: Model<IPhoto>,
+    @Inject(Consts.temporary_rep)
+    private readonly temporaryModel: Model<ITemporary>,
+    @Inject(Consts.custom_rep)
+    private readonly customModel: Model<ICustom>,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
@@ -64,6 +79,16 @@ export class CommonPlaceService {
       this.commonPlace = this.impressionModel;
     } else if (value === 'transport') {
       this.commonPlace = this.transportModel;
+    } else if (value === 'country') {
+      this.commonPlace = this.countryModel;
+    } else if (value === 'city') {
+      this.commonPlace = this.cityModel;
+    } else if (value === 'photo') {
+      this.commonPlace = this.photoModel;
+    } else if (value === 'temporary') {
+      this.commonPlace = this.temporaryModel;
+    } else if (value === 'custom') {
+      this.commonPlace = this.customModel;
     } else {
       this.commonPlace = null;
     }
