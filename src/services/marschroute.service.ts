@@ -275,6 +275,59 @@ export class MarschrouteService {
       this.createSnap(res);
       return res;
     }
+    throw new HttpException('User not found in route', 400);
+  }
+
+  async drop(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    if ( Number(mroute.author) !== Number(user.id) ) {
+      throw new HttpException('User is not author', 401);
+    }
+
+    let b = false;
+    mroute.potentialCompanions.forEach((item, i, arr) => {
+      if ( item.id === String(body.userId) ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      const potentialCompanions = [];
+      mroute.potentialCompanions.forEach((item, i, arr) => {
+        if ( item.id !== String(body.userId) ) {
+          potentialCompanions.push(item);
+        }
+      });
+      const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+        potentialCompanions: potentialCompanions,
+      }, {upsert: true, new: true});
+      this.createSnap(res);
+      return res;
+    }
+
+    b = false;
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === String(body.userId) ) {
+        b = true;
+      }
+    });
+    if ( b ) {
+      const companions = [];
+      mroute.companions.forEach((item, i, arr) => {
+        if ( item.id !== String(body.userId) ) {
+          companions.push(item);
+        }
+      });
+      const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
+        companions: companions,
+      }, {upsert: true, new: true});
+      this.createSnap(res);
+      return res;
+    }
+    throw new HttpException('User not found in route', 400);
   }
 
   async role(body, query): Promise<any> {

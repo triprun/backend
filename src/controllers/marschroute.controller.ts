@@ -14,6 +14,7 @@ import {
   MarschroutePostRoleDto,
   MarschrouteGetListDto,
   MarschroutePostPlaceInsertDto,
+  MarschroutePostDropDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -94,6 +95,14 @@ export class MarschrouteController {
   @HttpCode(200)
   async leave(@Body() body: MarschroutePostLeaveDto, @Query() query): Promise<any> {
     return this.marschrouteService.leave(body, query);
+  }
+
+  @ApiOperation({title: 'Удалить пользователя из маршрута'})
+  @ApiResponse({status: 200, type: MarschrouteAnySwagger})
+  @Post('dpop')
+  @HttpCode(200)
+  async drop(@Body() body: MarschroutePostDropDto, @Query() query): Promise<any> {
+    return this.marschrouteService.drop(body, query);
   }
 
   @ApiOperation({title: 'Выдать роль'})
