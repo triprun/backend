@@ -227,6 +227,20 @@ export class UserService {
     return {};
   }
 
+  async profiles(query): Promise<any> {
+    const arr = query.ids.split(',')
+    let res = [];
+    for (let i = 0; i < arr.length; i++) {
+      const tmp = {
+        userId: arr[i],
+        userName: null,
+        accessToken: null,
+      };
+      res.push(await this.profile(tmp));
+    }
+    return res;
+  }
+
   async profile(query): Promise<any> {
 
     if (query.userId == null && query.userName == null && query.accessToken == null) {

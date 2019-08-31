@@ -12,6 +12,8 @@ export const Consts = {
   shopping_rep: 'SHOPPING_REPOSITORY',
   impression_rep: 'IMPRESSION_REPOSITORY',
   transport_rep: 'TRANSPORT_REPOSITORY',
+  marschroute_rep: 'MARSCHROUTE_REPOSITORY',
+  marschroutesnap_rep: 'MARSCHROUTESNAP_REPOSITORY',
   country_rep: 'COUNTRY_REPOSITORY',
   city_rep: 'CITY_REPOSITORY',
   photo_rep: 'PHOTO_REPOSITORY',

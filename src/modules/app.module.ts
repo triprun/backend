@@ -13,6 +13,7 @@ import {RelaxModule} from './relax.module';
 import {ShoppingModule} from './shopping.module';
 import {ImpressionModule} from './impression.module';
 import {TransportModule} from './transport.module';
+import {MarschrouteModule} from './marschroute.module';
 import {CountryModule} from './country.module';
 import {CityModule} from './city.module';
 import {PhotoModule} from './photo.module';
@@ -37,6 +38,7 @@ import {CustomModule} from './custom.module';
     ShoppingModule,
     ImpressionModule,
     TransportModule,
+    MarschrouteModule,
     CountryModule,
     CityModule,
     PhotoModule,
