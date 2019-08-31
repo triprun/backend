@@ -11,6 +11,10 @@ import {shoppingProviders} from '../providers/shopping.provider';
 import {impressionProviders} from '../providers/impression.provider';
 import {transportProviders} from '../providers/transport.provider';
 import {countryProviders} from '../providers/country.provider';
+import {cityProviders} from '../providers/city.provider';
+import {photoProviders} from '../providers/photo.provider';
+import {temporaryProviders} from '../providers/temporary.provider';
+import {customProviders} from '../providers/custom.provider';
 import {AuthModule} from './auth.module';
 import {UserModule} from './user.module';
 
@@ -28,6 +32,10 @@ import {UserModule} from './user.module';
     ...impressionProviders,
     ...transportProviders,
     ...countryProviders,
+    ...cityProviders,
+    ...photoProviders,
+    ...temporaryProviders,
+    ...customProviders,
   ],
   imports: [DatabaseModule, AuthModule, UserModule],
   exports: [CommonPlaceService],
