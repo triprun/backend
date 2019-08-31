@@ -12,6 +12,7 @@ import { IRelax } from '../schemas/relax.interface';
 import { IShopping } from '../schemas/shopping.interface';
 import { IImpression } from '../schemas/impression.interface';
 import { ITransport } from '../schemas/transport.interface';
+import { IPhoto} from '../schemas/photo.interface';
 import { ITemporary } from '../schemas/temporary.interface';
 import { ICustom } from '../schemas/custom.interface';
 
@@ -41,6 +42,8 @@ export class CommonPlaceService {
     private readonly impressionModel: Model<IImpression>,
     @Inject(Consts.transport_rep)
     private readonly transportModel: Model<ITransport>,
+    @Inject(Consts.photo_rep)
+    private readonly photoModel: Model<IPhoto>,
     @Inject(Consts.temporary_rep)
     private readonly temporaryModel: Model<ITemporary>,
     @Inject(Consts.custom_rep)
@@ -70,6 +73,8 @@ export class CommonPlaceService {
       this.commonPlace = this.impressionModel;
     } else if (value === 'transport') {
       this.commonPlace = this.transportModel;
+    } else if (value === 'photo') {
+      this.commonPlace = this.photoModel;
     } else if (value === 'temporary') {
       this.commonPlace = this.temporaryModel;
     } else if (value === 'custom') {
