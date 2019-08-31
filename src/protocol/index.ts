@@ -46,6 +46,10 @@ export {TemporaryPostEditDto} from './temporary/post.edit.dto';
 export {TemporaryPostCreateDto} from './temporary/post.create.dto';
 export {TemporaryGetSearchDto} from './temporary/get.search.dto';
 export {TemporaryGetFetchDto} from './temporary/get.fetch.dto';
+export {CustomPostEditDto} from './custom/post.edit.dto';
+export {CustomPostCreateDto} from './custom/post.create.dto';
+export {CustomGetSearchDto} from './custom/get.search.dto';
+export {CustomGetFetchDto} from './custom/get.fetch.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -62,6 +66,7 @@ export {ShoppingAnyResponse} from './shopping/any.response';
 export {ImpressionAnyResponse} from './impression/any.response';
 export {TransportAnyResponse} from './transport/any.response';
 export {TemporaryAnyResponse} from './temporary/any.response';
+export {CustomAnyResponse} from './custom/any.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -78,3 +83,4 @@ export {ShoppingAnySwagger} from './shopping/any.swagger';
 export {ImpressionAnySwagger} from './impression/any.swagger';
 export {TransportAnySwagger} from './transport/any.swagger';
 export {TemporaryAnySwagger} from './temporary/any.swagger';
+export {CustomAnySwagger} from './custom/any.swagger';
