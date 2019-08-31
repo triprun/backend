@@ -89,6 +89,58 @@ export class MarschrouteService {
     return res;
   }
 
+  async list(userId, query): Promise<any> {
+    let user = {id: 0};
+    if (userId === null) {
+      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+      }
+      user = await this.userService.profile({accessToken: query.accessToken});
+      userId = user.id;
+    } else {
+      if ( await this.authService.checkAccessToken(query.accessToken) !== false ) {
+        user = await this.userService.profile({accessToken: query.accessToken});
+      }
+    }
+
+    const authorRoutes = await this.marschrouteModel.find({author: userId});
+    const authorRoutesRes = [];
+    authorRoutes.forEach((item, i, arr) => {
+      if ( item.type !== 0 || item.author === Number(user.id) ) {
+        authorRoutesRes.push(item);
+      }
+    });
+    const companionRoutes = await this.marschrouteModel.find({
+      $or: [
+        {companions: {id: userId, role: '0'}},
+        {companions: {id: userId, role: '1'}},
+        ],
+    });
+    const companionRoutesRes = [];
+    companionRoutes.forEach((item, i, arr) => {
+      if ( item.type !== 0 || item.author === Number(user.id) ) {
+        companionRoutesRes.push(item);
+      }
+    });
+    const potentialCompanions = await this.marschrouteModel.find({
+      $or: [
+        {potentialCompanions: {id: userId, role: '0'}},
+        {potentialCompanions: {id: userId, role: '1'}},
+      ],
+    });
+    const potentialCompanionsRes = [];
+    potentialCompanions.forEach((item, i, arr) => {
+      if ( item.type !== 0 || item.author === Number(user.id) ) {
+        potentialCompanionsRes.push(item);
+      }
+    });
+    return {
+      authorRoutes: authorRoutesRes,
+      companionRoutes: companionRoutesRes,
+      potentialCompanions: potentialCompanionsRes,
+    };
+  }
+
   async join(body, query): Promise<any> {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);

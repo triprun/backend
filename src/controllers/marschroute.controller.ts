@@ -12,6 +12,7 @@ import {
   MarschroutePostApproveDto,
   MarschroutePostLeaveDto,
   MarschroutePostRoleDto,
+  MarschrouteGetListDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -36,6 +37,22 @@ export class MarschrouteController {
   @HttpCode(200)
   async fetch(@Param() params: MarschrouteGetFetchDto, @Query() query): Promise<MarschrouteAnyResponse> {
     return this.marschrouteService.findById(params.id, query);
+  }
+
+  @ApiOperation({title: 'Список маршрутов по access token'})
+  @ApiResponse({status: 200, type: MarschrouteAnySwagger})
+  @Get('list')
+  @HttpCode(200)
+  async list(@Query() query): Promise<MarschrouteAnyResponse> {
+    return this.marschrouteService.list(null, query);
+  }
+
+  @ApiOperation({title: 'Список маршрутов по userId'})
+  @ApiResponse({status: 200, type: MarschrouteAnySwagger})
+  @Get('list/:userId')
+  @HttpCode(200)
+  async list2(@Param() params: MarschrouteGetListDto, @Query() query): Promise<MarschrouteAnyResponse> {
+    return this.marschrouteService.list(params.userId, query);
   }
 
   @ApiOperation({title: 'Изменение маршрута'})
