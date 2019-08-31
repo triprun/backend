@@ -1,5 +1,5 @@
-//import {MarschrouteCompanionDton} from './companion.dto';
-//import {MarschrouteDto} from './place.dto';
+import {MarschrouteCompanionDto} from './companion.dto';
+import {PlaceDto} from './place.dto';
 
 export interface MarschrouteAnyResponse {
   id: string;
@@ -7,5 +7,5 @@ export interface MarschrouteAnyResponse {
   description: string;
   author: number;
   type: number;
-  //companions: [MarschrouteCompanion];
+  companions: [MarschrouteCompanionDto];
 }

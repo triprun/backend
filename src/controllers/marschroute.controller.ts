@@ -41,7 +41,7 @@ export class MarschrouteController {
   }
 
   @ApiOperation({title: 'Список маршрутов по access token'})
-  @ApiResponse({status: 200, type: MarschrouteAnySwagger})
+  @ApiResponse({status: 200, type: MarschrouteAnySwagger, isArray: true})
   @Get('list')
   @HttpCode(200)
   async list(@Query() query): Promise<MarschrouteAnyResponse> {
