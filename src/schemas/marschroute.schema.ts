@@ -9,5 +9,5 @@ export const MarschrouteSchema = new mongoose.Schema({
   type: Number,
   companions: Array,
   potentialCompanions: Array,
-  marschroute: Array,
+  places: Array,
 });

@@ -291,4 +291,14 @@ export class MarschrouteService {
     return {};
   }
 
+  async places(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const user = await this.userService.profile({accessToken: query.accessToken});
+    const mroute = await this.marschrouteModel.findById(body.id).exec();
+    const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {places: body.places}, {upsert: true, new: true});
+    return res;
+  }
+
 }

@@ -5,6 +5,10 @@ interface Comps {
   role: string;
 }
 
+interface Places {
+  ref: string;
+  refType: string;
+}
 export interface IMarschroute extends Document {
   id: string;
   author: number;
@@ -12,4 +16,5 @@ export interface IMarschroute extends Document {
   type: number;
   companions: [Comps];
   potentialCompanions: [Comps];
+  places: [Places];
 }

@@ -13,6 +13,7 @@ import {
   MarschroutePostLeaveDto,
   MarschroutePostRoleDto,
   MarschrouteGetListDto,
+  MarschroutePostPlaceInsertDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -61,6 +62,14 @@ export class MarschrouteController {
   @HttpCode(200)
   async edit(@Body() body: MarschroutePostEditDto, @Query() query): Promise<MarschrouteAnyResponse> {
     return this.marschrouteService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Сохранить список мест в маршруте'})
+  @ApiResponse({status: 200, type: MarschrouteAnySwagger})
+  @Post('places')
+  @HttpCode(200)
+  async placeInsert(@Body() body: MarschroutePostPlaceInsertDto, @Query() query): Promise<MarschrouteAnyResponse> {
+    return this.marschrouteService.places(body, query);
   }
 
   @ApiOperation({title: 'Запрос на присоединение к маршруту'})

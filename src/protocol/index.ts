@@ -52,6 +52,7 @@ export {MarschroutePostApproveDto} from './marschroute/post.approve.dto';
 export {MarschroutePostLeaveDto} from './marschroute/post.leave.dto';
 export {MarschroutePostRoleDto} from './marschroute/post.role.dto';
 export {MarschrouteGetListDto} from './marschroute/get.list.dto';
+export {MarschroutePostPlaceInsertDto} from './marschroute/post.place.insert.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
