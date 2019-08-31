@@ -12,6 +12,7 @@ export const Consts = {
   shopping_rep: 'SHOPPING_REPOSITORY',
   impression_rep: 'IMPRESSION_REPOSITORY',
   transport_rep: 'TRANSPORT_REPOSITORY',
+  temporary_rep: 'TEMPORARY_REPOSITORY',
   custom_rep: 'CUSTOM_REPOSITORY',
   ERROR_FORBIDDEN: 'Forbidden',
   ERROR_REQUIRED_FIELDS: 'Not all required fields',

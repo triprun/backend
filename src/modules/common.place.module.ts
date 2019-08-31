@@ -10,6 +10,7 @@ import {relaxProviders} from '../providers/relax.provider';
 import {shoppingProviders} from '../providers/shopping.provider';
 import {impressionProviders} from '../providers/impression.provider';
 import {transportProviders} from '../providers/transport.provider';
+import {temporaryProviders} from '../providers/temporary.provider';
 import {customProviders} from '../providers/custom.provider';
 import {AuthModule} from './auth.module';
 import {UserModule} from './user.module';
@@ -27,6 +28,7 @@ import {UserModule} from './user.module';
     ...shoppingProviders,
     ...impressionProviders,
     ...transportProviders,
+    ...temporaryProviders,
     ...customProviders,
   ],
   imports: [DatabaseModule, AuthModule, UserModule],
