@@ -16,6 +16,7 @@ export interface IMarschroute extends Document {
   author: number;
   name: string;
   type: number;
+  status: number;
   companions: [Comps];
   potentialCompanions: [Comps];
   places: [Places];

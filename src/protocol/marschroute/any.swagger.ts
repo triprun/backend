@@ -4,13 +4,13 @@ import {PlaceDto} from './place.dto';
 
 export class MarschrouteAnySwagger {
 
-  @ApiModelProperty({description: ''})
+  @ApiModelProperty({example: '', description: ''})
   id: string;
 
-  @ApiModelProperty({description: ''})
+  @ApiModelProperty({example: '', description: ''})
   name: string;
 
-  @ApiModelProperty({description: ''})
+  @ApiModelProperty({example: '', description: ''})
   description: string;
 
   @ApiModelProperty({description: '', isArray: true})

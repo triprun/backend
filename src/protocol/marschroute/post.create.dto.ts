@@ -13,6 +13,9 @@ export class MarschroutePostCreateDto {
   @ApiModelProperty({example: '', description: 'Тип 0 - закрытое путешествие, 1 - открытое путешествие, 2 - открытое путешествие можно присоединиться.'})
   type: number;
 
+  @ApiModelProperty({example: '', description: '0 - план, 1 - активное путешествие, 2 - оконченное путешествие'})
+  status: number;
+
   @ApiModelProperty({ description: 'Участники путешествия', isArray: true})
   companions: MarschrouteCompanionDto;
 
