@@ -2,67 +2,73 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class CustomPostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly name: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly description: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
+
+  @ApiModelProperty({example: '', description: ''})
   readonly open: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly close: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly photos: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly verified: boolean;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly type: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly stars: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly avgprice: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly distance: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly desktime: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly roomtype: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly hotelextras: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly roomextras: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly disabilityextras: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly isnetwork: boolean;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly journeytypes: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly foodtypes: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly shoreline: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly specialextras: [string];
 
   readonly accessToken: string;

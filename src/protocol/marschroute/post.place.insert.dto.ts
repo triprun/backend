@@ -3,7 +3,7 @@ import {PlaceDto} from './place.dto';
 
 export class MarschroutePostPlaceInsertDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
   @ApiModelProperty({isArray: true})

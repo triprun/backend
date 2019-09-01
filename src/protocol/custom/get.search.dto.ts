@@ -2,10 +2,10 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class CustomGetSearchDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly limit: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly skip: number;
 
   @ApiModelProperty({required: false})

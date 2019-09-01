@@ -2,66 +2,72 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class CustomPostCreateDto {
 
-  @ApiModelProperty()
-  readonly name: string;
+  @ApiModelProperty({example: '', description: ''})
+  name: string;
 
-  @ApiModelProperty()
-  readonly description: string;
+  @ApiModelProperty({example: '', description: ''})
+  description: string;
 
-  @ApiModelProperty()
-  readonly open: number;
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
 
-  @ApiModelProperty()
-  readonly close: number;
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
 
-  @ApiModelProperty()
-  readonly photos: [string];
+  @ApiModelProperty({example: '', description: ''})
+  open: number;
 
-  @ApiModelProperty()
-  readonly verified: boolean;
+  @ApiModelProperty({example: '', description: ''})
+  close: number;
 
-  @ApiModelProperty()
-  readonly type: string;
+  @ApiModelProperty({example: '', description: ''})
+  photos: [string];
 
-  @ApiModelProperty()
-  readonly stars: number;
+  @ApiModelProperty({example: '', description: ''})
+  verified: boolean;
 
-  @ApiModelProperty()
-  readonly avgprice: number;
+  @ApiModelProperty({example: '', description: ''})
+  type: string;
 
-  @ApiModelProperty()
-  readonly distance: number;
+  @ApiModelProperty({example: '', description: ''})
+  stars: number;
 
-  @ApiModelProperty()
-  readonly desktime: string;
+  @ApiModelProperty({example: '', description: ''})
+  avgprice: number;
 
-  @ApiModelProperty()
-  readonly roomtype: [string];
+  @ApiModelProperty({example: '', description: ''})
+  distance: number;
 
-  @ApiModelProperty()
-  readonly hotelextras: [string];
+  @ApiModelProperty({example: '', description: ''})
+  desktime: string;
 
-  @ApiModelProperty()
-  readonly roomextras: [string];
+  @ApiModelProperty({example: '', description: ''})
+  roomtype: [string];
 
-  @ApiModelProperty()
-  readonly disabilityextras: [string];
+  @ApiModelProperty({example: '', description: ''})
+  hotelextras: [string];
 
-  @ApiModelProperty()
-  readonly isnetwork: boolean;
+  @ApiModelProperty({example: '', description: ''})
+  roomextras: [string];
 
-  @ApiModelProperty()
-  readonly journeytypes: [string];
+  @ApiModelProperty({example: '', description: ''})
+  disabilityextras: [string];
 
-  @ApiModelProperty()
-  readonly foodtypes: [string];
+  @ApiModelProperty({example: '', description: ''})
+  isnetwork: boolean;
 
-  @ApiModelProperty()
-  readonly shoreline: number;
+  @ApiModelProperty({example: '', description: ''})
+  journeytypes: [string];
 
-  @ApiModelProperty()
-  readonly specialextras: [string];
+  @ApiModelProperty({example: '', description: ''})
+  foodtypes: [string];
 
-  readonly accessToken: string;
+  @ApiModelProperty({example: '', description: ''})
+  shoreline: number;
+
+  @ApiModelProperty({example: '', description: ''})
+  specialextras: [string];
+
+  accessToken: string;
 
 }

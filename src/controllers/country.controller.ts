@@ -8,11 +8,12 @@ import {
   CountryGetSearchDto,
   CountryPostEditDto,
   CountryGetFetchDto,
+  CountryPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
-@ApiUseTags('hotel')
-@Controller('hotel')
+@ApiUseTags('country')
+@Controller('country')
 export class CountryController {
 
   constructor(private readonly commonPlaceService: CommonPlaceService) {
@@ -52,6 +53,15 @@ export class CountryController {
   async edit(@Body() body: CountryPostEditDto, @Query() query): Promise<CountryAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('country');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление страны'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: CountryPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('country');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

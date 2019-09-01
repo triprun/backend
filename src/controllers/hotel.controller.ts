@@ -8,6 +8,7 @@ import {
   HotelGetSearchDto,
   HotelPostEditDto,
   HotelGetFetchDto,
+  HotelPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class HotelController {
   async edit(@Body() body: HotelPostEditDto, @Query() query): Promise<HotelAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('hotel');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление отеля'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: HotelPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('hotel');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

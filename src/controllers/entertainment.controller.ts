@@ -8,6 +8,7 @@ import {
   EntertainmentGetSearchDto,
   EntertainmentPostEditDto,
   EntertainmentGetFetchDto,
+  EntertainmentPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class EntertainmentController {
   async edit(@Body() body: EntertainmentPostEditDto, @Query() query): Promise<EntertainmentAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('entertainment');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление развлечения'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: EntertainmentPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('entertainment');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

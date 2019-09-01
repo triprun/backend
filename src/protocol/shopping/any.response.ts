@@ -2,6 +2,8 @@ export interface ShoppingAnyResponse {
   id: string;
   name: string;
   description: string;
+  ref: string;
+  refType: string;
   open: number;
   close: number;
   photos: [string];

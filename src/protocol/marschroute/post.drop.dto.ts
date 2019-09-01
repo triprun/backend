@@ -2,10 +2,10 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class MarschroutePostDropDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly userId: string;
 
   readonly accessToken: string;

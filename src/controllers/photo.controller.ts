@@ -8,6 +8,7 @@ import {
   PhotoGetSearchDto,
   PhotoPostEditDto,
   PhotoGetFetchDto,
+  PhotoPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class PhotoController {
   async edit(@Body() body: PhotoPostEditDto, @Query() query): Promise<PhotoAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('photo');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление места для фото'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: PhotoPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('photo');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

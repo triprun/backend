@@ -1,5 +1,7 @@
-export const commonPlace = {
+export const commonPlaceSchema = {
   id: String,
+  ref: String,
+  refType: String,
   name: String,
   description: String,
   open: Number,

@@ -2,7 +2,7 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class RestaurantGetFetchDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
   readonly accessToken: string;

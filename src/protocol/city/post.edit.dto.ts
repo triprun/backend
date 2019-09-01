@@ -2,7 +2,7 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class CityPostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   id: string;
 
   @ApiModelProperty({example: '', description: ''})

@@ -8,6 +8,7 @@ import {
   ConcertGetSearchDto,
   ConcertPostEditDto,
   ConcertGetFetchDto,
+  ConcertPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class ConcertController {
   async edit(@Body() body: ConcertPostEditDto, @Query() query): Promise<ConcertAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('concert');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление концерта'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: ConcertPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('concert');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

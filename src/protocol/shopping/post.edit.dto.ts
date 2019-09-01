@@ -2,7 +2,7 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class ShoppingPostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
   @ApiModelProperty({example: '', description: ''})
@@ -10,6 +10,12 @@ export class ShoppingPostEditDto {
 
   @ApiModelProperty({example: '', description: ''})
   description: string;
+
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
 
   @ApiModelProperty({example: '', description: ''})
   open: number;

@@ -8,6 +8,7 @@ import {
   ImpressionGetSearchDto,
   ImpressionPostEditDto,
   ImpressionGetFetchDto,
+  ImpressionPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class ImpressionController {
   async edit(@Body() body: ImpressionPostEditDto, @Query() query): Promise<ImpressionAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('impression');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление впечатления'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: ImpressionPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('impression');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

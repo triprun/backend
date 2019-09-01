@@ -2,14 +2,20 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class ConcertPostEditDto {
 
-  @ApiModelProperty()
-  readonly id: string;
+  @ApiModelProperty({example: '', description: ''})
+  id: string;
 
   @ApiModelProperty({example: '', description: ''})
   name: string;
 
   @ApiModelProperty({example: '', description: ''})
   description: string;
+
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
 
   @ApiModelProperty({example: '', description: ''})
   open: number;
@@ -44,6 +50,6 @@ export class ConcertPostEditDto {
   @ApiModelProperty({example: '', description: ''})
   extras: [string];
 
-  readonly accessToken: string;
+  accessToken: string;
 
 }

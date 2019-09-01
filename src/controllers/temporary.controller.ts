@@ -8,6 +8,7 @@ import {
   TemporaryGetSearchDto,
   TemporaryPostEditDto,
   TemporaryGetFetchDto,
+  TemporaryPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class TemporaryController {
   async edit(@Body() body: TemporaryPostEditDto, @Query() query): Promise<TemporaryAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('temporary');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление временного места'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: TemporaryPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('temporary');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

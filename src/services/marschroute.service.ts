@@ -272,7 +272,7 @@ export class MarschrouteService {
     }
     if ( mroute.author === Number(user.id) ) {
       const res = await this.marschrouteModel.findOneAndRemove({_id: body.id});
-      this.createSnap(res);
+      //this.createSnap(res);
       return res;
     }
     throw new HttpException('User not found in route', 400);
