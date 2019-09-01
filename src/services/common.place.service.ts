@@ -98,8 +98,7 @@ export class CommonPlaceService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
-    if (user.role === 0) {
+    if (query.userRole === 0) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     const common = new this.commonPlace({...body, verified: false});
@@ -125,8 +124,7 @@ export class CommonPlaceService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
-    if (user.role === 0) {
+    if (query.userRole === 0) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     return await this.commonPlace.findOneAndUpdate({_id: body.id}, {verified: true}, {upsert: true, new: true});
@@ -136,8 +134,7 @@ export class CommonPlaceService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
-    if (user.role === 0) {
+    if (query.userRole === 0) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     const res = await this.commonPlace.findOneAndRemove({_id: body.id});
