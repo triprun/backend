@@ -2,7 +2,7 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class MarschrouteGetFetchDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
   readonly accessToken: string;

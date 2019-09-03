@@ -2,13 +2,13 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class MarschroutePostRoleDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly userId: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly role: string;
 
   readonly accessToken: string;

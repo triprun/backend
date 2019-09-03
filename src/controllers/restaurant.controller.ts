@@ -8,6 +8,7 @@ import {
   RestaurantGetSearchDto,
   RestaurantPostEditDto,
   RestaurantGetFetchDto,
+  RestaurantPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class RestaurantController {
   async edit(@Body() body: RestaurantPostEditDto, @Query() query): Promise<RestaurantAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('restaurant');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление ресторана'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: RestaurantPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('restaurant');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

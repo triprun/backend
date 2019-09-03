@@ -2,25 +2,25 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class CityGetFetchDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   countyId: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   name: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   description: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   photos: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   type: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   rating: number;
 
   readonly accessToken: string;

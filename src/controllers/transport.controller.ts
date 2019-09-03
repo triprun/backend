@@ -8,6 +8,7 @@ import {
   TransportGetSearchDto,
   TransportPostEditDto,
   TransportGetFetchDto,
+  TransportPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class TransportController {
   async edit(@Body() body: TransportPostEditDto, @Query() query): Promise<TransportAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('transport');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление транспорта'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: TransportPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('transport');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

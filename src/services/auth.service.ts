@@ -119,6 +119,7 @@ export class AuthService {
 
     const dataAccess = {
       userId: user.id,
+      userRole: user.role,
       expireAt: moment().unix() + Config.access_token_expire_at,
       token: crypto.createHash('sha256').update(
         Config.salt_sha_access + moment() + moment().unix() + user.id + Math.random(),

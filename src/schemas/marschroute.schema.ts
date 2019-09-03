@@ -1,12 +1,13 @@
 import * as mongoose from 'mongoose';
 
-import {commonPlace} from './common.place.schema';
+import {commonPlaceSchema} from './common.place.schema';
 
 export const MarschrouteSchema = new mongoose.Schema({
-  ...commonPlace,
+  ...commonPlaceSchema,
   ref: String,
   author: Number,
   type: Number,
+  status: Number,
   companions: Array,
   potentialCompanions: Array,
   places: Array,

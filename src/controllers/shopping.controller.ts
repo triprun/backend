@@ -8,6 +8,7 @@ import {
   ShoppingGetSearchDto,
   ShoppingPostEditDto,
   ShoppingGetFetchDto,
+  ShoppingPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class ShoppingController {
   async edit(@Body() body: ShoppingPostEditDto, @Query() query): Promise<ShoppingAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('shopping');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление места для покупок'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: ShoppingPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('shopping');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

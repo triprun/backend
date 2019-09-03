@@ -7,5 +7,6 @@ export interface MarschrouteAnyResponse {
   description: string;
   author: number;
   type: number;
+  status: number;
   companions: [MarschrouteCompanionDto];
 }

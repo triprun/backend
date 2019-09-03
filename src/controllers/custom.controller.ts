@@ -8,6 +8,7 @@ import {
   CustomGetSearchDto,
   CustomPostEditDto,
   CustomGetFetchDto,
+  CustomPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class CustomController {
   async edit(@Body() body: CustomPostEditDto, @Query() query): Promise<CustomAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('custom');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление пользовательского места'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: CustomPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('custom');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

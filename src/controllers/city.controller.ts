@@ -8,6 +8,7 @@ import {
   CityGetSearchDto,
   CityPostEditDto,
   CityGetFetchDto,
+  CityPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class CityController {
   async edit(@Body() body: CityPostEditDto, @Query() query): Promise<CityAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('city');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление города'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: CityPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('city');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

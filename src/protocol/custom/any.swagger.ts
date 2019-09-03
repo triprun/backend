@@ -11,6 +11,12 @@ export class CustomAnySwagger {
   @ApiModelProperty({example: '', description: ''})
   description: string;
 
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
+
   @ApiModelProperty({example: '', description: ''})
   open: number;
 

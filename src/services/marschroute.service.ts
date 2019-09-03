@@ -36,14 +36,10 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
-    if (user.role === 0) {
-      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
-    }
 
     const common = new this.marschrouteModel({...body, created_at: moment().unix()});
     common.id = common._id;
-    common.author = Number(user.id);
+    common.author = Number(query.userId);
     const res = await common.save();
 
     this.createSnap(res);
@@ -59,13 +55,12 @@ export class MarschrouteService {
     if (query.accessToken == null) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
-    const user = await this.userService.profile(query);
     let b = false;
-    if ( mroute.author === Number(user.id) ) {
+    if ( mroute.author === Number(query.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === user.id ) {
+      if ( item.id === query.userId ) {
         b = true;
       }
     });
@@ -79,14 +74,13 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     let b = false;
-    if ( mroute.author === Number(user.id) ) {
+    if ( mroute.author === Number(query.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === user.id && item.role === '1' ) {
+      if ( item.id === query.userId && item.role === '1' ) {
         b = true;
       }
     });
@@ -99,16 +93,15 @@ export class MarschrouteService {
   }
 
   async list(userId, query): Promise<any> {
-    let user = {id: 0};
+    const user = {id: 0};
     if (userId === null) {
       if (await this.authService.checkAccessToken(query.accessToken) === false) {
         throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
       }
-      user = await this.userService.profile({accessToken: query.accessToken});
-      userId = user.id;
+      userId = query.userId;
     } else {
       if ( await this.authService.checkAccessToken(query.accessToken) !== false ) {
-        user = await this.userService.profile({accessToken: query.accessToken});
+        user.id = query.userId;
       }
     }
 
@@ -154,14 +147,13 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     let b = false;
-    if ( mroute.author === Number(user.id) ) {
+    if ( mroute.author === Number(query.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === user.id ) {
+      if ( item.id === query.userId ) {
         b = true;
       }
     });
@@ -170,7 +162,7 @@ export class MarschrouteService {
     }
     b = false;
     mroute.potentialCompanions.forEach((item, i, arr) => {
-      if ( item.id === user.id ) {
+      if ( item.id === query.userId ) {
         b = true;
       }
     });
@@ -178,7 +170,7 @@ export class MarschrouteService {
       throw new HttpException('You have already submitted a request', 400);
     }
     mroute.potentialCompanions.push({
-      id: user.id,
+      id: query.userId,
       role: '0',
     });
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
@@ -192,9 +184,8 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( mroute.author !== Number(user.id) ) {
+    if ( mroute.author !== Number(query.userId) ) {
       throw new HttpException('User is not author', 401);
     }
     let b = -1;
@@ -228,19 +219,18 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
 
     let b = false;
     mroute.potentialCompanions.forEach((item, i, arr) => {
-      if ( item.id === String(user.id) ) {
+      if ( item.id === String(query.userId) ) {
         b = true;
       }
     });
     if ( b ) {
       const potentialCompanions = [];
       mroute.potentialCompanions.forEach((item, i, arr) => {
-        if ( item.id !== String(user.id) ) {
+        if ( item.id !== String(query.userId) ) {
           potentialCompanions.push(item);
         }
       });
@@ -253,14 +243,14 @@ export class MarschrouteService {
 
     b = false;
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === String(user.id) ) {
+      if ( item.id === String(query.userId) ) {
         b = true;
       }
     });
     if ( b ) {
       const companions = [];
       mroute.companions.forEach((item, i, arr) => {
-        if ( item.id !== String(user.id) ) {
+        if ( item.id !== String(query.userId) ) {
           companions.push(item);
         }
       });
@@ -270,9 +260,9 @@ export class MarschrouteService {
       this.createSnap(res);
       return res;
     }
-    if ( mroute.author === Number(user.id) ) {
+    if ( mroute.author === Number(query.userId) ) {
       const res = await this.marschrouteModel.findOneAndRemove({_id: body.id});
-      this.createSnap(res);
+      //this.createSnap(res);
       return res;
     }
     throw new HttpException('User not found in route', 400);
@@ -282,9 +272,8 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( Number(mroute.author) !== Number(user.id) ) {
+    if ( Number(mroute.author) !== Number(query.userId) ) {
       throw new HttpException('User is not author', 401);
     }
 
@@ -334,9 +323,8 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( mroute.author !== Number(user.id) ) {
+    if ( mroute.author !== Number(query.userId) ) {
       throw new HttpException('User is not author', 401);
     }
     let b = false;
@@ -366,8 +354,19 @@ export class MarschrouteService {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.userService.profile({accessToken: query.accessToken});
     const mroute = await this.marschrouteModel.findById(body.id).exec();
+    let b = false;
+    if ( mroute.author !== Number(query.userId) ) {
+      b = true;
+    }
+    mroute.companions.forEach((item, i, arr) => {
+      if ( item.id === query.userId && item.role === '1') {
+        b = true;
+      }
+    });
+    if ( b === false ) {
+      throw new HttpException('User not rules', 401);
+    }
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {places: body.places}, {upsert: true, new: true});
     this.createSnap(res);
     return res;

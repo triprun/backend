@@ -2,7 +2,7 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class MarschroutePostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly id: string;
 
   @ApiModelProperty({example: '', description: ''})

@@ -1,9 +1,9 @@
 import * as mongoose from 'mongoose';
 
-import {commonPlace} from './common.place.schema';
+import {commonPlaceSchema} from './common.place.schema';
 
 export const EntertainmentSchema = new mongoose.Schema({
-  ...commonPlace,
+  ...commonPlaceSchema,
   freeprice: Boolean,
   avgprice: Number,
   avgpricechild: Number,

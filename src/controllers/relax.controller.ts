@@ -8,6 +8,7 @@ import {
   RelaxGetSearchDto,
   RelaxPostEditDto,
   RelaxGetFetchDto,
+  RelaxPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class RelaxController {
   async edit(@Body() body: RelaxPostEditDto, @Query() query): Promise<RelaxAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('relax');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление места для отдыха'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: RelaxPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('relax');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

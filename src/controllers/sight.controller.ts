@@ -8,6 +8,7 @@ import {
   SightGetSearchDto,
   SightPostEditDto,
   SightGetFetchDto,
+  SightPostDeleteDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -52,6 +53,15 @@ export class SightController {
   async edit(@Body() body: SightPostEditDto, @Query() query): Promise<SightAnyResponse> {
     await this.commonPlaceService.enterCommonPlace('sight');
     return this.commonPlaceService.edit(body, query);
+  }
+
+  @ApiOperation({title: 'Удаление достопримечательности'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('delete')
+  @HttpCode(200)
+  async delete(@Body() body: SightPostDeleteDto, @Query() query): Promise<any> {
+    await this.commonPlaceService.enterCommonPlace('sight');
+    return this.commonPlaceService.delete(body, query);
   }
 
 }

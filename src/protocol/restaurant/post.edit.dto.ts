@@ -2,46 +2,52 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class RestaurantPostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly restId: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly name: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly description: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
+
+  @ApiModelProperty({example: '', description: ''})
   readonly open: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly close: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly photos: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly verified: boolean;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly cuisine: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly type: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly limitations: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly bestToVisit: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly avgprice: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly suitableFor: [string];
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   readonly extras: [string];
 
   readonly accessToken: string;

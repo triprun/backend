@@ -2,22 +2,28 @@ import {ApiModelProperty} from '@nestjs/swagger';
 
 export class EntertainmentPostEditDto {
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   id: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   name: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   description: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '1', description: 'id страны/города'})
+  ref: string;
+
+  @ApiModelProperty({example: 'country', description: 'city/country'})
+  refType: string;
+
+  @ApiModelProperty({example: '', description: ''})
   open: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   close: number;
 
-  @ApiModelProperty()
+  @ApiModelProperty({example: '', description: ''})
   photos: [string];
 
   @ApiModelProperty({example: '', description: ''})
