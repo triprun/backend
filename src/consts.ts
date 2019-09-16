@@ -14,6 +14,8 @@ export const Consts = {
   transport_rep: 'TRANSPORT_REPOSITORY',
   marschroute_rep: 'MARSCHROUTE_REPOSITORY',
   marschroutesnap_rep: 'MARSCHROUTESNAP_REPOSITORY',
+  dialog_rep: 'DIALOG_REPOSITORY',
+  message_rep: 'MESSAGE_REPOSITORY',
   country_rep: 'COUNTRY_REPOSITORY',
   city_rep: 'CITY_REPOSITORY',
   photo_rep: 'PHOTO_REPOSITORY',
@@ -34,4 +36,5 @@ export const Consts = {
   ERROR_MIME_TYPE: 'Error mimetype',
   ERROR_NO_FILE: 'Expected file',
   ERROR_FILE_SIZE: 'File size exceeded',
+  ERROR_DIALOG_NOT_FOUND: 'Dialog not found',
 };

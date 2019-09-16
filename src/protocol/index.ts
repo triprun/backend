@@ -88,6 +88,14 @@ export {ShoppingPostDeleteDto} from './shopping/post.delete.dto';
 export {SightPostDeleteDto} from './sight/post.delete.dto';
 export {TemporaryPostDeleteDto} from './temporary/post.delete.dto';
 export {TransportPostDeleteDto} from './transport/post.delete.dto';
+export {ChatPostCreateDto} from './chat/post.create.dto';
+export {ChatPostSendDto} from './chat/post.send.dto';
+export {ChatPostGroupCreateDto} from './chat/post.group.create.dto';
+export {ChatPostGroupRemoveDto} from './chat/post.group.remove.dto';
+export {ChatPostGroupSendDto} from './chat/post.group.send.dto';
+export {ChatGetDialogListDto} from './chat/get.dialog.list.dto';
+export {ChatDialogByIdDto} from './chat/get.dialog.by.id.dto';
+export {ChatGetDialogQueryDto} from './chat/get.dialog.query.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
@@ -109,6 +117,7 @@ export {CityAnyResponse} from './city/any.response';
 export {PhotoAnyResponse} from './photo/any.response';
 export {TemporaryAnyResponse} from './temporary/any.response';
 export {CustomAnyResponse} from './custom/any.response';
+export {ChatDialogResponse} from './chat/dialog.response';
 
 export {UserPostRegistrationSwagger} from './user/post.registration.swagger';
 export {AuthPostMailSwagger} from './auth/post.mail.swagger';
@@ -130,3 +139,5 @@ export {CityAnySwagger} from './city/any.swagger';
 export {PhotoAnySwagger} from './photo/any.swagger';
 export {TemporaryAnySwagger} from './temporary/any.swagger';
 export {CustomAnySwagger} from './custom/any.swagger';
+export {ChatDialogSwagger} from './chat/dialog.swagger';
+export {ChatGroupSwagger} from './chat/group.swagger';

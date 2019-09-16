@@ -6,10 +6,11 @@ import {DatabaseModule} from '../modules/database.module';
 import {AuthModule} from './auth.module';
 import {MarschrouteService} from '../services/marschroute.service';
 import {UserModule} from './user.module';
+import {ChatModule} from './chat.module';
 
 @Module({
   controllers: [MarschrouteController],
-  imports: [DatabaseModule, AuthModule, UserModule],
+  imports: [DatabaseModule, AuthModule, UserModule, ChatModule],
   providers: [
     ...marschrouteProviders,
     ...marschrouteSnapProviders,
