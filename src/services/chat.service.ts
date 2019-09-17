@@ -241,6 +241,10 @@ export class ChatService {
     // ищем диалог user
     if ( params.refType === 'user' ) {
 
+      if ( query.userId === params.ref ) {
+        throw new HttpException(Consts.ERROR_DIALOG_NOT_FOUND, 403);
+      }
+
       const res = await this.dialogModel.find({
         refType: 'user',
         members: {$all: [query.userId, params.ref]},
@@ -378,7 +382,6 @@ export class ChatService {
     }
   }
 
-/*
   async groupCreate(body, query): Promise<any> {
     if (await this.authService.checkAccessToken(query.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
@@ -386,142 +389,152 @@ export class ChatService {
     const now = moment().unix();
     body.members.push(query.userId);
     let dm = new this.dialogModel({
-      ref: body.userId,
+      ref: '',
       name: body.name,
-      type: 'group',
+      refType: 'conversation',
       created_at: now,
       updated_at: now,
       author: query.userId,
       members: body.members,
     });
     dm = await dm.save();
+    await this.dialogModel.update({
+      _id: dm._id,
+      refType: 'conversation',
+    }, {
+      ref: dm._id,
+    });
+    dm = await this.dialogModel.findById({
+      _id: dm._id,
+    });
     return dm;
   }
 
-  async groupRemove(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
-      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-    }
-    const dm = await this.dialogModel.findById(body.id).exec();
-    if ( dm.author !== query.userId ) {
-      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
-    }
-    await dm.remove();
-    return {};
-  }
-
-  async groupSend(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
-      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-    }
-    const now = moment().unix();
-
-    // ищем диалог
-    const res = await this.dialogModel.findOne({
-      type: 'group',
-      _id: body.id,
-    });
-
-    // проверяем, если ли текущий пользователь в диалоге
-    if ( res.members.indexOf( query.userId ) === -1 ) {
-      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+  /*
+    async groupRemove(body, query): Promise<any> {
+      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+      }
+      const dm = await this.dialogModel.findById(body.id).exec();
+      if ( dm.author !== query.userId ) {
+        throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+      }
+      await dm.remove();
+      return {};
     }
 
-    const arr = res.members;
-    arr.splice(arr.indexOf( query.userId ), 1);
-    // помечаем диалог как "есть не прочитанное сообщение" для получателей
-    await this.dialogModel.findOneAndUpdate({
-      _id: res._id,
-    }, {
-      notificationMembers: arr,
-      updated_at: now,
-    });
+    async groupSend(body, query): Promise<any> {
+      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+      }
+      const now = moment().unix();
 
-    // добавляем сообщение
-    const res3 = new this.messageModel({
-      dialogId: res._id,
-      author: query.userId,
-      created_at: now,
-      updated_at: now,
-      text: body.text,
-      readMembers: [query.userId],
-      deleteForMe: false,
-      deleteForAll: false,
-      modified: false,
-    });
-    await res3.save();
-    return {};
-  }
-
-  async dialogList( query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
-      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-    }
-
-    let conditions = {};
-    if ( query.type === 'all' ) {
-      conditions = {
-        members: { $in: [query.userId]},
-      };
-    }
-    if ( query.type === 'private' ) {
-      conditions = {
-        members: { $in: [query.userId]},
-        type: 'private',
-      };
-    }
-    if ( query.type === 'group' ) {
-      conditions = {
-        members: { $in: [query.userId]},
+      // ищем диалог
+      const res = await this.dialogModel.findOne({
         type: 'group',
-      };
-    }
-    if ( query.type === 'marschroute' ) {
-      conditions = {
-        members: { $in: [query.userId]},
-        type: 'marschroute',
-      };
-    }
-    const res = await this.dialogModel.find({
-      ...conditions,
-    }).sort({updated_at: 'desc'}).skip(Number(query.skip)).limit(Number(query.limit));
-
-    const obj: any[] = [];
-    let noReadCount = 0;
-
-    for (let i = 0; i < res.length; i++) {
-      obj.push({
-        _id: res[i]._id,
-        members: res[i].members,
-        notificationMembers: res[i].notificationMembers,
-        name: res[i].name,
-        type: res[i].type,
-        created_at: res[i].created_at,
-        updated_at: res[i].updated_at,
-        author: res[i].author,
-        noRead: false,
+        _id: body.id,
       });
 
-      if ( res[i].notificationMembers.indexOf(query.userId) + 1 ) {
-        obj[i].noRead = true;
-        noReadCount++;
+      // проверяем, если ли текущий пользователь в диалоге
+      if ( res.members.indexOf( query.userId ) === -1 ) {
+        throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
       }
-      // вытаскиваем последнее сообщение
-      const mm = await this.messageModel.find({
-        dialogId: res[i]._id,
-      }, {}, {
-        sort: {updated_at: -1},
-      }).limit(1);
-      if ( mm.length + 1 ) {
-        obj[i].lastMessage = mm[0];
-      } else {
-        obj[i].lastMessage = null;
-      }
+
+      const arr = res.members;
+      arr.splice(arr.indexOf( query.userId ), 1);
+      // помечаем диалог как "есть не прочитанное сообщение" для получателей
+      await this.dialogModel.findOneAndUpdate({
+        _id: res._id,
+      }, {
+        notificationMembers: arr,
+        updated_at: now,
+      });
+
+      // добавляем сообщение
+      const res3 = new this.messageModel({
+        dialogId: res._id,
+        author: query.userId,
+        created_at: now,
+        updated_at: now,
+        text: body.text,
+        readMembers: [query.userId],
+        deleteForMe: false,
+        deleteForAll: false,
+        modified: false,
+      });
+      await res3.save();
+      return {};
     }
-    return {
-      noReadCount: noReadCount,
-      dialogs: obj,
-    };
-  }
-*/
+
+    async dialogList( query): Promise<any> {
+      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+      }
+
+      let conditions = {};
+      if ( query.type === 'all' ) {
+        conditions = {
+          members: { $in: [query.userId]},
+        };
+      }
+      if ( query.type === 'private' ) {
+        conditions = {
+          members: { $in: [query.userId]},
+          type: 'private',
+        };
+      }
+      if ( query.type === 'group' ) {
+        conditions = {
+          members: { $in: [query.userId]},
+          type: 'group',
+        };
+      }
+      if ( query.type === 'marschroute' ) {
+        conditions = {
+          members: { $in: [query.userId]},
+          type: 'marschroute',
+        };
+      }
+      const res = await this.dialogModel.find({
+        ...conditions,
+      }).sort({updated_at: 'desc'}).skip(Number(query.skip)).limit(Number(query.limit));
+
+      const obj: any[] = [];
+      let noReadCount = 0;
+
+      for (let i = 0; i < res.length; i++) {
+        obj.push({
+          _id: res[i]._id,
+          members: res[i].members,
+          notificationMembers: res[i].notificationMembers,
+          name: res[i].name,
+          type: res[i].type,
+          created_at: res[i].created_at,
+          updated_at: res[i].updated_at,
+          author: res[i].author,
+          noRead: false,
+        });
+
+        if ( res[i].notificationMembers.indexOf(query.userId) + 1 ) {
+          obj[i].noRead = true;
+          noReadCount++;
+        }
+        // вытаскиваем последнее сообщение
+        const mm = await this.messageModel.find({
+          dialogId: res[i]._id,
+        }, {}, {
+          sort: {updated_at: -1},
+        }).limit(1);
+        if ( mm.length + 1 ) {
+          obj[i].lastMessage = mm[0];
+        } else {
+          obj[i].lastMessage = null;
+        }
+      }
+      return {
+        noReadCount: noReadCount,
+        dialogs: obj,
+      };
+    }
+  */
 }

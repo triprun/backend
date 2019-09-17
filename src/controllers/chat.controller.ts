@@ -39,12 +39,30 @@ export class ChatController {
     return this.chatService.dialogById(params, query);
   }
 
+  @ApiOperation({title: 'Отметить диалог как прочитан'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('dialog_read/:refType/:ref')
+  @HttpCode(200)
+  async dialogRead(@Param() params: ChatDialogByIdDto, @Query() query): Promise<any> {
+    query.read = 1;
+    this.chatService.dialogById(params, query);
+    return {};
+  }
+
   @ApiOperation({title: 'Отправить сообщение'})
   @ApiResponse({status: 200, type: {}})
   @Post('send')
   @HttpCode(200)
   async privateSend(@Body() body: ChatPostSendDto, @Query() query): Promise<any> {
     return this.chatService.send(body, query);
+  }
+
+  @ApiOperation({title: 'Создать групповой чат'})
+  @ApiResponse({status: 200, type: ChatGroupSwagger})
+  @Post('group/create')
+  @HttpCode(200)
+  async groupCreate(@Body() body: ChatPostGroupCreateDto, @Query() query): Promise<ChatDialogResponse> {
+    return this.chatService.groupCreate(body, query);
   }
 
   /*@ApiOperation({title: 'Отправить сообщение в групповой чат'})
@@ -55,13 +73,7 @@ export class ChatController {
     return this.chatService.groupSend(body, query);
   }*/
 /*
-  @ApiOperation({title: 'Создать групповой чат'})
-  @ApiResponse({status: 200, type: ChatGroupSwagger})
-  @Post('group/create')
-  @HttpCode(200)
-  async groupCreate(@Body() body: ChatPostGroupCreateDto, @Query() query): Promise<ChatDialogResponse> {
-    return this.chatService.groupCreate(body, query);
-  }
+
 
   @ApiOperation({title: 'Удалить групповой чат'})
   @ApiResponse({status: 200, type: {}})

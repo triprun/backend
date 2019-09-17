@@ -16,8 +16,6 @@ async function bootstrap() {
   const sm = new SignatureMiddleware();
   app.use(sm.use);
   app.enableCors();
-  // const bodyParser = require('body-parser');
-  //app.use(bodyParser);
   await app.listen(3030);
 }
 
