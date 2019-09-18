@@ -13,6 +13,8 @@ import {
   ChatGetDialogListDto,
   ChatDialogByIdDto,
   ChatGetDialogQueryDto,
+  ChatPostGroupJoinDto,
+  ChatPostGroupDropDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -59,28 +61,35 @@ export class ChatController {
 
   @ApiOperation({title: 'Создать групповой чат'})
   @ApiResponse({status: 200, type: ChatGroupSwagger})
-  @Post('group/create')
+  @Post('conversation/create')
   @HttpCode(200)
-  async groupCreate(@Body() body: ChatPostGroupCreateDto, @Query() query): Promise<ChatDialogResponse> {
+  async groupCreate(@Body() body: ChatPostGroupCreateDto, @Query() query): Promise<any> {
     return this.chatService.groupCreate(body, query);
   }
 
-  /*@ApiOperation({title: 'Отправить сообщение в групповой чат'})
+  @ApiOperation({title: 'Добавить пользователя в групповой чат'})
   @ApiResponse({status: 200, type: {}})
-  @Post('group/send')
+  @Post('conversation/join')
   @HttpCode(200)
-  async groupSend(@Body() body: ChatPostGroupSendDto, @Query() query): Promise<any> {
-    return this.chatService.groupSend(body, query);
-  }*/
-/*
+  async groupJoin(@Body() body: ChatPostGroupJoinDto, @Query() query): Promise<any> {
+    return this.chatService.groupJoin(body, query);
+  }
 
+  @ApiOperation({title: 'Добавить пользователя в групповой чат'})
+  @ApiResponse({status: 200, type: {}})
+  @Post('conversation/drop')
+  @HttpCode(200)
+  async groupDrop(@Body() body: ChatPostGroupDropDto, @Query() query): Promise<any> {
+    return this.chatService.groupDrop(body, query);
+  }
 
   @ApiOperation({title: 'Удалить групповой чат'})
   @ApiResponse({status: 200, type: {}})
-  @Post('group/remove')
+  @Post('conversation/remove')
   @HttpCode(200)
   async groupRemove(@Body() body: ChatPostGroupRemoveDto, @Query() query): Promise<{}> {
     return this.chatService.groupRemove(body, query);
   }
-*/
+
+
 }

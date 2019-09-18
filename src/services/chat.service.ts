@@ -410,131 +410,94 @@ export class ChatService {
     return dm;
   }
 
-  /*
-    async groupRemove(body, query): Promise<any> {
-      if (await this.authService.checkAccessToken(query.accessToken) === false) {
-        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-      }
-      const dm = await this.dialogModel.findById(body.id).exec();
-      if ( dm.author !== query.userId ) {
-        throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
-      }
-      await dm.remove();
-      return {};
+  async groupJoin(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const res = await this.dialogModel.find({
+      _id: body.id,
+    });
+
+    let dm = null;
+
+    if (!res.length) {
+      throw new HttpException(Consts.ERROR_DIALOG_NOT_FOUND, 403);
+    } else {
+      dm = res[0];
     }
 
-    async groupSend(body, query): Promise<any> {
-      if (await this.authService.checkAccessToken(query.accessToken) === false) {
-        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
-      }
-      const now = moment().unix();
-
-      // ищем диалог
-      const res = await this.dialogModel.findOne({
-        type: 'group',
-        _id: body.id,
-      });
-
-      // проверяем, если ли текущий пользователь в диалоге
-      if ( res.members.indexOf( query.userId ) === -1 ) {
-        throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
-      }
-
-      const arr = res.members;
-      arr.splice(arr.indexOf( query.userId ), 1);
-      // помечаем диалог как "есть не прочитанное сообщение" для получателей
-      await this.dialogModel.findOneAndUpdate({
-        _id: res._id,
-      }, {
-        notificationMembers: arr,
-        updated_at: now,
-      });
-
-      // добавляем сообщение
-      const res3 = new this.messageModel({
-        dialogId: res._id,
-        author: query.userId,
-        created_at: now,
-        updated_at: now,
-        text: body.text,
-        readMembers: [query.userId],
-        deleteForMe: false,
-        deleteForAll: false,
-        modified: false,
-      });
-      await res3.save();
-      return {};
+    if ( dm.author !== query.userId ) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
 
-    async dialogList( query): Promise<any> {
-      if (await this.authService.checkAccessToken(query.accessToken) === false) {
-        throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    const members = dm.members;
+    body.members.forEach((item) => {
+      if ( members.indexOf(item) === -1 ) {
+        members.push(item);
       }
+    });
 
-      let conditions = {};
-      if ( query.type === 'all' ) {
-        conditions = {
-          members: { $in: [query.userId]},
-        };
-      }
-      if ( query.type === 'private' ) {
-        conditions = {
-          members: { $in: [query.userId]},
-          type: 'private',
-        };
-      }
-      if ( query.type === 'group' ) {
-        conditions = {
-          members: { $in: [query.userId]},
-          type: 'group',
-        };
-      }
-      if ( query.type === 'marschroute' ) {
-        conditions = {
-          members: { $in: [query.userId]},
-          type: 'marschroute',
-        };
-      }
-      const res = await this.dialogModel.find({
-        ...conditions,
-      }).sort({updated_at: 'desc'}).skip(Number(query.skip)).limit(Number(query.limit));
+    const now = moment().unix();
 
-      const obj: any[] = [];
-      let noReadCount = 0;
+    await this.dialogModel.update({
+      _id: body.id,
+    },{
+      members: members,
+      update_at: now,
+    });
 
-      for (let i = 0; i < res.length; i++) {
-        obj.push({
-          _id: res[i]._id,
-          members: res[i].members,
-          notificationMembers: res[i].notificationMembers,
-          name: res[i].name,
-          type: res[i].type,
-          created_at: res[i].created_at,
-          updated_at: res[i].updated_at,
-          author: res[i].author,
-          noRead: false,
-        });
+    return {};
+  }
 
-        if ( res[i].notificationMembers.indexOf(query.userId) + 1 ) {
-          obj[i].noRead = true;
-          noReadCount++;
-        }
-        // вытаскиваем последнее сообщение
-        const mm = await this.messageModel.find({
-          dialogId: res[i]._id,
-        }, {}, {
-          sort: {updated_at: -1},
-        }).limit(1);
-        if ( mm.length + 1 ) {
-          obj[i].lastMessage = mm[0];
-        } else {
-          obj[i].lastMessage = null;
-        }
-      }
-      return {
-        noReadCount: noReadCount,
-        dialogs: obj,
-      };
+  async groupDrop(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-  */
+    const res = await this.dialogModel.find({
+      _id: body.id,
+    });
+
+    let dm = null;
+
+    if (!res.length) {
+      throw new HttpException(Consts.ERROR_DIALOG_NOT_FOUND, 403);
+    } else {
+      dm = res[0];
+    }
+
+    if ( dm.author !== query.userId ) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+    }
+
+    const members = [];
+    dm.members.forEach((item) => {
+      if ( body.members.indexOf(item) === -1 ) {
+        members.push(item);
+      }
+    });
+
+    const now = moment().unix();
+
+    await this.dialogModel.update({
+      _id: body.id,
+    },{
+      members: members,
+      update_at: now,
+    });
+
+    return {};
+  }
+
+  async groupRemove(body, query): Promise<any> {
+    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    const dm = await this.dialogModel.findById(body.id).exec();
+    if ( dm.author !== query.userId ) {
+      throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
+    }
+    await dm.remove();
+    return {};
+  }
+
 }

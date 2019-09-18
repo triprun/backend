@@ -96,6 +96,8 @@ export {ChatPostGroupSendDto} from './chat/post.group.send.dto';
 export {ChatGetDialogListDto} from './chat/get.dialog.list.dto';
 export {ChatDialogByIdDto} from './chat/get.dialog.by.id.dto';
 export {ChatGetDialogQueryDto} from './chat/get.dialog.query.dto';
+export {ChatPostGroupJoinDto} from './chat/post.group.join.dto';
+export {ChatPostGroupDropDto} from './chat/post.group.drop.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
