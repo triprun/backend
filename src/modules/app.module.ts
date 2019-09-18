@@ -19,6 +19,7 @@ import {CityModule} from './city.module';
 import {PhotoModule} from './photo.module';
 import {TemporaryModule} from './temporary.module';
 import {CustomModule} from './custom.module';
+import {UploadModule} from './upload.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import {CustomModule} from './custom.module';
     PhotoModule,
     TemporaryModule,
     CustomModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],
