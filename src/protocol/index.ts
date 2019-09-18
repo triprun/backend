@@ -88,6 +88,7 @@ export {ShoppingPostDeleteDto} from './shopping/post.delete.dto';
 export {SightPostDeleteDto} from './sight/post.delete.dto';
 export {TemporaryPostDeleteDto} from './temporary/post.delete.dto';
 export {TransportPostDeleteDto} from './transport/post.delete.dto';
+export {UploadPostImageDto} from './upload/post.image.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';
