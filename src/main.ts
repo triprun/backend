@@ -11,13 +11,12 @@ import {AppModule} from './modules/app.module';
 import {SignatureMiddleware} from './middlewares/signature.middleware';
 
 async function bootstrap() {
-  let config = { cors: true };
+  let config = {};
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     const fs = require('fs');
     const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
     const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
     config = {
-      ...config,
       key: keyFile,
       cert: certFile
     }
@@ -36,12 +35,17 @@ async function bootstrap() {
   app.use(sm.use);
   app.use(helmet());
   app.use(csurf());
-  // app.enableCors();
+  app.enableCors();
   // const bodyParser = require('body-parser');
   //app.use(bodyParser);
   await app.init();
   http.createServer(server).listen(3030);
-  https.createServer(config, server).listen(443);
+  console.log(config);
+  if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
+    console.log('got SSL certs, loading HTTPS...');
+    https.createServer(config, server).listen(443);
+    console.log('HTTPS server is up and running!');
+  }
 }
 
 bootstrap();
