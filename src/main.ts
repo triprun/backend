@@ -1,5 +1,10 @@
+const https = require('https');
+const http = require('http');
+
+import express from 'express';
 import {NestFactory} from '@nestjs/core';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
+import {ExpressAdapter} from '@nestjs/platform-express';
 import * as helmet from 'helmet';
 import * as csurf from 'csurf';
 import {AppModule} from './modules/app.module';
@@ -17,7 +22,8 @@ async function bootstrap() {
       cert: certFile
     }
   }
-  const app = await NestFactory.create(AppModule, config);
+  const server = express();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const options = new DocumentBuilder()
     .setTitle('TripRun')
     .setDescription('TripRun')
@@ -30,10 +36,12 @@ async function bootstrap() {
   app.use(sm.use);
   app.use(helmet());
   app.use(csurf());
-  app.enableCors();
+  // app.enableCors();
   // const bodyParser = require('body-parser');
   //app.use(bodyParser);
-  await app.listen(3030);
+  await app.init();
+  http.createServer(server).listen(3030);
+  https.createServer(config, server).listen(443);
 }
 
 bootstrap();
