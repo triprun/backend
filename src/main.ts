@@ -6,7 +6,20 @@ import {AppModule} from './modules/app.module';
 import {SignatureMiddleware} from './middlewares/signature.middleware';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  let config = { cors: true };
+  if(process.env.SSL_KEY && process.env.SSL_CRT) {
+    const fs = require('fs');
+    const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
+    const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
+    config = {
+      ...config,
+      httpsOptions: {
+        key: keyFile,
+        cert: certFile,
+      }
+    }
+  }
+  const app = await NestFactory.create(AppModule, config);
   const options = new DocumentBuilder()
     .setTitle('TripRun')
     .setDescription('TripRun')
