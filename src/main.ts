@@ -1,7 +1,7 @@
 const https = require('https');
 const http = require('http');
 
-import express from 'express';
+import * as express from 'express';
 import {NestFactory} from '@nestjs/core';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {ExpressAdapter} from '@nestjs/platform-express';
