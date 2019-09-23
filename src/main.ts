@@ -36,8 +36,8 @@ async function bootstrap() {
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     console.log('got SSL certs, loading HTTPS...');
     const fs = require('fs');
-    const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
-    const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
+    const keyFile  = fs.readFileSync(`${__dirname}/${process.env.PATH_TO_SSL_KEY}`);
+    const certFile = fs.readFileSync(`${__dirname}/${process.env.PATH_TO_SSL_CRT}`);
     const config = {
       key: keyFile,
       cert: certFile
