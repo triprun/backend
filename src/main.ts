@@ -30,9 +30,7 @@ async function bootstrap() {
   // const bodyParser = require('body-parser');
   //app.use(bodyParser);
   await app.init();
-  http.createServer(server).listen(3030);
-  console.log(process.env.PATH_TO_SSL_KEY);
-  console.log(process.env.PATH_TO_SSL_CRT);
+  http.createServer(server).listen(3031);
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     console.log('got SSL certs, loading HTTPS...');
     const fs = require('fs');
@@ -42,7 +40,7 @@ async function bootstrap() {
       key: keyFile,
       cert: certFile
     }
-    https.createServer(config, server).listen(3031);
+    https.createServer(config, server).listen(3030);
     console.log('HTTPS server is up and running!');
   }
 }
