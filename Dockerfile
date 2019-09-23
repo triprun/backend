@@ -12,6 +12,8 @@ USER node
 
 RUN npm install
 
+RUN npx sequelize-cli db:migrate
+
 COPY --chown=node:node . .
 
 EXPOSE 3030
