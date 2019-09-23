@@ -7,7 +7,7 @@ import {SignatureMiddleware} from './middlewares/signature.middleware';
 
 async function bootstrap() {
   let config = { cors: true };
-  if(process.env.SSL_KEY && process.env.SSL_CRT) {
+  if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     const fs = require('fs');
     const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
     const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
