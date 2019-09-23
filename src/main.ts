@@ -42,7 +42,7 @@ async function bootstrap() {
       key: keyFile,
       cert: certFile
     }
-    https.createServer(config, server).listen(443);
+    https.createServer(config, server).listen(3031);
     console.log('HTTPS server is up and running!');
   }
 }

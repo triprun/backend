@@ -15,6 +15,6 @@ RUN npm install
 COPY --chown=node:node . .
 
 EXPOSE 3030
-EXPOSE 443
+EXPOSE 3031
 
 CMD [ "npm", "run", "start:dev" ]
