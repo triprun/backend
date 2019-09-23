@@ -11,16 +11,6 @@ import {AppModule} from './modules/app.module';
 import {SignatureMiddleware} from './middlewares/signature.middleware';
 
 async function bootstrap() {
-  let config = {};
-  if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
-    const fs = require('fs');
-    const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
-    const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
-    config = {
-      key: keyFile,
-      cert: certFile
-    }
-  }
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const options = new DocumentBuilder()
@@ -43,6 +33,13 @@ async function bootstrap() {
   console.log(config);
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     console.log('got SSL certs, loading HTTPS...');
+    const fs = require('fs');
+    const keyFile  = fs.readFileSync(`${process.env.PATH_TO_SSL_KEY}`);
+    const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
+    const config = {
+      key: keyFile,
+      cert: certFile
+    }
     https.createServer(config, server).listen(443);
     console.log('HTTPS server is up and running!');
   }
