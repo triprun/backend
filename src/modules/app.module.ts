@@ -20,6 +20,7 @@ import {PhotoModule} from './photo.module';
 import {TemporaryModule} from './temporary.module';
 import {CustomModule} from './custom.module';
 import {ChatModule} from './chat.module';
+import {EventModule} from './event.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import {ChatModule} from './chat.module';
     TemporaryModule,
     CustomModule,
     ChatModule,
+    EventModule,
   ],
   controllers: [],
   providers: [],

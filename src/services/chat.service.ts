@@ -2,7 +2,7 @@ import { Injectable, Inject, HttpException} from '@nestjs/common';
 import { Model } from 'mongoose';
 import { Consts } from '../consts';
 import { RedisService } from 'nestjs-redis';
-import { UserService } from './user.service';
+import { EventProvider } from '../providers/event.provider';
 import { IDialog } from '../schemas/dialog.interface';
 import { IMessage } from '../schemas/message.interface';
 import moment = require('moment');
@@ -20,7 +20,7 @@ export class ChatService {
 
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
-    private readonly userService: UserService,
+    private readonly eventProvider: EventProvider,
   ) {
   }
 
@@ -82,7 +82,6 @@ export class ChatService {
       } else {
         dm = res[0];
       }
-
     }
 
     // ищем диалог conversation
@@ -98,10 +97,9 @@ export class ChatService {
       } else {
         dm = res[0];
       }
-
     }
 
-    // ищем диалог conversation
+    // ищем диалог marschroute
     if ( body.refType === 'marschroute' ) {
 
       const res = await this.dialogModel.find({
@@ -114,7 +112,6 @@ export class ChatService {
       } else {
         dm = res[0];
       }
-
     }
 
     if ( dm === null ) {
@@ -134,6 +131,16 @@ export class ChatService {
       modified: false,
     });
     await res3.save();
+
+    for (let i = 0; i < dm.members.length; i++) {
+      if ( dm.members[i] !== query.userId ) {
+        const tmp = {
+          dialog: dm,
+          message: res3,
+        };
+        await this.eventProvider.emit('chat', dm.members[i], tmp);
+      }
+    }
 
     return {};
   }

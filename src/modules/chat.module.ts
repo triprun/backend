@@ -6,10 +6,11 @@ import {DatabaseModule} from '../modules/database.module';
 import {AuthModule} from './auth.module';
 import {ChatService} from '../services/chat.service';
 import {UserModule} from './user.module';
+import {EventModule} from './event.module';
 
 @Module({
   controllers: [ChatController],
-  imports: [DatabaseModule, AuthModule, UserModule],
+  imports: [DatabaseModule, AuthModule, UserModule, EventModule],
   providers: [
     ...dialogProviders,
     ...messageProviders,
