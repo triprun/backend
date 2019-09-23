@@ -3,6 +3,7 @@ const https = require('https');
 const http = require('http');
 
 import * as express from 'express';
+import * as cors from 'cors';
 import {NestFactory} from '@nestjs/core';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {ExpressAdapter} from '@nestjs/platform-express';
@@ -13,6 +14,7 @@ import {SignatureMiddleware} from './middlewares/signature.middleware';
 
 async function bootstrap() {
   const server = express();
+  server.options('*', cors());
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
   const options = new DocumentBuilder()
     .setTitle('TripRun')
