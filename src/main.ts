@@ -8,7 +8,7 @@ import {NestFactory} from '@nestjs/core';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {ExpressAdapter} from '@nestjs/platform-express';
 import * as helmet from 'helmet';
-import * as csurf from 'csurf';
+// import * as csurf from 'csurf';
 import {AppModule} from './modules/app.module';
 import {SignatureMiddleware} from './middlewares/signature.middleware';
 
@@ -27,7 +27,7 @@ async function bootstrap() {
   const sm = new SignatureMiddleware();
   app.use(sm.use);
   app.use(helmet());
-  app.use(csurf());
+  // app.use(csurf());
   app.enableCors();
   // const bodyParser = require('body-parser');
   //app.use(bodyParser);
