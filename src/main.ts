@@ -30,7 +30,8 @@ async function bootstrap() {
   //app.use(bodyParser);
   await app.init();
   http.createServer(server).listen(3030);
-  console.log(config);
+  console.log(process.env.PATH_TO_SSL_KEY);
+  console.log(process.env.PATH_TO_SSL_CRT);
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {
     console.log('got SSL certs, loading HTTPS...');
     const fs = require('fs');
