@@ -12,6 +12,8 @@ USER node
 
 RUN npm install
 
+RUN npx sequelize-cli init
+
 RUN npx sequelize-cli db:migrate
 
 COPY --chown=node:node . .
