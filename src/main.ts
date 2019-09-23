@@ -32,7 +32,7 @@ async function bootstrap() {
   app.use(sm.use);
   app.use(helmet());
   app.use(csurf());
-  // app.enableCors();
+  app.enableCors();
   // const bodyParser = require('body-parser');
   //app.use(bodyParser);
   await app.listen(3030);
