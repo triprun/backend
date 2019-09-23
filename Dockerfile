@@ -5,6 +5,8 @@ WORKDIR /home/node/triprun
 
 COPY package*.json ./
 COPY .env ./.env
+COPY nest-selfsigned.key ./nest-selfsigned.key
+COPY nest-selfsigned.crt ./nest-selfsigned.crt
 
 USER node
 
