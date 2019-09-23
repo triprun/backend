@@ -13,10 +13,8 @@ async function bootstrap() {
     const certFile = fs.readFileSync(`${process.env.PATH_TO_SSL_CRT}`);
     config = {
       ...config,
-      httpsOptions: {
-        key: keyFile,
-        cert: certFile,
-      }
+      key: keyFile,
+      cert: certFile
     }
   }
   const app = await NestFactory.create(AppModule, config);
