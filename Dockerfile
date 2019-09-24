@@ -14,8 +14,7 @@ RUN npm install
 
 COPY --chown=node:node . .
 
-RUN export DATABASE_URL=postgres://postgres:qwer1234ty56@postgres:5432/triprun
-RUN npx sequelize-cli db:migrate
+RUN export DATABASE_URL=postgres://postgres:qwer1234ty56@postgres:5432/triprun && npx sequelize-cli db:migrate
 
 EXPOSE 3030
 EXPOSE 3031
