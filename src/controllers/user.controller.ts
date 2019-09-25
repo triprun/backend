@@ -13,6 +13,7 @@ import {
   UserPostPasswordSwagger,
   UserPostRoleDto,
   UserGetProfilesDto,
+  UserPostProfileDto,
 } from '../protocol';
 
 @ApiBearerAuth()
@@ -63,6 +64,16 @@ export class UserController {
   @HttpCode(200)
   async profiles(@Query() query: UserGetProfilesDto): Promise<UserGetProfileResponse[]> {
     return this.userService.profiles(query);
+  }
+
+  @ApiOperation({
+    title: 'Изменить профиль пользователя',
+  })
+  @ApiResponse({status: 200, type: UserGetProfileSwagger})
+  @Post('profile')
+  @HttpCode(200)
+  async profileEdit(@Body() body: UserPostProfileDto, @Query() query): Promise<any> {
+    return this.userService.profileEdit(body, query);
   }
 
   @ApiOperation({title: 'Установка роли', description: 'Принимает только значение 0-user,1-moderator,2-root'})

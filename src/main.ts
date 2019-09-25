@@ -19,7 +19,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('TripRun')
     .setDescription('TripRun')
-    .addBearerAuth('accesstoken')
+    .addBearerAuth()
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);

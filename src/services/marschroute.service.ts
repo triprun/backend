@@ -33,13 +33,13 @@ export class MarschrouteService {
   }
 
   async create(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
 
     const common = new this.marschrouteModel({...body, created_at: moment().unix()});
     common.id = common._id;
-    common.author = Number(query.userId);
+    common.author = Number(query.this.userId);
     const res = await common.save();
 
     this.createSnap(res);
@@ -52,15 +52,15 @@ export class MarschrouteService {
     if ( mroute.type !== 0 ) {
       return mroute;
     }
-    if (query.accessToken == null) {
+    if (query.this.accessToken == null) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
     let b = false;
-    if ( mroute.author === Number(query.userId) ) {
+    if ( mroute.author === Number(query.this.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === query.userId ) {
+      if ( item.id === query.this.userId ) {
         b = true;
       }
     });
@@ -71,16 +71,16 @@ export class MarschrouteService {
   }
 
   async edit(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     let b = false;
-    if ( mroute.author === Number(query.userId) ) {
+    if ( mroute.author === Number(query.this.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === query.userId && item.role === '1' ) {
+      if ( item.id === query.this.userId && item.role === '1' ) {
         b = true;
       }
     });
@@ -95,13 +95,13 @@ export class MarschrouteService {
   async list(userId, query): Promise<any> {
     const user = {id: 0};
     if (userId === null) {
-      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
         throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
       }
-      userId = query.userId;
+      userId = query.this.userId;
     } else {
-      if ( await this.authService.checkAccessToken(query.accessToken) !== false ) {
-        user.id = query.userId;
+      if ( await this.authService.checkAccessToken(query.this.accessToken) !== false ) {
+        user.id = query.this.userId;
       }
     }
 
@@ -144,16 +144,16 @@ export class MarschrouteService {
   }
 
   async join(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     let b = false;
-    if ( mroute.author === Number(query.userId) ) {
+    if ( mroute.author === Number(query.this.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === query.userId ) {
+      if ( item.id === query.this.userId ) {
         b = true;
       }
     });
@@ -162,7 +162,7 @@ export class MarschrouteService {
     }
     b = false;
     mroute.potentialCompanions.forEach((item, i, arr) => {
-      if ( item.id === query.userId ) {
+      if ( item.id === query.this.userId ) {
         b = true;
       }
     });
@@ -170,7 +170,7 @@ export class MarschrouteService {
       throw new HttpException('You have already submitted a request', 400);
     }
     mroute.potentialCompanions.push({
-      id: query.userId,
+      id: query.this.userId,
       role: '0',
     });
     const res = await this.marschrouteModel.findOneAndUpdate({_id: body.id}, {
@@ -181,11 +181,11 @@ export class MarschrouteService {
   }
 
   async approve(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( mroute.author !== Number(query.userId) ) {
+    if ( mroute.author !== Number(query.this.userId) ) {
       throw new HttpException('User is not author', 401);
     }
     let b = -1;
@@ -216,21 +216,21 @@ export class MarschrouteService {
   }
 
   async leave(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
 
     let b = false;
     mroute.potentialCompanions.forEach((item, i, arr) => {
-      if ( item.id === String(query.userId) ) {
+      if ( item.id === String(query.this.userId) ) {
         b = true;
       }
     });
     if ( b ) {
       const potentialCompanions = [];
       mroute.potentialCompanions.forEach((item, i, arr) => {
-        if ( item.id !== String(query.userId) ) {
+        if ( item.id !== String(query.this.userId) ) {
           potentialCompanions.push(item);
         }
       });
@@ -243,14 +243,14 @@ export class MarschrouteService {
 
     b = false;
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === String(query.userId) ) {
+      if ( item.id === String(query.this.userId) ) {
         b = true;
       }
     });
     if ( b ) {
       const companions = [];
       mroute.companions.forEach((item, i, arr) => {
-        if ( item.id !== String(query.userId) ) {
+        if ( item.id !== String(query.this.userId) ) {
           companions.push(item);
         }
       });
@@ -260,7 +260,7 @@ export class MarschrouteService {
       this.createSnap(res);
       return res;
     }
-    if ( mroute.author === Number(query.userId) ) {
+    if ( mroute.author === Number(query.this.userId) ) {
       const res = await this.marschrouteModel.findOneAndRemove({_id: body.id});
       //this.createSnap(res);
       return res;
@@ -269,11 +269,11 @@ export class MarschrouteService {
   }
 
   async drop(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( Number(mroute.author) !== Number(query.userId) ) {
+    if ( Number(mroute.author) !== Number(query.this.userId) ) {
       throw new HttpException('User is not author', 401);
     }
 
@@ -320,11 +320,11 @@ export class MarschrouteService {
   }
 
   async role(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
-    if ( mroute.author !== Number(query.userId) ) {
+    if ( mroute.author !== Number(query.this.userId) ) {
       throw new HttpException('User is not author', 401);
     }
     let b = false;
@@ -351,16 +351,16 @@ export class MarschrouteService {
   }
 
   async places(body, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     const mroute = await this.marschrouteModel.findById(body.id).exec();
     let b = false;
-    if ( mroute.author !== Number(query.userId) ) {
+    if ( mroute.author !== Number(query.this.userId) ) {
       b = true;
     }
     mroute.companions.forEach((item, i, arr) => {
-      if ( item.id === query.userId && item.role === '1') {
+      if ( item.id === query.this.userId && item.role === '1') {
         b = true;
       }
     });
