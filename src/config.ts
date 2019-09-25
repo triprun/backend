@@ -17,5 +17,6 @@ export const Config = {
   refresh_token_expire_at: 60 * 60 * 24 * 3, // seconds
   upload_images_path: './public/uploads/',
   upload_images_path_response: '/public/uploads/',
-  upload_images_file_size: 1024 * 1024 * 10, // bytes
+  upload_images_file_size_max: 1024 * 1024 * 10, // bytes
+  upload_images_file_size_min: 1024 * 5, // bytes
 };

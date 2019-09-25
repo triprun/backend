@@ -20,7 +20,7 @@ export class UploadController {
   @HttpCode(200)
   @UseInterceptors(FileInterceptor('file'))
   @ApiImplicitFile({ name: 'file', required: true, description: 'file to upload' })
-  image( @UploadedFile() file, @Query() query ): Promise<any> {
+  image( @UploadedFile() file, @Query() query: UploadPostImageDto ): Promise<any> {
     return this.uploadService.image(file, query);
   }
 
