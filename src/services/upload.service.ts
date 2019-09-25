@@ -17,7 +17,7 @@ export class UploadService {
   }
 
   async image(file, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     if ( typeof file === 'undefined') {

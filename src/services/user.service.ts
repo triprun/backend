@@ -17,6 +17,7 @@ import {
   AuthGetLogoutDto,
   AuthPostAccessDto,
   AuthPostRefreshDto,
+  UserPostProfileDto,
 } from '../protocol';
 
 import {AuthService} from './auth.service';
@@ -110,7 +111,9 @@ export class UserService {
 
     const profile = await this.profile({
       userName: null,
-      accessToken: res.accessToken,
+      this: {
+        accessToken: res.accessToken,
+      },
       userId: null,
     });
 
@@ -120,14 +123,50 @@ export class UserService {
     };
   }
 
-  async logout(query: AuthGetLogoutDto): Promise<any> {
+  async logout(query): Promise<any> {
 
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     await this.authService.logout(query);
 
     return {};
+  }
+
+  async profileEdit(body: UserPostProfileDto, query) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
+      throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
+    }
+    let user = await this.TUsers.findOne({
+      where: {
+        userName: body.userName,
+      },
+    });
+
+    if (user != null) {
+      throw new HttpException(Consts.ERROR_USERNAME, 400);
+    }
+
+    await this.TUsers.update({
+      firstName: body.firstName,
+      lastName: body.lastName,
+      userName: body.userName,
+      bdate: body.bdate,
+      avatar: body.avatar,
+    }, {
+      where: {
+        id: query.this.userId,
+      },
+    });
+
+    user = await this.TUsers.findOne({
+      where: {
+        id: query.this.userId,
+      },
+    });
+
+    return user;
+
   }
 
   async password(body: UserPostPasswordDto, query): Promise<any> {
@@ -140,12 +179,12 @@ export class UserService {
       throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
     }
 
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
 
     let decoded = null;
-    jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
+    jwt.verify(query.this.accessToken, Config.jwt_key_access, (e, d) => {
       if (d != null) {
         decoded = d;
       }
@@ -204,10 +243,10 @@ export class UserService {
 
   async setRole(body, query): Promise<any> {
 
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
-    const user = await this.profile({accessToken: query.accessToken});
+    const user = await this.profile({accessToken: query.this.accessToken});
     if (user.role === 0) {
       throw new HttpException(Consts.ERROR_FORBIDDEN, 403);
     }
@@ -243,7 +282,7 @@ export class UserService {
 
   async profile(query): Promise<any> {
 
-    if (query.userId == null && query.userName == null && query.accessToken == null) {
+    if (query.userId == null && query.userName == null && query.this.accessToken == null) {
       throw new HttpException(Consts.ERROR_REQUIRED_FIELDS, 400);
     }
 
@@ -252,11 +291,11 @@ export class UserService {
 
     if (query.userId == null && query.userName == null) {
 
-      if (await this.authService.checkAccessToken(query.accessToken) === false) {
+      if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
         throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
       }
 
-      jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
+      jwt.verify(query.this.accessToken, Config.jwt_key_access, (e, d) => {
         if (d != null) {
           decoded = d;
         }
@@ -313,7 +352,7 @@ export class UserService {
   }
 
   async access(body: AuthPostAccessDto, query): Promise<any> {
-    if (await this.authService.checkAccessToken(query.accessToken) === false) {
+    if (await this.authService.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
     return {};
