@@ -21,6 +21,8 @@ import {
 } from '../protocol';
 
 import {AuthService} from './auth.service';
+import {Model} from 'mongoose';
+import {IUploadImage} from '../schemas/upload.image.interface';
 
 @Injectable()
 export class UserService {
@@ -31,6 +33,8 @@ export class UserService {
   constructor(
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
+    @Inject(Consts.upload_image_rep)
+    private readonly uploadImageModel: Model<IUploadImage>,
   ) {
   }
 
@@ -334,6 +338,8 @@ export class UserService {
       throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
     }
 
+    //const ava = await this.uploadImageModel.findById(user.avatar);
+
     return {
       id: user.id,
       email: user.email,
@@ -343,7 +349,7 @@ export class UserService {
       sex: user.sex,
       verified: user.verified,
       bio: user.bio,
-      avatar: user.avatar,
+     // avatar: ava,
       joined: user.createdAt,
       origin: user.origin,
       role: user.role,

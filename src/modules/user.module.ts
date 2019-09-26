@@ -3,16 +3,15 @@ import {UserController} from '../controllers/user.controller';
 import {UserService} from '../services/user.service';
 import {DatabaseModule} from './database.module';
 import {AuthModule} from './auth.module';
-//import {CommonPlaceModule} from './common.place.module';
-//import {UsersProvider} from '../providers/users.provider';
+import {uploadImageProviders} from '../providers/upload.image.provider';
 
 @Module({
   controllers: [UserController],
   providers: [
     UserService,
-   // ...UsersProvider,
+    ...uploadImageProviders,
   ],
-  imports: [DatabaseModule, AuthModule/*, CommonPlaceModule*/],
+  imports: [DatabaseModule,  AuthModule],
   exports: [UserService],
 })
 export class UserModule {
