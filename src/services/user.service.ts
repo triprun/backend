@@ -148,7 +148,9 @@ export class UserService {
     });
 
     if (user != null) {
-      throw new HttpException(Consts.ERROR_USERNAME, 400);
+      if ( user.id !== query.this.userId ) {
+        throw new HttpException(Consts.ERROR_USERNAME, 400);
+      }
     }
 
     await this.TUsers.update({
@@ -338,7 +340,7 @@ export class UserService {
       throw new HttpException(Consts.ERROR_USER_NOT_FOUND, 400);
     }
 
-    //const ava = await this.uploadImageModel.findById(user.avatar);
+    const ava = await this.uploadImageModel.findById(user.avatar);
 
     return {
       id: user.id,
@@ -349,7 +351,7 @@ export class UserService {
       sex: user.sex,
       verified: user.verified,
       bio: user.bio,
-     // avatar: ava,
+      avatar: ava,
       joined: user.createdAt,
       origin: user.origin,
       role: user.role,
