@@ -38,4 +38,10 @@ export class Users extends Model<Users> {
   @Column
   role: number;
 
+  @Column
+  about: string;
+
+  @Column
+  status: string;
+
 }
