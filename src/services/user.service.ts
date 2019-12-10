@@ -153,6 +153,8 @@ export class UserService {
       userName: body.userName,
       bdate: body.bdate,
       avatar: body.avatar,
+      about: body.about,
+      status: body.status,
     }, {
       where: {
         id: query.this.userId,
@@ -347,6 +349,8 @@ export class UserService {
       joined: user.createdAt,
       origin: user.origin,
       role: user.role,
+      about: user.about,
+      status: user.status,
     };
 
   }

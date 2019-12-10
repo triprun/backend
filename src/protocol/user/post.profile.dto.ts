@@ -26,7 +26,17 @@ export class UserPostProfileDto {
   @ApiModelProperty({
     description: 'Аватар',
   })
-  readonly avatar: string;
 
+  @ApiModelProperty({
+    description: 'О себе',
+  })
+  readonly about: string;
+
+  @ApiModelProperty({
+    description: 'Статус',
+  })
+  readonly status: string;
+
+  readonly avatar: string;
 
 }
