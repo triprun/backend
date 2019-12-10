@@ -158,12 +158,12 @@ export class AuthService {
 
   async logout(query): Promise<any> {
 
-    if (await this.checkAccessToken(query.accessToken) === false) {
+    if (await this.checkAccessToken(query.this.accessToken) === false) {
       throw new HttpException(Consts.ERROR_ACCESS_TOKEN, 401);
     }
 
     let decoded = null;
-    jwt.verify(query.accessToken, Config.jwt_key_access, (e, d) => {
+    jwt.verify(query.this.accessToken, Config.jwt_key_access, (e, d) => {
       if (d != null) {
         decoded = d;
       }

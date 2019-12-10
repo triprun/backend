@@ -1,5 +1,5 @@
 export const Config = {
-  mdb_link: 'mongodb://127.0.0.1/mongotrip',
+  mdb_link: 'mongodb://localhost/mongotrip',
   pdb_host: 'localhost',
   pdb_port: 5432,
   pdb_username: 'postgres',
@@ -16,5 +16,7 @@ export const Config = {
   access_token_expire_at: 60 * 30 * 999, // seconds
   refresh_token_expire_at: 60 * 60 * 24 * 3, // seconds
   upload_images_path: './public/uploads/',
-  upload_images_file_size: 1024 * 1024 * 10, // bytes
+  upload_images_path_response: '/public/uploads/',
+  upload_images_file_size_max: 1024 * 1024 * 10, // bytes
+  upload_images_file_size_min: 1024 * 5, // bytes
 };

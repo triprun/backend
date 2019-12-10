@@ -2,7 +2,7 @@ export {UserPostRegistrationDto} from './user/post.registration.dto';
 export {AuthPostMailDto} from './auth/post.mail.dto';
 export {UserGetProfileDto} from './user/get.profile.dto';
 export {UserGetProfilesDto} from './user/get.profiles.dto';
-export {UserPostPasswordDto} from './user/post.password.dto.js';
+export {UserPostPasswordDto} from './user/post.password.dto';
 export {UserPostRoleDto} from './user/post.role.dto';
 export {AuthGetLogoutDto} from './auth/get.logout.dto';
 export {AuthPostAccessDto} from './auth/post.access.dto';
@@ -98,6 +98,8 @@ export {ChatDialogByIdDto} from './chat/get.dialog.by.id.dto';
 export {ChatGetDialogQueryDto} from './chat/get.dialog.query.dto';
 export {ChatPostGroupJoinDto} from './chat/post.group.join.dto';
 export {ChatPostGroupDropDto} from './chat/post.group.drop.dto';
+export {UploadPostImageDto} from './upload/post.image.dto';
+export {UserPostProfileDto} from './user/post.profile.dto';
 
 export {UserPostRegistrationResponse} from './user/post.registration.response';
 export {AuthPostMailResponse} from './auth/post.mail.response';

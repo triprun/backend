@@ -37,7 +37,7 @@ export class AuthController {
   @ApiResponse({status: 200, type: {}})
   @Get('logout')
   @HttpCode(200)
-  async logout(@Query() query: AuthGetLogoutDto): Promise<any> {
+  async logout(@Query() query): Promise<any> {
     return this.userService.logout(query);
   }
 
@@ -45,8 +45,8 @@ export class AuthController {
   @ApiResponse({status: 200, type: AuthPostRefreshSwagger})
   @Post('refresh')
   @HttpCode(200)
-  async refresh(@Body() query: AuthPostRefreshDto): Promise<AuthPostRefreshResponse> {
-    return this.userService.refresh(query);
+  async refresh(@Body() body: AuthPostRefreshDto): Promise<AuthPostRefreshResponse> {
+    return this.userService.refresh(body);
   }
 
   @ApiOperation({title: 'Проверка токена', description: 'Вернет пустой json при успехе'})

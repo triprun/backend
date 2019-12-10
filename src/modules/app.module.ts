@@ -21,6 +21,7 @@ import {TemporaryModule} from './temporary.module';
 import {CustomModule} from './custom.module';
 import {ChatModule} from './chat.module';
 import {EventModule} from './event.module';
+import {UploadModule} from './upload.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import {EventModule} from './event.module';
     CustomModule,
     ChatModule,
     EventModule,
+    UploadModule,
   ],
   controllers: [],
   providers: [],

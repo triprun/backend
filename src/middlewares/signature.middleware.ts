@@ -7,23 +7,23 @@ import * as jwt from 'jsonwebtoken';
 export class SignatureMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: Function) {
-
-    req.query.accessToken = null;
-    if (typeof req.headers.accesstoken !== 'undefined') {
-      req.query.accessToken = req.headers.accesstoken;
+    req.query.this = {};
+    req.query.this.accessToken = null;
+    if (typeof req.headers.authorization !== 'undefined') {
+      req.query.this.accessToken = req.headers.authorization;
 
       let decoded = null;
-      jwt.verify(req.query.accessToken, Config.jwt_key_access, (e, d) => {
+      jwt.verify(req.query.this.accessToken, Config.jwt_key_access, (e, d) => {
         if (d != null) {
           decoded = d;
         }
       });
 
-      req.query.userId = null;
-      req.query.userRole = null;
+      req.query.this.userId = null;
+      req.query.this.userRole = null;
       if (decoded !== null) {
-        req.query.userId = decoded.userId;
-        req.query.userRole = decoded.userRole;
+        req.query.this.userId = decoded.userId;
+        req.query.this.userRole = decoded.userRole;
       }
     }
     next();

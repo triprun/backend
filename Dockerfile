@@ -5,6 +5,8 @@ WORKDIR /home/node/triprun
 
 COPY package*.json ./
 COPY .env ./.env
+COPY nest-selfsigned.key ./nest-selfsigned.key
+COPY nest-selfsigned.crt ./nest-selfsigned.crt
 
 USER node
 
@@ -13,5 +15,6 @@ RUN npm install
 COPY --chown=node:node . .
 
 EXPOSE 3030
+EXPOSE 3031
 
 CMD [ "npm", "run", "start:dev" ]
