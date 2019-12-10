@@ -6,6 +6,8 @@ import {RedisService} from 'nestjs-redis';
 import {AuthService} from './auth.service';
 import * as fs from 'fs';
 import * as path from 'path';
+import {IUploadImage} from '../schemas/upload.image.interface';
+import {Model} from 'mongoose';
 
 @Injectable()
 export class UploadService {
@@ -13,6 +15,8 @@ export class UploadService {
   constructor(
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
+    @Inject(Consts.upload_image_rep)
+    private readonly uploadImageModel: Model<IUploadImage>,
   ) {
   }
 
@@ -27,7 +31,10 @@ export class UploadService {
       file.mimetype === 'image/png')) {
       throw new HttpException(Consts.ERROR_MIME_TYPE, 400);
     }
-    if ( file.size > Config.upload_images_file_size) {
+    if ( file.size > Config.upload_images_file_size_max ) {
+      throw new HttpException(Consts.ERROR_FILE_SIZE, 400);
+    }
+    if ( file.size < Config.upload_images_file_size_min ) {
       throw new HttpException(Consts.ERROR_FILE_SIZE, 400);
     }
 
@@ -37,7 +44,36 @@ export class UploadService {
     const writeStream = fs.createWriteStream(p);
     writeStream.write(file.buffer);
     writeStream.end();
-    return Config.upload_images_path_response + `${randomName}${ext}`;
+
+    const sharp = require('sharp');
+    const images = [];
+
+    let image = {
+      path: Config.upload_images_path_response + `${randomName}${ext}`,
+      size: 'original',
+    };
+    images.push(image);
+
+    await sharp(file.buffer)
+      .resize(75, null)
+      .toFile(Config.upload_images_path + '75____' + `${randomName}${ext}`);
+    image = {
+      path: Config.upload_images_path_response + '75____' + `${randomName}${ext}`,
+      size: 'preview',
+    };
+    images.push(image);
+
+    const imageM = new this.uploadImageModel({
+      created_at: moment().unix(),
+      author: query.this.userId,
+      name: query.name,
+      description: query.description,
+      images: images,
+    });
+    imageM.id = imageM._id;
+    return await imageM.save();
+
+    return imageM;
   }
 
 }

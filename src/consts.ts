@@ -19,6 +19,7 @@ export const Consts = {
   photo_rep: 'PHOTO_REPOSITORY',
   temporary_rep: 'TEMPORARY_REPOSITORY',
   custom_rep: 'CUSTOM_REPOSITORY',
+  upload_image_rep: 'UPLOAD_IMAGE_REPOSITORY',
   ERROR_FORBIDDEN: 'Forbidden',
   ERROR_REQUIRED_FIELDS: 'Not all required fields',
   ERROR_ACCESS_TOKEN: 'Not valid access token',

@@ -3,7 +3,10 @@ import {ApiModelProperty} from '@nestjs/swagger';
 export class UploadPostImageDto {
 
   @ApiModelProperty({example: '', description: ''})
-  file: any;
+  name: string;
+
+  @ApiModelProperty({example: '', description: ''})
+  description: string;
 
   readonly accessToken: string;
 
