@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { Consts } from '../consts';
 import { RedisService } from 'nestjs-redis';
 import { UserService } from './user.service';
+import { ChatService } from './chat.service';
 import { IMarschroute } from '../schemas/marschroute.interface';
 import moment = require('moment');
 
@@ -19,6 +20,7 @@ export class MarschrouteService {
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly chatService: ChatService,
   ) {
   }
 
@@ -43,6 +45,8 @@ export class MarschrouteService {
     const res = await common.save();
 
     this.createSnap(res);
+
+    await this.chatService._dialogUpsertMarschroute(res);
 
     return res;
   }

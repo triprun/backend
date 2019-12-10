@@ -11,6 +11,7 @@ import * as helmet from 'helmet';
 // import * as csurf from 'csurf';
 import {AppModule} from './modules/app.module';
 import {SignatureMiddleware} from './middlewares/signature.middleware';
+import {RedisIoAdapter} from './providers/redis.io.adapter';
 
 async function bootstrap() {
   const server = express();
@@ -29,8 +30,6 @@ async function bootstrap() {
   app.use(helmet());
   // app.use(csurf());
   app.enableCors();
-  // const bodyParser = require('body-parser');
-  //app.use(bodyParser);
   await app.init();
   http.createServer(server).listen(3031);
   if(process.env.PATH_TO_SSL_KEY && process.env.PATH_TO_SSL_CRT) {

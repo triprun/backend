@@ -1,0 +1,23 @@
+<script src="socket.io.js"></script>
+<script>
+	var socket = io('http://localhost:3030');
+
+	socket.on('connect', () => {
+
+		socket.emit('subscribe', {
+			events: ['chat'],
+			<!-- accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwidXNlclJvbGUiOjIsImV4cGlyZUF0IjoxNTcxMDE0NDU4LCJ0b2tlbiI6IjQwM2E5YTIwNzg1NWFlMDg1MGJiZjVmNTMyOGM5MWI5MDU2MmVmMzc1YjExOGU2MWQ2MzJmZTFmZDFjNTI2OGIiLCJpYXQiOjE1NjkyMTYyNTh9.HqDXtkMQZuVbbwRCSkr88XdAkCPdAAcJJ1-8NJwhG7Y', -->
+			accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyIiwidXNlclJvbGUiOjAsImV4cGlyZUF0IjoxNTcxMDE0NDc3LCJ0b2tlbiI6IjljMzI1NDc0MjNkMjVkN2RjYjAwNGRiY2Y2YWI2YzgyNGU0ZWRlMGEzMjllYTllN2ZhOWUyOGY3YzYwMWI2YjYiLCJpYXQiOjE1NjkyMTYyNzd9.mw30gCaEHsLy7x2Crx70Ayvp6H-dlsikbrDp45lGIqM',
+		});
+		
+		socket.on('subscribe', data => {
+			console.log('subscribe', data);    
+		});
+
+		socket.on('chat', data => {
+			console.log('chat', data);    
+		});
+
+	});
+  
+</script>
