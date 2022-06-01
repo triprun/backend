@@ -42,7 +42,7 @@
     "sequelize": "^5.9.0",
     "sequelize-cli": "^5.5.0",
     "sequelize-typescript": "^0.6.11",
-    "sharp": "^0.22.1",
+    "sharp": "^0.30.5",
     "tedis": "^0.1.7"
   },
   "devDependencies": {
